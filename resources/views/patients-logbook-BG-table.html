@@ -1,0 +1,1052 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BioTectiveDRC</title>
+  <link rel="shortcut icon" type="image/png" href="../assets/images/logos/SmallBioTectiveLogo.png" />
+  <link rel="stylesheet" href="../assets/css/styles.mintry.css" />
+
+  <!-- Include DataTables CSS -->
+  <!--<link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">-->
+  <link rel="stylesheet" href="../assets/css/datatables.css" />
+  
+  <!-- Add the Font Awesome CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+</head>
+
+<body>
+  <!--  Body Wrapper -->
+  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+    data-sidebar-position="fixed" data-header-position="fixed">
+    <!-- Sidebar Start -->
+    <aside class="left-sidebar">
+      <!-- Sidebar scroll-->
+      <div>
+        <div class="brand-logo d-flex align-items-center justify-content-between">
+          <a href="./index.html" class="text-nowrap logo-img">
+            <img src="../assets/images/logos/BioTective Logo.png" width="205" alt="" />
+          </a>
+          <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+            <i class="ti ti-x fs-8"></i>
+          </div>
+        </div>
+        <!-- Sidebar navigation-->
+        <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+          <ul id="sidebarnav">
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./index2.html" aria-expanded="false">
+                <span>
+                  <i class="ti ti-layout-dashboard"></i>
+                </span>
+                <span class="hide-menu">Dashboard</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link collapsed" href="#" aria-expanded="false" data-bs-target="#patients-nav" data-bs-toggle="collapse">
+                <span>
+                  <i class="ti ti-user"></i>
+                </span>
+                <span class="hide-menu">Patients</span><i class="ti ti-chevron-down"></i>
+              </a>
+              <ul id="patients-nav" class="collapse sidebar-list" data-bs-parent="#sidebarnav">
+                <li class="sidebar-list-item">
+                  <a href="./patients-list-withorganization.html">
+                    <i class="ti ti-point"></i><span> List</span>
+                  </a>
+                </li>
+                <li class="sidebar-list-item">
+                  <a href="./patients-create.html">
+                    <i class="ti ti-point"></i><span> Create Patient</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./index.html" aria-expanded="false">
+                <span>
+                  <i class="ti ti-arrow-autofit-up"></i>
+                </span>
+                <span class="hide-menu">Hyper Events</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./sample-page.html" aria-expanded="false">
+                <span>
+                  <i class="ti ti-arrow-autofit-down"></i>
+                </span>
+                <span class="hide-menu">Hypo Events</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./practicegroups.html" aria-expanded="false">
+                <span>
+                  <i class="ti ti-users"></i>
+                </span>
+                <span class="hide-menu">My Working Groups</span>
+              </a>
+            </li>
+            <li class="nav-small-cap">
+              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+              <span class="hide-menu">MANAGEMENT</span>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link collapsed" href="#" aria-expanded="false" data-bs-target="#organizations-nav" data-bs-toggle="collapse">
+                <span>
+                  <i class="ti ti-building-hospital"></i>
+                </span>
+                <span class="hide-menu">Organizations</span><i class="ti ti-chevron-down"></i>
+              </a>
+              <ul id="organizations-nav" class="collapse sidebar-list" data-bs-parent="#sidebarnav">
+                <li class="sidebar-list-item">
+                  <a href="./organizations-old.html">
+                    <i class="ti ti-point"></i><span> All Organization</span>
+                  </a>
+                </li>
+                <li class="sidebar-list-item">
+                  <a href="./organizations-create.html">
+                    <i class="ti ti-point"></i><span> Create Organization</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link collapsed" href="#" aria-expanded="false" data-bs-target="#users-nav" data-bs-toggle="collapse">
+                <span>
+                  <i class="ti ti-stethoscope"></i>
+                </span>
+                <span class="hide-menu">Users</span><i class="ti ti-chevron-down"></i>
+              </a>
+              <ul id="users-nav" class="collapse sidebar-list" data-bs-parent="#sidebarnav">
+                <li class="sidebar-list-item">
+                  <a href="./users-all.html">
+                    <i class="ti ti-point"></i><span> All Users</span>
+                  </a>
+                </li>
+                <li class="sidebar-list-item">
+                  <a href="./users-create.html">
+                    <i class="ti ti-point"></i><span> Create User</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link collapsed" href="#" aria-expanded="false" data-bs-target="#roles-nav" data-bs-toggle="collapse">
+                <span>
+                  <i class="ti ti-license"></i>
+                </span>
+                <span class="hide-menu">Roles</span><i class="ti ti-chevron-down"></i>
+              </a>
+              <ul id="roles-nav" class="collapse sidebar-list" data-bs-parent="#sidebarnav">
+                <li class="sidebar-list-item">
+                  <a href="./roles-all.html">
+                    <i class="ti ti-point"></i><span> All Roles</span>
+                  </a>
+                </li>
+                <li class="sidebar-list-item">
+                  <a href="./roles-create.html">
+                    <i class="ti ti-point"></i><span> Create Role</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link collapsed" href="#" aria-expanded="false" data-bs-target="#permissions-nav" data-bs-toggle="collapse">
+                <span>
+                  <i class="ti ti-lock-square"></i>
+                </span>
+                <span class="hide-menu">Permissions</span><i class="ti ti-chevron-down"></i>
+              </a>
+              <ul id="permissions-nav" class="collapse sidebar-list" data-bs-parent="#sidebarnav">
+                <li class="sidebar-list-item">
+                  <a href="./permissions-all.html">
+                    <i class="ti ti-point"></i><span> All Permissions</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <!-- End Sidebar navigation -->
+      </div>
+      <!-- End Sidebar scroll-->
+    </aside>
+    <!--  Sidebar End -->
+    <!--  Main wrapper -->
+    <div class="body-wrapper">
+      <!--  Header Start -->
+      <header class="app-header">
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <ul class="navbar-nav">
+            <li class="nav-item d-block d-xl-none">
+              <a class="nav-link sidebartoggler nav-icon-hover" id="headerCollapse" href="javascript:void(0)">
+                <i class="ti ti-menu-2"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link nav-icon-hover" href="javascript:void(0)">
+                <i class="ti ti-bell-ringing"></i>
+                <div class="notification bg-primary rounded-circle"></div>
+              </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link nav-icon-hover" href="javascript:void(0)">
+                  <i class="ti ti-message"></i>
+                </a>
+              </li>
+          </ul>
+          <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
+            <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
+              <li class="nav-item dropdown">
+                <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  <img src="../assets/images/profile/user-1.jpg" alt="" width="35" height="35" class="rounded-circle">
+                </a>
+                <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
+                  <div class="message-body">
+                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                      <i class="ti ti-user-circle fs-6"></i>
+                      <p class="mb-0 fs-3">My Profile</p>
+                    </a>
+                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                      <i class="ti ti-building fs-6"></i>
+                      <p class="mb-0 fs-3">My Organization</p>
+                    </a>
+                    <!--<a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                      <i class="ti ti-list-check fs-6"></i>
+                      <p class="mb-0 fs-3">My Task</p>
+                    </a>-->
+                    <a href="./authentication-login.html" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+      <!--  Header End -->
+      <div class="container-fluid">
+        <!-- Outer Tab -->
+        <div class="d-flex justify-content-center">
+          <div class="card d-inline-block">
+            <div class="card-body py-1 px-4">
+              <div class="row text-center">
+                <div class="col-md-12 p-0">
+                    <a href="patients-dashboard-general.html" class="btn btn-light m-1 btn-pagenav-notselected">Dashboard</a>
+                    <a href="patients-aboutpatient.html" class="btn btn-light m-1 btn-pagenav-notselected">About Patient</a>
+                    <a href="#" class="btn btn-primary m-1 active">Logbook</a>
+                    <a href="patients-healthdata.html" class="btn btn-light m-1 btn-pagenav-notselected">Health Data</a>
+                </div>
+            </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-body">
+                <!-- Inner Tab -->
+                <div class="row">
+                             
+          <div class="col-md-12 d-flex justify-content-center">
+            <a href="patients-logbook-BG.html" class="btn btn-secondary m-3 active">BG</a>
+            <a href="patients-logbook-BP.html" class="btn btn-light m-3">BP</a>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-md-4 text-center">
+                <p class="fs-4 fw-semibold">Patient: Albert Hui (40 y/o)</p>
+            </div>
+            <div class="col-md-4 text-center">
+                <p class="fs-4 fw-semibold">Gender: Male</p>
+            </div>
+            <div class="col-md-4 text-center">
+                <p class="fs-4 fw-semibold">Diabetes Type: Type 1</p>
+            </div>
+        </div>
+               
+          <div class="d-flex flex-row justify-content-between mt-2 mb-4">
+            <div class="btn-group" role="group" aria-label="Basic example">
+              <button class="btn btn-outline-primary" onclick="filterLogs('today', this)">Today</button>
+              <button class="btn btn-outline-primary" onclick="filterLogs('yesterday', this)">Yesterday</button>
+              <button class="btn btn-outline-primary" onclick="filterLogs('last3days', this)">Since 3 days</button>
+              <button class="btn btn-outline-primary" onclick="filterLogs('last7days', this)">Since 7 days</button>
+              <button class="btn btn-outline-primary" onclick="filterLogs('last14days', this)">Since 14 days</button>
+              <button class="btn btn-outline-primary" onclick="filterLogs('last30days', this)">Since 30 days</button>
+            </div>
+          
+            <div class="btn-group" role="group" aria-label="First group">
+              <a href="patients-logbook-BG.html" class="btn btn-outline-secondary"><i class="fas fa-fw fa-list-alt"></i></a>
+              <a href="patients-logbook-BG-table.html" class="btn btn-outline-secondary active"><i class="fas fa-fw fa-th"></i></a>
+            </div>
+          </div>
+          <br>
+          
+          <!-- table -->
+          <div class="table-responsive table" style="overflow-y: hidden;">
+            <table class="table text-nowrap mb-0 align-middle datatable">
+              <thead id="table-period" class="table-info" >
+                <tr style="background-color:#3ab4b6;">
+                  <th rowspan="1" colspan="2">Date</th>
+                  <th rowspan="1">Wakeup</th>
+                  <th colspan="2">Breakfast</th>
+                  <th colspan="2">Lunch</th>
+                  <th colspan="2">Dinner</th>
+                  <th rowspan="1">Bedtime</th>
+                </tr>
+                <tr>
+                  <td><p>Est. HbA1c: 0</p></td>
+                  <td></td>
+                  <td class="edge"></td>
+                  <td>Before</td>
+                  <td class="edge">After</td>
+                  <td>Before</td>
+                  <td class="edge">After</td>
+                  <td>Before</td>
+                  <td class="edge">After</td>
+                  <td></td>
+                </tr> 
+              </thead>
+              <tbody id="logbookTable">
+                <tr id ="table-total" class="totals" style="background-color:#DCDCDC;">
+                  <td><strong>Average</strong></td>
+                  <td><p></p></td>
+                  <td id="wakeupAverage"></td>
+                  <td id="breakfastBeforeAverage"></td>
+                  <td id="breakfastAfterAverage"></td>
+                  <td id="lunchBeforeAverage"></td>
+                  <td id="lunchAfterAverage"></td>
+                  <td id="dinnerBeforeAverage"></td>
+                  <td id="dinnerAfterAverage"></td>
+                  <td id="bedtimeAverage"></td>
+                </tr>
+                
+                <!-- Today -->
+                <tr id="todayRow" class="reading">
+                  <td><p id="todayDate"></p></td>
+                  <td><p></p></td>
+                  <td></td>
+                  <td>5.5</td>
+                  <td>5.5</td>
+                  <td>5.8</td>
+                  <td>5.4</td>
+                  <td>6.0</td>
+                  <td>6.0</td>
+                  <td></td>
+                </tr>
+                
+                <!-- Yesterday -->
+                <tr id="yesterdayRow" class="reading">
+                  <td><p id="yesterdayDate"></p></td>
+                  <td><p></p></td>
+                  <td></td>
+                  <td>5.3</td>
+                  <td>5.5</td>
+                  <td>5.5</td>
+                  <td>5.8</td>
+                  <td>5.4</td>
+                  <td>6.0</td>
+                  <td></td>
+                </tr>
+                
+                <!-- Last 3 days -->
+                <tr id="last3daysRow3" class="reading">
+                  <td><p id="last3DaysDate3"></p></td>
+                  <td><p></p></td>
+                  <td></td>
+                  <td>5.3</td>
+                  <td>5.5</td>
+                  <td>5.5</td>
+                  <td>5.8</td>
+                  <td>5.4</td>
+                  <td>6.0</td>
+                  <td></td>
+                </tr>
+          
+                <!-- Last 7 days -->
+        
+                <tr id="last4daysRow7" class="reading">
+                  <td><p id="last4DaysDate7"></p></td>
+                  <td><p></p></td>
+                  <td></td>
+                  <td>5.3</td>
+                  <td>5.5</td>
+                  <td>5.5</td>
+                  <td>5.8</td>
+                  <td>5.4</td>
+                  <td>6.0</td>
+                  <td></td>
+                </tr>
+                <tr id="last5daysRow7" class="reading">
+                  <td><p id="last5DaysDate7"></p></td>
+                  <td><p></p></td>
+                  <td></td>
+                  <td>5.3</td>
+                  <td>5.5</td>
+                  <td>5.5</td>
+                  <td>5.8</td>
+                  <td>5.4</td>
+                  <td>6.0</td>
+                  <td></td>
+                </tr>
+                <tr id="last6daysRow7" class="reading">
+                  <td><p id="last6DaysDate7"></p></td>
+                  <td><p></p></td>
+                  <td></td>
+                  <td>5.3</td>
+                  <td>5.5</td>
+                  <td>5.5</td>
+                  <td>5.8</td>
+                  <td>5.4</td>
+                  <td>6.0</td>
+                  <td></td>
+                </tr>
+                <tr id="last7daysRow7" class="reading">
+                  <td><p id="last7DaysDate7"></p></td>
+                  <td><p></p></td>
+                  <td></td>
+                  <td>5.3</td>
+                  <td>5.5</td>
+                  <td>5.5</td>
+                  <td>5.8</td>
+                  <td>5.4</td>
+                  <td>6.0</td>
+                  <td></td>
+                </tr>
+
+                <!-- Last 14 days -->
+        
+                <tr id="last8daysRow14" class="reading">
+                  <td><p id="last8DaysDate14"></p></td>
+                  <td><p></p></td>
+                  <td></td>
+                  <td>5.3</td>
+                  <td>5.5</td>
+                  <td>5.5</td>
+                  <td>5.8</td>
+                  <td>5.4</td>
+                  <td>6.0</td>
+                  <td></td>
+                </tr>
+                <tr id="last9daysRow14" class="reading">
+                  <td><p id="last9DaysDate14"></p></td>
+                  <td><p></p></td>
+                  <td></td>
+                  <td>5.3</td>
+                  <td>5.5</td>
+                  <td>5.5</td>
+                  <td>5.8</td>
+                  <td>5.4</td>
+                  <td>6.0</td>
+                  <td></td>
+                </tr>
+                <tr id="last10daysRow14" class="reading">
+                  <td><p id="last10DaysDate14"></p></td>
+                  <td><p></p></td>
+                  <td></td>
+                  <td>5.3</td>
+                  <td>5.5</td>
+                  <td>5.5</td>
+                  <td>5.8</td>
+                  <td>5.4</td>
+                  <td>6.0</td>
+                  <td></td>
+                </tr>
+                <tr id="last11daysRow14" class="reading">
+                  <td><p id="last11DaysDate14"></p></td>
+                  <td><p></p></td>
+                  <td></td>
+                  <td>5.3</td>
+                  <td>5.5</td>
+                  <td>5.5</td>
+                  <td>5.8</td>
+                  <td>5.4</td>
+                  <td>6.0</td>
+                  <td></td>
+                </tr>
+                <tr id="last12daysRow14" class="reading">
+                  <td><p id="last12DaysDate14"></p></td>
+                  <td><p></p></td>
+                  <td></td>
+                  <td>5.3</td>
+                  <td>5.5</td>
+                  <td>5.5</td>
+                  <td>5.8</td>
+                  <td>5.4</td>
+                  <td>6.0</td>
+                  <td></td>
+                </tr>
+                <tr id="last13daysRow14" class="reading">
+                  <td><p id="last13DaysDate14"></p></td>
+                  <td><p></p></td>
+                  <td></td>
+                  <td>5.3</td>
+                  <td>5.5</td>
+                  <td>5.5</td>
+                  <td>5.8</td>
+                  <td>5.4</td>
+                  <td>6.0</td>
+                  <td></td>
+                </tr>
+                <tr id="last14daysRow14" class="reading">
+                  <td><p id="last14DaysDate14"></p></td>
+                  <td><p></p></td>
+                  <td></td>
+                  <td>5.3</td>
+                  <td>5.5</td>
+                  <td>5.5</td>
+                  <td>5.8</td>
+                  <td>5.4</td>
+                  <td>6.0</td>
+                  <td></td>
+                </tr>
+                
+                
+                <!-- Last 30 days -->
+        
+                <tr id="last15daysRow30" class="reading">
+                  <td><p id="last15DaysDate30"></p></td>
+                  <td><p></p></td>
+                  <td></td>
+                  <td>5.3</td>
+                  <td>5.5</td>
+                  <td>5.5</td>
+                  <td>5.8</td>
+                  <td>5.4</td>
+                  <td>6.0</td>
+                  <td></td>
+                </tr>
+                <tr id="last16daysRow30" class="reading">
+                  <td><p id="last16DaysDate30"></p></td>
+                  <td><p></p></td>
+                  <td></td>
+                  <td>5.3</td>
+                  <td>5.5</td>
+                  <td>5.5</td>
+                  <td>5.8</td>
+                  <td>5.4</td>
+                  <td>6.0</td>
+                  <td></td>
+                </tr>
+                <tr id="last17daysRow30" class="reading">
+                  <td><p id="last17DaysDate30"></p></td>
+                  <td><p></p></td>
+                  <td></td>
+                  <td>5.3</td>
+                  <td>5.5</td>
+                  <td>5.5</td>
+                  <td>5.8</td>
+                  <td>5.4</td>
+                  <td>6.0</td>
+                  <td></td>
+                </tr>
+                <tr id="last18daysRow30" class="reading">
+                  <td><p id="last18DaysDate30"></p></td>
+                  <td><p></p></td>
+                  <td></td>
+                  <td>5.3</td>
+                  <td>5.5</td>
+                  <td>5.5</td>
+                  <td>5.8</td>
+                  <td>5.4</td>
+                  <td>6.0</td>
+                  <td></td>
+                </tr>
+        
+                <tr id="last19daysRow30" class="reading">
+                  <td><p id="last19DaysDate30"></p></td>
+                  <td><p></p></td>
+                  <td></td>
+                  <td>5.3</td>
+                  <td>5.5</td>
+                  <td>5.5</td>
+                  <td>5.8</td>
+                  <td>5.4</td>
+                  <td>6.0</td>
+                  <td></td>
+                </tr>
+                <tr id="last20daysRow30" class="reading">
+                  <td><p id="last20DaysDate30"></p></td>
+                  <td><p></p></td>
+                  <td></td>
+                  <td>5.3</td>
+                  <td>5.5</td>
+                  <td>5.5</td>
+                  <td>5.8</td>
+                  <td>5.4</td>
+                  <td>6.0</td>
+                  <td></td>
+                </tr>
+                <tr id="last21daysRow30" class="reading">
+                  <td><p id="last21DaysDate30"></p></td>
+                  <td><p></p></td>
+                  <td></td>
+                  <td>5.3</td>
+                  <td>5.5</td>
+                  <td>5.5</td>
+                  <td>5.8</td>
+                  <td>5.4</td>
+                  <td>6.0</td>
+                  <td></td>
+                </tr>
+                <tr id="last22daysRow30" class="reading">
+                  <td><p id="last22DaysDate30">DATE</p></td>
+                  <td><p></p></td>
+                  <td></td>
+                  <td>5.3</td>
+                  <td>5.5</td>
+                  <td>5.5</td>
+                  <td>5.8</td>
+                  <td>5.4</td>
+                  <td>6.0</td>
+                  <td></td>
+                </tr>
+                <tr id="last23daysRow30" class="reading">
+                  <td><p id="last23DaysDate30"></p></td>
+                  <td><p></p></td>
+                  <td></td>
+                  <td>5.3</td>
+                  <td>5.5</td>
+                  <td>5.5</td>
+                  <td>5.8</td>
+                  <td>5.4</td>
+                  <td>6.0</td>
+                  <td></td>
+                </tr>
+                <tr id="last24daysRow30" class="reading">
+                  <td><p id="last24DaysDate30"></p></td>
+                  <td><p></p></td>
+                  <td></td>
+                  <td>5.3</td>
+                  <td>5.5</td>
+                  <td>5.5</td>
+                  <td>5.8</td>
+                  <td>5.4</td>
+                  <td>6.0</td>
+                  <td></td>
+                </tr>
+                <tr id="last25daysRow30" class="reading">
+                  <td><p id="last25DaysDate30"></p></td>
+                  <td><p></p></td>
+                  <td></td>
+                  <td>5.3</td>
+                  <td>5.5</td>
+                  <td>5.5</td>
+                  <td>5.8</td>
+                  <td>5.4</td>
+                  <td>6.0</td>
+                  <td></td>
+                </tr>
+                <tr id="last26daysRow30" class="reading">
+                  <td><p id="last26DaysDate30"></p></td>
+                  <td><p></p></td>
+                  <td></td>
+                  <td>5.3</td>
+                  <td>5.5</td>
+                  <td>5.5</td>
+                  <td>5.8</td>
+                  <td>5.4</td>
+                  <td>6.0</td>
+                  <td></td>
+                </tr>
+                <tr id="last27daysRow30" class="reading">
+                  <td><p id="last27DaysDate30"></p></td>
+                  <td><p></p></td>
+                  <td></td>
+                  <td>5.3</td>
+                  <td>5.5</td>
+                  <td>5.5</td>
+                  <td>5.8</td>
+                  <td>5.4</td>
+                  <td>6.0</td>
+                  <td></td>
+                </tr>
+                <tr id="last28daysRow30" class="reading">
+                  <td><p id="last28DaysDate30"></p></td>
+                  <td><p></p></td>
+                  <td></td>
+                  <td>5.3</td>
+                  <td>5.5</td>
+                  <td>5.5</td>
+                  <td>5.8</td>
+                  <td>5.4</td>
+                  <td>6.0</td>
+                  <td></td>
+                </tr>
+                <tr id="last29daysRow30" class="reading">
+                  <td><p id="last29DaysDate30"></p></td>
+                  <td><p></p></td>
+                  <td></td>
+                  <td>5.3</td>
+                  <td>5.5</td>
+                  <td>5.5</td>
+                  <td>5.8</td>
+                  <td>5.4</td>
+                  <td>6.0</td>
+                  <td></td>
+                </tr>
+                <tr id="last30daysRow30" class="reading">
+                  <td><p id="last30DaysDate30"></p></td>
+                  <td><p></p></td>
+                  <td></td>
+                  <td>5.3</td>
+                  <td>5.5</td>
+                  <td>5.5</td>
+                  <td>5.8</td>
+                  <td>5.4</td>
+                  <td>6.0</td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <script>
+            function filterLogs(filterType, button) {
+              // Remove active class from all buttons
+              const buttons = document.querySelectorAll('.btn-group button');
+              buttons.forEach((btn) => btn.classList.remove('active'));
+          
+              // Add active class to the clicked button
+              button.classList.add('active');
+          
+              // Hide all rows
+              const rows = document.querySelectorAll('.reading');
+              rows.forEach((row) => row.style.display = 'none');
+          
+              // Show the corresponding row based on the filter type
+              switch (filterType) {
+                case 'today':
+                  // Show rows for Today
+                  document.getElementById('todayRow').style.display = 'table-row';
+                  break;
+                case 'yesterday':
+                  // Show rows for Yesterday
+                  document.getElementById('yesterdayRow').style.display = 'table-row';
+                  break;
+                case 'last3days':
+                  // Show rows for the last 3 days
+                  document.getElementById('todayRow').style.display = 'table-row';
+                  document.getElementById('yesterdayRow').style.display = 'table-row';
+                  document.getElementById('last3daysRow3').style.display = 'table-row';
+                  break;
+                case 'last7days':
+                  // Show rows for the last 7 days:
+                  document.getElementById('todayRow').style.display = 'table-row';
+                  document.getElementById('yesterdayRow').style.display = 'table-row';
+                  document.getElementById('last3daysRow3').style.display = 'table-row';
+                  document.getElementById('last4daysRow7').style.display = 'table-row';
+                  document.getElementById('last5daysRow7').style.display = 'table-row';
+                  document.getElementById('last6daysRow7').style.display = 'table-row';
+                  document.getElementById('last7daysRow7').style.display = 'table-row';
+                  break;
+                case 'last14days':
+                  // Show rows for the last 14 days
+                  document.getElementById('todayRow').style.display = 'table-row';
+                  document.getElementById('yesterdayRow').style.display = 'table-row';
+                  document.getElementById('last3daysRow3').style.display = 'table-row';
+                  document.getElementById('last4daysRow7').style.display = 'table-row';
+                  document.getElementById('last5daysRow7').style.display = 'table-row';
+                  document.getElementById('last6daysRow7').style.display = 'table-row';
+                  document.getElementById('last7daysRow7').style.display = 'table-row';
+                  document.getElementById('last8daysRow14').style.display = 'table-row';
+                  document.getElementById('last9daysRow14').style.display = 'table-row';
+                  document.getElementById('last10daysRow14').style.display = 'table-row';
+                  document.getElementById('last11daysRow14').style.display = 'table-row';
+                  document.getElementById('last12daysRow14').style.display = 'table-row';
+                  document.getElementById('last13daysRow14').style.display = 'table-row';
+                  document.getElementById('last14daysRow14').style.display = 'table-row';
+                  break;
+                case 'last30days':
+                  // Show rows for the last 30 days
+                  document.getElementById('todayRow').style.display = 'table-row';
+                  document.getElementById('yesterdayRow').style.display = 'table-row';
+                  document.getElementById('last3daysRow3').style.display = 'table-row';
+                  document.getElementById('last4daysRow7').style.display = 'table-row';
+                  document.getElementById('last5daysRow7').style.display = 'table-row';
+                  document.getElementById('last6daysRow7').style.display = 'table-row';
+                  document.getElementById('last7daysRow7').style.display = 'table-row';
+                  document.getElementById('last8daysRow14').style.display = 'table-row';
+                  document.getElementById('last9daysRow14').style.display = 'table-row';
+                  document.getElementById('last10daysRow14').style.display = 'table-row';
+                  document.getElementById('last11daysRow14').style.display = 'table-row';
+                  document.getElementById('last12daysRow14').style.display = 'table-row';
+                  document.getElementById('last13daysRow14').style.display = 'table-row';
+                  document.getElementById('last14daysRow14').style.display = 'table-row';
+                  document.getElementById('last15daysRow30').style.display = 'table-row';
+                  document.getElementById('last16daysRow30').style.display = 'table-row';
+                  document.getElementById('last17daysRow30').style.display = 'table-row';
+                  document.getElementById('last18daysRow30').style.display = 'table-row';
+                  document.getElementById('last19daysRow30').style.display = 'table-row';
+                  document.getElementById('last20daysRow30').style.display = 'table-row';
+                  document.getElementById('last21daysRow30').style.display = 'table-row';
+                  document.getElementById('last22daysRow30').style.display = 'table-row';
+                  document.getElementById('last23daysRow30').style.display = 'table-row';
+                  document.getElementById('last24daysRow30').style.display = 'table-row';
+                  document.getElementById('last25daysRow30').style.display = 'table-row';
+                  document.getElementById('last26daysRow30').style.display = 'table-row';
+                  document.getElementById('last27daysRow30').style.display = 'table-row';
+                  document.getElementById('last28daysRow30').style.display = 'table-row';
+                  document.getElementById('last29daysRow30').style.display = 'table-row';
+                  document.getElementById('last30daysRow30').style.display = 'table-row';
+                  
+                  break;
+                default:
+                  break;
+              }
+            }
+          </script>
+          
+  <!-- Add the following script below the table code -->
+<script>
+  function formatDate(date) {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return date.toLocaleDateString(undefined, options);
+  }
+
+  function populateDates() {
+    const today = new Date();
+
+    // Today
+    const todayDateElement = document.getElementById('todayDate');
+    todayDateElement.textContent = formatDate(today);
+
+    // Yesterday
+    const yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1);
+    const yesterdayDateElement = document.getElementById('yesterdayDate');
+    yesterdayDateElement.textContent = formatDate(yesterday);
+
+    // Last 3 days
+    const last3Days = new Date(today);
+    last3Days.setDate(today.getDate() - 2);
+    const last3DaysDate3Element = document.getElementById('last3DaysDate3');
+    last3DaysDate3Element.textContent = formatDate(last3Days);
+
+    // Last 4 days
+    const last4Days = new Date(today);
+    last4Days.setDate(today.getDate() - 3);
+    const last4DaysDate7Element = document.getElementById('last4DaysDate7');
+    last4DaysDate7Element.textContent = formatDate(last4Days);
+
+    // Last 5 days
+    const last5Days = new Date(today);
+    last5Days.setDate(today.getDate() - 4);
+    const last5DaysDate7Element = document.getElementById('last5DaysDate7');
+    last5DaysDate7Element.textContent = formatDate(last5Days);
+
+    // Last 6 days
+    const last6Days = new Date(today);
+    last6Days.setDate(today.getDate() - 5);
+    const last6DaysDate7Element = document.getElementById('last6DaysDate7');
+    last6DaysDate7Element.textContent = formatDate(last6Days);
+
+    // Last 7 days
+    const last7Days = new Date(today);
+    last7Days.setDate(today.getDate() - 6);
+    const last7DaysDate7Element = document.getElementById('last7DaysDate7');
+    last7DaysDate7Element.textContent = formatDate(last7Days); 
+
+    // Last 8 days
+    const last8Days = new Date(today);
+    last8Days.setDate(today.getDate() - 7);
+    const last8DaysDate14Element = document.getElementById('last8DaysDate14');
+    last8DaysDate14Element.textContent = formatDate(last8Days);
+
+    // Last 9 days
+    const last9Days = new Date(today);
+    last9Days.setDate(today.getDate() - 8);
+    const last9DaysDate14Element = document.getElementById('last9DaysDate14');
+    last9DaysDate14Element.textContent = formatDate(last9Days);
+
+    // Last 10 days
+    const last10Days = new Date(today);
+    last10Days.setDate(today.getDate() - 9);
+    const last10DaysDate14Element = document.getElementById('last10DaysDate14');
+    last10DaysDate14Element.textContent = formatDate(last10Days);
+
+    // Last 11 days
+    const last11Days = new Date(today);
+    last11Days.setDate(today.getDate() - 10);
+    const last11DaysDate14Element = document.getElementById('last11DaysDate14');
+    last11DaysDate14Element.textContent = formatDate(last11Days);
+
+    // Last 12 days
+    const last12Days = new Date(today);
+    last12Days.setDate(today.getDate() - 11);
+    const last12DaysDate14Element = document.getElementById('last12DaysDate14');
+    last12DaysDate14Element.textContent = formatDate(last12Days);
+
+    // Last 13 days
+    const last13Days = new Date(today);
+    last13Days.setDate(today.getDate() - 12);
+    const last13DaysDate14Element = document.getElementById('last13DaysDate14');
+    last13DaysDate14Element.textContent = formatDate(last13Days);
+
+    // Last 14 days
+    const last14Days = new Date(today);
+    last14Days.setDate(today.getDate() - 13);
+    const last14DaysDate14Element = document.getElementById('last14DaysDate14');
+    last14DaysDate14Element.textContent = formatDate(last14Days);
+
+    // Last 15 days
+    const last15Days = new Date(today);
+    last15Days.setDate(today.getDate() - 14);
+    const last15DaysDate30Element = document.getElementById('last15DaysDate30');
+    last15DaysDate30Element.textContent = formatDate(last15Days);
+
+    // Last 16 days
+    const last16Days = new Date(today);
+    last16Days.setDate(today.getDate() - 15);
+    const last16DaysDate30Element = document.getElementById('last16DaysDate30');
+    last16DaysDate30Element.textContent = formatDate(last16Days);
+
+    // Last 17 days
+    const last17Days = new Date(today);
+    last17Days.setDate(today.getDate() - 16);
+    const last17DaysDate30Element = document.getElementById('last17DaysDate30');
+    last17DaysDate30Element.textContent = formatDate(last17Days);
+
+    // Last 18 days
+    const last18Days = new Date(today);
+    last18Days.setDate(today.getDate() - 17);
+    const last18DaysDate30Element = document.getElementById('last18DaysDate30');
+    last18DaysDate30Element.textContent = formatDate(last18Days);
+
+    // Last 19 days
+    const last19Days = new Date(today);
+    last19Days.setDate(today.getDate() - 18);
+    const last19DaysDate30Element = document.getElementById('last19DaysDate30');
+    last19DaysDate30Element.textContent = formatDate(last19Days);
+
+    // Last 20 days
+    const last20Days = new Date(today);
+    last20Days.setDate(today.getDate() - 19);
+    const last20DaysDate30Element = document.getElementById('last20DaysDate30');
+    last20DaysDate30Element.textContent = formatDate(last20Days);
+
+    // Last 21 days
+    const last21Days = new Date(today);
+    last21Days.setDate(today.getDate() - 20);
+    const last21DaysDate30Element = document.getElementById('last21DaysDate30');
+    last21DaysDate30Element.textContent = formatDate(last21Days);
+
+    // Last 22 days
+    const last22Days = new Date(today);
+    last22Days.setDate(today.getDate() - 21);
+    const last22DaysDate30Element = document.getElementById('last22DaysDate30');
+    last22DaysDate30Element.textContent = formatDate(last22Days);
+
+    // Last 23 days
+    const last23Days = new Date(today);
+    last23Days.setDate(today.getDate() - 22);
+    const last23DaysDate30Element = document.getElementById('last23DaysDate30');
+    last23DaysDate30Element.textContent = formatDate(last23Days);
+
+    // Last 24 days
+    const last24Days = new Date(today);
+    last24Days.setDate(today.getDate() - 23);
+    const last24DaysDate30Element = document.getElementById('last24DaysDate30');
+    last24DaysDate30Element.textContent = formatDate(last24Days);
+
+    // Last 25 days
+    const last25Days = new Date(today);
+    last25Days.setDate(today.getDate() - 24);
+    const last25DaysDate30Element = document.getElementById('last25DaysDate30');
+    last25DaysDate30Element.textContent = formatDate(last25Days);
+
+    // Last 26 days
+    const last26Days = new Date(today);
+    last26Days.setDate(today.getDate() - 25);
+    const last26DaysDate30Element = document.getElementById('last26DaysDate30');
+    last26DaysDate30Element.textContent = formatDate(last26Days);
+
+    // Last 27 days
+    const last27Days = new Date(today);
+    last27Days.setDate(today.getDate() - 26);
+    const last27DaysDate30Element = document.getElementById('last27DaysDate30');
+    last27DaysDate30Element.textContent = formatDate(last27Days);
+
+    // Last 28 days
+    const last28Days = new Date(today);
+    last28Days.setDate(today.getDate() - 27);
+    const last28DaysDate30Element = document.getElementById('last28DaysDate30');
+    last28DaysDate30Element.textContent = formatDate(last28Days);
+
+    // Last 29 days
+    const last29Days = new Date(today);
+    last29Days.setDate(today.getDate() - 28);
+    const last29DaysDate30Element = document.getElementById('last29DaysDate30');
+    last29DaysDate30Element.textContent = formatDate(last29Days);
+
+    // Last 30 days
+    const last30Days = new Date(today);
+    last30Days.setDate(today.getDate() - 29);
+    const last30DaysDate30Element = document.getElementById('last30DaysDate30');
+    last30DaysDate30Element.textContent = formatDate(last30Days);
+
+ }
+
+  // Call the populateDates function to display the dates on page load
+  populateDates();
+
+</script>
+
+<script>
+// Calculate averages for each column
+const calculateAverages = () => {
+  const readings = document.querySelectorAll('.reading');
+  const rowCount = readings.length;
+
+  let wakeupSum = 0;
+  let breakfastBeforeSum = 0;
+  let breakfastAfterSum = 0;
+  let lunchBeforeSum = 0;
+  let lunchAfterSum = 0;
+  let dinnerBeforeSum = 0;
+  let dinnerAfterSum = 0;
+  let bedtimeSum = 0;
+
+  // Loop through each reading row and sum the values
+  readings.forEach((reading) => {
+    wakeupSum += parseFloat(reading.querySelector('td:nth-child(3)').textContent);
+    breakfastBeforeSum += parseFloat(reading.querySelector('td:nth-child(4)').textContent);
+    breakfastAfterSum += parseFloat(reading.querySelector('td:nth-child(5)').textContent);
+    lunchBeforeSum += parseFloat(reading.querySelector('td:nth-child(6)').textContent);
+    lunchAfterSum += parseFloat(reading.querySelector('td:nth-child(7)').textContent);
+    dinnerBeforeSum += parseFloat(reading.querySelector('td:nth-child(8)').textContent);
+    dinnerAfterSum += parseFloat(reading.querySelector('td:nth-child(9)').textContent);
+    bedtimeSum += parseFloat(reading.querySelector('td:nth-child(10)').textContent);
+  });
+
+  // Calculate averages
+  const wakeupAverage = wakeupSum / rowCount;
+  const breakfastBeforeAverage = breakfastBeforeSum / rowCount;
+  const breakfastAfterAverage = breakfastAfterSum / rowCount;
+  const lunchBeforeAverage = lunchBeforeSum / rowCount;
+  const lunchAfterAverage = lunchAfterSum / rowCount;
+  const dinnerBeforeAverage = dinnerBeforeSum / rowCount;
+  const dinnerAfterAverage = dinnerAfterSum / rowCount;
+  const bedtimeAverage = bedtimeSum / rowCount;
+
+  // Update the corresponding table cells with the calculated averages
+  document.getElementById('breakfastBeforeAverage').textContent = breakfastBeforeAverage.toFixed(2);
+  document.getElementById('breakfastAfterAverage').textContent = breakfastAfterAverage.toFixed(2);
+  document.getElementById('lunchBeforeAverage').textContent = lunchBeforeAverage.toFixed(2);
+  document.getElementById('lunchAfterAverage').textContent = lunchAfterAverage.toFixed(2);
+  document.getElementById('dinnerBeforeAverage').textContent = dinnerBeforeAverage.toFixed(2);
+  document.getElementById('dinnerAfterAverage').textContent = dinnerAfterAverage.toFixed(2);
+  
+};
+
+// Call the calculateAverages function to calculate and update the averages initially
+calculateAverages();
+
+</script>
+  
+  
+  
+ </body>
+
+</html>

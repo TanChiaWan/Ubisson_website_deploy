@@ -1,0 +1,38 @@
+Title: The Process of Developing a Diabetes Monitoring System 
+
+Thank you Chiawan,
+Good morning Everyone, I would be discussing on the process of developing a Diabetes Monitoring System. 
+
+To begin, we initiate the process by gathering requirements. This enables us to fully understand the client's needs, including essential functionalities, data collection methods, user interface preferences, and integration capabilities.
+
+Once the requirements have been gathered, we proceed with creating a Project Plan. This comprehensive roadmap outlines the project's scope, timeline, required resources, and milestones. It involves task allocation to team members, setting clear goals, and defining deliverables.
+
+Effective communication is maintained through regular discussions and meetings among team members and the client. This collaborative approach allows for the exchange of ideas, addressing challenges, and ensuring that the project's progress remains aligned with the established goals and objectives.
+
+To keep track of project details, we diligently document project requirements, discussions, decisions, and feedback. This documentation serves as a valuable reference point for the team, ensuring clarity and consistency throughout the project's lifecycle.
+
+Next, we move on to the creation of wireframes, which provide visual representations of the system's interface and functionality. This enables us to conceptualize the user experience. Following that, we develop a functional prototype that the client can test and provide feedback on.
+
+Finally, we gather feedback from the client and make necessary amendments to ensure that the system fully meets their needs and expectations. This iterative feedback loop ensures the continuous improvement and refinement of the system.
+
+
+Thats all for the process
+
+The pieces that we have done are project proposal, Project plan, software requirement specification, product wireframe, and software design document, The prototype development has already begun, and in the next phase, we will showcase it to you.
+
+
+Log in module
+
+
+The following is our Diabetes Monitoring System Log in Webpage design with a remember me function and a login function that allows users to log in securely using their Organization ID, Username, and Password.
+
+Log in will only be successful if Organization ID, Username, or Password are correct, if not, it will not log in
+So right now we have to put in the correct password to logged in .
+And to logout, just click the logout button to log out.
+
+
+Dashboard module
+
+After successful login, users will be directed to the Dashboard page, which includes a navigation bar at the side for easy access to the different parts of the system.  The main content area will provide information in a visually appealing card view format featuring insights based on different categories, as well as real-time data updates as it is linked to the database. For example, by clicking on the card view for No. of Patient Profiles, it will then direct us to the List of Patients.
+
+Thank you, Thats all for my part, let me pass to Leonard to continue

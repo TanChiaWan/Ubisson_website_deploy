@@ -1,0 +1,103 @@
+* {
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
+}
+
+
+/* General Content */
+
+.content {
+    position: relative;
+    padding-top: 5vh;
+    padding-left: 50px;
+}
+
+.subtitle {
+    padding-top: 12px;
+    font-size: 14px;
+}
+
+.subtitle2 {
+    margin-bottom: -2vh;
+    font-size: 14px;
+}
+
+
+/* All Organization */
+
+.table_wrapper {
+    width: 90%;
+    border: 3px solid #3BB4B6;
+    border-radius: 2vw;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+#all_organization_table,
+#all_user_table,
+#all_role_table,
+#all_permission_table {
+    width: 100%;
+}
+
+tr {
+    line-height: 300%;
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #E8F0F0;
+}
+
+
+/* Vue Pagination */
+
+.pagination_block {
+    display: flex;
+    justify-content: end;
+    margin-right: 10%;
+    margin-top: 5vh;
+}
+
+.pagination_block button {
+    display: flex;
+    text-align: center;
+    color: black;
+    border: 1px solid #3BB4B6;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+.pagination_block .active {
+    background-color: lightblue;
+}
+
+
+/* search module in all organization */
+
+.search_block {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    margin-right: 10%;
+    margin-bottom: 5vh;
+}
+
+.search_label {
+    margin-bottom: 0;
+}
+
+.search_textfield {
+    margin-left: 20px;
+    margin-right: 20px;
+    width: 15vw;
+    border-radius: 8px;
+    border-color: #707070;
+    border-style: solid;
+    background-color: rgb(255, 255, 255);
+}
+
+.icon_title:hover {
+    text-decoration: none;
+}

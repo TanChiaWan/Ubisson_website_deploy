@@ -1,0 +1,290 @@
+/*side bar*/
+
+* {
+    font-family: 'Poppins', sans-serif;
+    /*background: #F5F5F5;*/
+}
+
+
+/* general sidebar */
+
+.sidebar {
+    height: 90vh;
+    width: 21vw;
+    position: fixed;
+    z-index: 1;
+    top: 5vh;
+    left: 5vw;
+    background-color: #7ECBCC;
+    overflow-x: hidden;
+    padding-top: 4vh;
+    border-radius: 20px;
+}
+
+#sidebar_biotective_logo {
+    width: 4.2vw;
+    position: relative;
+    margin-left: 2.3vw;
+    background-color: #7ECBCC;
+}
+
+#side_logo_title {
+    color: #1B6B88;
+    font-size: 1.5vw;
+    background-color: #7ECBCC;
+    margin-left: 1vw;
+}
+
+#sidebar_icon_up {
+    width: 1.3vw;
+    display: block;
+    position: relative;
+    margin: auto;
+    top: 10px;
+    background-color: #7ECBCC;
+}
+
+#nav_menu {
+    width: 15.51vw;
+    height: 31.019vw;
+    margin-left: 2.8vw;
+    margin-top: 1vw;
+    overflow-y: auto;
+    position: relative;
+    -ms-overflow-style: none;
+    /* hide scrollbar for IE and Edge */
+    scrollbar-width: none;
+    /* hide scrollbar for Firefox */
+    color: white;
+    background-color: #7ECBCC;
+}
+
+
+/* hide scrollbar for Chrome, Safari and Opera */
+
+#nav_menu::-webkit-scrollbar {
+    display: none;
+}
+
+#sidebar_icon_down {
+    width: 1.3vw;
+    display: block;
+    position: relative;
+    margin: auto;
+    top: 1.5vw;
+    background-color: #7ECBCC;
+}
+
+li {
+    margin-top: 2vh;
+}
+
+.nav_items {
+    color: white;
+    background-color: #7ECBCC;
+    font-size: 1.3vw;
+    font-weight: bold;
+}
+
+.nav_items:hover {
+    color: #1B6B88;
+    opacity: 50%;
+}
+
+.nav_items:active {
+    color: #1B6B88;
+}
+
+.submenu_items {
+    padding-left: 20px;
+    min-width: 200px;
+}
+
+
+/* General Content */
+
+.content {
+    padding-top: 5vh;
+    padding-left: 1vw;
+}
+
+
+/*Body*/
+
+body {
+    background-color: #f8fafc;
+    position: relative;
+    min-height: auto;
+}
+
+h1 {
+    margin-left: 10px;
+}
+
+
+/*Organization Info*/
+
+.border1 {
+    background-color: #7ecbcc;
+    border: 3px solid #3BB4B6;
+    border-radius: 43px 43px 0px 0px;
+    height: 50px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 650px;
+    margin-top: 5px;
+    margin-left: 10px;
+}
+
+.container1 {
+    background-color: var(--white);
+    border: 3px solid #3BB4B6;
+    border-radius: 0px 0px 43px 43px;
+    height: 140px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 650px;
+    margin-top: 52px;
+    margin-left: 10px;
+}
+
+.sub {
+    margin-left: 20px;
+    margin-top: 15px;
+    font-size: large;
+}
+
+label {
+    text-align: left;
+    font-size: 20px;
+}
+
+.required::after {
+    content: " *";
+    color: red;
+    font-size: 20px;
+}
+
+input,
+select {
+    padding: 10px;
+    width: 250px;
+}
+
+.form-group {
+    margin-top: 15px;
+    margin-left: 10px;
+    display: inline-block;
+    padding-left: 10px;
+    margin-right: 50px;
+}
+
+
+/*Contact Info*/
+
+.border2 {
+    background-color: #7ecbcc;
+    border: 3px solid #3BB4B6;
+    border-radius: 43px 43px 0px 0px;
+    height: 50px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 650px;
+    margin-top: 210px;
+    margin-left: 10px;
+}
+
+.container2 {
+    background-color: var(--white);
+    border: 3px solid #3BB4B6;
+    border-radius: 0px 0px 43px 43px;
+    height: 140px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 650px;
+    margin-top: 256px;
+    margin-left: 10px;
+}
+
+
+/*Administrator*/
+
+.border3 {
+    background-color: #7ecbcc;
+    border: 3px solid #3BB4B6;
+    border-radius: 43px 43px 0px 0px;
+    height: 50px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 650px;
+    margin-top: 415px;
+    margin-left: 10px;
+}
+
+.container3 {
+    background-color: var(--white);
+    border: 3px solid #3BB4B6;
+    border-radius: 0px 0px 43px 43px;
+    height: 250px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 650px;
+    margin-top: 460px;
+    margin-left: 10px;
+}
+
+
+/*Preferences*/
+
+.border4 {
+    background-color: #7ecbcc;
+    border: 3px solid #3BB4B6;
+    border-radius: 43px 43px 0px 0px;
+    height: 50px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 650px;
+    margin-top: 730px;
+    margin-left: 10px;
+}
+
+.container4 {
+    background-color: var(--white);
+    border: 3px solid #3BB4B6;
+    border-radius: 0px 0px 43px 43px;
+    height: 250px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 650px;
+    margin-top: 773px;
+    margin-left: 10px;
+}
+
+optgroup {
+    font-size: 15px;
+}
+
+
+/*Add Button*/
+
+.btn {
+    margin-top: 1030px;
+    margin-left: 550px;
+}
+
+.addbtn {
+    width: 80px;
+    height: 30px;
+    background-color: #7ecbcc;
+    border: 3px solid #3BB4B6;
+    border-radius: 10px 10px 10px 10px;
+    font-weight: 600;
+}

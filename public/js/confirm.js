@@ -1,0 +1,10 @@
+document.getElementById("confirm_name").innerHTML = localStorage.getItem("name");
+        document.getElementById("confirm_login").innerHTML = localStorage.getItem("login");
+        document.getElementById("confirm_address").innerHTML = localStorage.getItem("address");
+        document.getElementById("confirm_phone").innerHTML = localStorage.getItem("phone");
+        document.getElementById("confirm_language").innerHTML = localStorage.getItem("language");
+        document.getElementById("confirm_region").innerHTML = localStorage.getItem("region");
+        document.getElementById("confirm_blood_glucose_unit").innerHTML = localStorage.getItem("blood_glucose_unit");
+        document.getElementById("confirm_other_units").innerHTML = localStorage.getItem("other_units");
+        document.getElementById("confirm_admin_name").innerHTML = localStorage.getItem("admin_name");
+        document.getElementById("confirm_email").innerHTML = localStorage.getItem("email");

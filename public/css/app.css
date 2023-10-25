@@ -1,0 +1,182 @@
+/* general sidebar */
+
+.sidebar {
+    height: 90vh;
+    width: /*270px;*/
+    20vw;
+    position: fixed;
+    z-index: 1;
+    top: 5vh;
+    left: 2vw;
+    background-color: #7ECBCC;
+    overflow-x: hidden;
+    padding-top: /*20px; */
+    2.5vh;
+    border-radius: /*20px;*/
+    1.5vw;
+    visibility: visible;
+}
+
+#sidebar_close_button {
+    font-size: 3vw;
+    position: absolute;
+    left: 95vw;
+    color: white;
+    cursor: pointer;
+    visibility: hidden;
+}
+
+.closed_sidebar {
+    height: 10vh;
+    width: 100%;
+    position: absolute;
+    display: flex;
+    z-index: 2;
+    background-color: #7ECBCC;
+    visibility: hidden;
+    align-items: center;
+    color: aliceblue;
+    font-size: 3vw;
+    cursor: pointer;
+    padding-left: 5vw;
+}
+
+#sidebar_biotective_logo {
+    width: /*55px;*/
+    4vw;
+    position: relative;
+    margin-left: /*30px;*/
+    2vw;
+    cursor: pointer;
+}
+
+#side_logo_title {
+    color: #1B6B88;
+    font-size: /*19px;*/
+    1.5vw;
+    margin-left: /*10px;*/
+    1vw;
+    cursor: pointer;
+}
+
+#sidebar_icon_up {
+    width: /*15px;*/
+    1vw;
+    display: block;
+    position: relative;
+    margin: auto;
+    top: /*10px;*/
+    1.5vh;
+}
+
+#nav_menu {
+    width: /*200px; */
+    16vw;
+    height: /*400px; */
+    60vh;
+    margin: auto;
+    overflow-y: auto;
+    position: relative;
+    top: /*15px;*/
+    2.5vh;
+    -ms-overflow-style: none;
+    /* hide scrollbar for IE and Edge */
+    scrollbar-width: none;
+    /* hide scrollbar for Firefox */
+    color: white;
+}
+
+
+/* hide scrollbar for Chrome, Safari and Opera */
+
+#nav_menu::-webkit-scrollbar {
+    display: none;
+}
+
+#sidebar_icon_down {
+    width: /*15px;*/
+    1vw;
+    display: block;
+    position: relative;
+    margin: auto;
+    top: 20px;
+}
+
+ul#patients_submenu li {
+    margin-top: /*10px;*/
+    2vh;
+    min-width: 22vw;
+}
+
+ul#nav_ul li {
+    margin-top: /*10px;*/
+    2vh;
+}
+
+.nav_items {
+    color: white;
+    font-size: /*16px;*/
+    2.5vh;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.nav_items:hover {
+    color: #1B6B88;
+    opacity: 50%;
+}
+
+.nav_items:active {
+    color: #1B6B88;
+}
+
+.submenu_items {
+    padding-left: /*20px;*/
+    2vw;
+    min-width: 2vw;
+}
+
+@media screen and (max-width: 700px) {
+    .sidebar {
+        width: 0;
+        top: 10vh;
+        left: 0;
+        border-radius: 0px;
+        transition: 0.3s;
+    }
+    #nav_menu {
+        width: 30vw;
+        text-align: center;
+    }
+    #sidebar_close_button {
+        visibility: visible;
+    }
+    .closed_sidebar {
+        visibility: visible;
+        position: relative;
+    }
+    .closed_sidebar:hover {
+        background-color: #63a0a1;
+    }
+    #sidebar_biotective_logo {
+        width: /*55px;*/
+        5vh;
+        margin-left: /*30px;*/
+        37vw;
+    }
+    #side_logo_title {
+        font-size: /*19px;*/
+        3vh;
+        margin-left: /*10px;*/
+        1vw;
+    }
+    #sidebar_icon_up,
+    #sidebar_icon_down {
+        width: /*15px;*/
+        2vw;
+    }
+}
+
+.fas {
+    width: 2vw;
+}

@@ -1,0 +1,162 @@
+* {
+    font-family: 'Poppins', sans-serif;
+    overflow-y: hidden;
+}
+
+
+/* General Content */
+
+.content {
+    padding-top: 5vh;
+    padding-left: 50px;
+}
+
+.subtitle {
+    padding-top: 12px;
+    font-size: 14px;
+}
+
+.table-striped>tr:nth-child(odd) {
+    background-color: white;
+}
+
+.table-striped>tr:nth-child(even) {
+    background-color: #e0f0f0;
+}
+
+
+/* All Organization */
+
+#all_organization_search_text_field {
+    width: 16vw;
+    border-radius: 10px;
+    border-color: #707070;
+    border-style: solid;
+    background-color: rgb(255, 255, 255);
+}
+
+.table-striped>tbody>tr.selectedRow:nth-child(even)>td {
+    background-color: #e0f0f0;
+}
+
+
+/*Patient With Organiszation & Without*/
+
+.tittle_wrapper,
+.tittle_wrapper4 {
+    height: 40%;
+    border: 2px solid #3BB4B6;
+    border-radius: 1vw;
+    border-collapse: separate;
+    border-spacing: 0;
+    background-color: #3BB4B6;
+    font-size: 2.5vh;
+    min-width: 4vw;
+    font-weight: bolder;
+}
+
+.tittle_wrapper2,
+.tittle_wrapper3 {
+    width: 30%;
+    height: 40%;
+    font-size: 2.5vh;
+    font-weight: bold;
+}
+
+.title2 {
+    display: flex;
+    justify-content: center;
+}
+
+.tittle_wrapper,
+.tittle_wrapper2 {
+    float: left;
+    width: 30%;
+    min-width: 4vw;
+    text-align: center;
+    height: 3vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2vh;
+}
+
+.tittle_wrapper,
+.tittle_wrapper2,
+.tittle_wrapper3,
+.tittle_wrapper4 div a p {
+    overflow-y: hidden;
+    padding-top: 1vh;
+}
+
+.titlesss {
+    padding-top: 1vh;
+    overflow-y: hidden;
+}
+
+.tittle_wrapper3,
+.tittle_wrapper4 {
+    float: left;
+    width: 30%;
+    text-align: center;
+    height: 3vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2vh;
+}
+
+.title2 a:link {
+    text-decoration: none;
+    color: black;
+}
+
+.title2 a:visited {
+    text-decoration: none;
+    color: black;
+}
+
+.title2 a:hover {
+    font-weight: bolder;
+}
+
+.title2 a:active {
+    text-decoration: none;
+}
+
+.table_wrapper {
+    border-radius: 3vh;
+    border: 3px solid #3BB4B6;
+}
+
+.patients_table {
+    width: 100%;
+}
+
+tr {
+    line-height: 300%;
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #E8F0F0;
+}
+
+@media (max-width: 768px) {
+    .row {
+        flex-wrap: wrap;
+        display: flex;
+    }
+    .col-sm-3 {
+        flex: 1 0 60%;
+        max-width: 100%;
+    }
+    .content {
+        flex: 1 0 100%;
+        max-width: 100%;
+        padding-left: 10px;
+    }
+    .col-sm-9 {
+        width: 60%;
+    }
+}

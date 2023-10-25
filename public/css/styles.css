@@ -1,0 +1,341 @@
+* {
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
+}
+
+
+/* General Content */
+
+.content {
+    position: relative;
+    margin-top: 10vh;
+    padding-left: 6vw;
+}
+
+.content2 {
+    position: relative;
+    padding-left: 6vw;
+}
+
+.subtitle {
+    padding-top: 12px;
+    font-size: 18px;
+}
+
+
+/* All Organization */
+
+.table_wrapper {
+    width: 100%;
+    border: 3px solid #3BB4B6;
+    border-radius: 2vw;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+#all_organization_table,
+#all_user_table,
+#all_role_table,
+#all_permission_table {
+    width: 100%;
+}
+
+tr {
+    line-height: 300%;
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #E8F0F0;
+}
+
+
+/* Vue Pagination */
+
+.pagination_block {
+    display: flex;
+    justify-content: end;
+    margin-right: 10%;
+    margin-top: 5vh;
+}
+
+.pagination {
+    display: inline;
+    text-align: center;
+}
+
+.pagination a {
+    color: black;
+    border: 1px solid #3BB4B6;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+.currentPage a {
+    background-color: lightblue;
+}
+
+
+/* search module in all organization */
+
+.search_block {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    margin-right: 10%;
+    margin-bottom: 5vh;
+}
+
+.search_label {
+    margin-bottom: 0;
+}
+
+.search_textfield {
+    margin-left: 20px;
+    margin-right: 20px;
+    width: 15vw;
+    border-radius: 8px;
+    border-color: #707070;
+    border-style: solid;
+    background-color: rgb(255, 255, 255);
+}
+
+
+/* Create Role */
+
+.formbox_title {
+    background-color: #7ecbcc;
+    border: 3px solid #3BB4B6;
+    border-radius: 2vw 2vw 0px 0px;
+    left: 0;
+    position: relative;
+    top: 0;
+    width: 55vw;
+    margin-top: 3vh;
+}
+
+.formbox {
+    background-color: white;
+    border: 3px solid #3BB4B6;
+    border-top: 0;
+    border-radius: 0px 0px 2vw 2vw;
+    left: 0;
+    position: relative;
+    top: 0;
+    width: 55vw;
+    display: flex;
+    justify-content: center;
+}
+
+.sub {
+    margin-left: 2vw;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    font-size: 1.4vw;
+    overflow-y: hidden;
+}
+
+.sub2 {
+    overflow-y: hidden;
+}
+
+.form_label {
+    font-size: 1.5vw;
+}
+
+.form_label::after {
+    content: " *";
+    color: red;
+    font-size: 1.5vw;
+}
+
+input,
+select {
+    padding: 1vh;
+    width: 20vw;
+}
+
+.form-group {
+    margin-top: 2.5vh;
+    margin-left: 2vw;
+    display: inline-block;
+    margin-right: 2vw;
+}
+
+input[type=checkbox] {
+    width: auto;
+}
+
+.table-permission-checkboxes {
+    width: 50vw;
+    margin: 5vh;
+}
+
+.create-role-permission-select-all-wrapper {
+    display: flex;
+    padding-left: 3vw;
+}
+
+.btn {
+    margin-top: 5vh;
+    margin-left: 0vw;
+}
+
+.btn6 {
+    margin-top: 5vh;
+    margin-left: 20vw;
+}
+
+.btn5 {
+    margin-top: 5vh;
+    margin-left: 20vw;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    overflow-y: hidden;
+}
+
+.addbtn {
+    width: 5vw;
+    height: 5vh;
+    background-color: #7ecbcc;
+    border: 3px solid #3BB4B6;
+    border-radius: 10px 10px 10px 10px;
+    font-weight: 600;
+    font-size: 2vh;
+    margin-left: 30vw;
+}
+
+
+/* template */
+
+.card_a {
+    margin-bottom: 30px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+}
+
+.card-title {
+    padding: 0 0 0 0;
+    font-size: 18px;
+    font-weight: 500;
+    color: black;
+    font-family: "Poppins", sans-serif;
+}
+
+.groupname {
+    padding-right: 0;
+}
+
+.card-body {
+    padding: 0 20px 20px 20px;
+    border: 2px solid #3BB4B6;
+    border-radius: 15px;
+}
+
+
+/* practice group */
+
+.practice_group_button_wrapper {
+    display: flex;
+    justify-content: right;
+}
+
+.btn_practice_group {
+    border: 2px solid #3BB4B6;
+    background-color: white;
+    color: #3BB4B6;
+    padding: 5px 5px;
+    font-size: 16px;
+    cursor: pointer;
+    height: fit-content;
+    font-weight: 600;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+.btn_practice_group:hover {
+    color: white;
+    background-color: #3BB4B6;
+}
+
+.legend_wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dangerous_event_indicator_shape {
+    width: 20px;
+    height: 0;
+    padding-bottom: 20px;
+    margin: 15px 20px;
+    display: inline-block;
+}
+
+.low_event_color {
+    background: #00B3FF;
+}
+
+.high_event_color {
+    background: #FF0000;
+}
+
+.icon_info {
+    text-align: right;
+}
+
+.amount_event_wrapper {
+    text-align: center;
+    padding: 0 20px;
+}
+
+
+/* practice group add new group */
+
+.form_title {
+    background-color: #7ecbcc;
+    border: 3px solid #3BB4B6;
+    border-radius: 2vw 2vw 0px 0px;
+    left: 0;
+    position: relative;
+    top: 0;
+    margin-top: 3vh;
+}
+
+.form_body {
+    background-color: white;
+    border: 3px solid #3BB4B6;
+    border-top: 0;
+    border-radius: 0px 0px 2vw 2vw;
+    left: 0;
+    position: relative;
+    top: 0;
+    padding: 10px 30px;
+}
+
+.input_add_practice_group {
+    margin: 10px 0;
+    border: 1px solid #63a0a1;
+    border-radius: 10px;
+    width: 80%;
+}
+
+
+/* practice group detail */
+
+#practice_group_table {
+    width: 100%;
+}
+
+td,
+th {
+    font-size: 16px;
+}

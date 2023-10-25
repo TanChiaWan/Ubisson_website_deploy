@@ -1,0 +1,688 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BioTectiveDRC</title>
+  <link rel="shortcut icon" type="image/png" href="../assets/images/logos/SmallBioTectiveLogo.png" />
+  <link rel="stylesheet" href="../assets/css/styles.mintry.css" />
+
+  <!-- Include DataTables CSS -->
+  <!--<link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">-->
+  <link rel="stylesheet" href="../assets/css/datatables.css" />
+
+  <!-- Buttons CSS -->
+  <!--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css">-->
+  <link rel="stylesheet" href="../assets/css/datatables-button.css" />
+
+  <!-- Include Bootstrap CSS and JS in your HTML 
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>-->
+
+  <!-- Include jQuery -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <!-- Include Bootstrap JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+  <!--  Body Wrapper -->
+  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+    data-sidebar-position="fixed" data-header-position="fixed">
+    <!-- Sidebar Start -->
+    <aside class="left-sidebar">
+      <!-- Sidebar scroll-->
+      <div>
+        <div class="brand-logo d-flex align-items-center justify-content-between">
+          <a href="./index.html" class="text-nowrap logo-img">
+            <img src="../assets/images/logos/BioTective Logo.png" width="205" alt="" />
+          </a>
+          <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+            <i class="ti ti-x fs-8"></i>
+          </div>
+        </div>
+        <!-- Sidebar navigation-->
+        <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+          <ul id="sidebarnav">
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./index2.html" aria-expanded="false">
+                <span>
+                  <i class="ti ti-layout-dashboard"></i>
+                </span>
+                <span class="hide-menu">Dashboard</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link collapsed" href="#" aria-expanded="false" data-bs-target="#patients-nav" data-bs-toggle="collapse">
+                <span>
+                  <i class="ti ti-user"></i>
+                </span>
+                <span class="hide-menu">Patients</span><i class="ti ti-chevron-down"></i>
+              </a>
+              <ul id="patients-nav" class="collapse sidebar-list" data-bs-parent="#sidebarnav">
+                <li class="sidebar-list-item">
+                  <a href="./patients-list-withorganization.html">
+                    <i class="ti ti-point"></i><span> List</span>
+                  </a>
+                </li>
+                <li class="sidebar-list-item">
+                  <a href="./patients-create.html">
+                    <i class="ti ti-point"></i><span> Create Patient</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./index.html" aria-expanded="false">
+                <span>
+                  <i class="ti ti-arrow-autofit-up"></i>
+                </span>
+                <span class="hide-menu">Hyper Events</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./sample-page.html" aria-expanded="false">
+                <span>
+                  <i class="ti ti-arrow-autofit-down"></i>
+                </span>
+                <span class="hide-menu">Hypo Events</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./practicegroups.html" aria-expanded="false">
+                <span>
+                  <i class="ti ti-users"></i>
+                </span>
+                <span class="hide-menu">My Working Groups</span>
+              </a>
+            </li>
+            <li class="nav-small-cap">
+              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+              <span class="hide-menu">MANAGEMENT</span>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link collapsed" href="#" aria-expanded="false" data-bs-target="#organizations-nav" data-bs-toggle="collapse">
+                <span>
+                  <i class="ti ti-building-hospital"></i>
+                </span>
+                <span class="hide-menu">Organizations</span><i class="ti ti-chevron-down"></i>
+              </a>
+              <ul id="organizations-nav" class="collapse sidebar-list" data-bs-parent="#sidebarnav">
+                <li class="sidebar-list-item">
+                  <a href="./organizations-old.html">
+                    <i class="ti ti-point"></i><span> All Organization</span>
+                  </a>
+                </li>
+                <li class="sidebar-list-item">
+                  <a href="./organizations-create.html">
+                    <i class="ti ti-point"></i><span> Create Organization</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link collapsed" href="#" aria-expanded="false" data-bs-target="#users-nav" data-bs-toggle="collapse">
+                <span>
+                  <i class="ti ti-stethoscope"></i>
+                </span>
+                <span class="hide-menu">Users</span><i class="ti ti-chevron-down"></i>
+              </a>
+              <ul id="users-nav" class="collapse sidebar-list" data-bs-parent="#sidebarnav">
+                <li class="sidebar-list-item">
+                  <a href="./users-all.html">
+                    <i class="ti ti-point"></i><span> All Users</span>
+                  </a>
+                </li>
+                <li class="sidebar-list-item">
+                  <a href="./users-create.html">
+                    <i class="ti ti-point"></i><span> Create User</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link collapsed" href="#" aria-expanded="false" data-bs-target="#roles-nav" data-bs-toggle="collapse">
+                <span>
+                  <i class="ti ti-license"></i>
+                </span>
+                <span class="hide-menu">Roles</span><i class="ti ti-chevron-down"></i>
+              </a>
+              <ul id="roles-nav" class="collapse sidebar-list" data-bs-parent="#sidebarnav">
+                <li class="sidebar-list-item">
+                  <a href="./roles-all.html">
+                    <i class="ti ti-point"></i><span> All Roles</span>
+                  </a>
+                </li>
+                <li class="sidebar-list-item">
+                  <a href="./roles-create.html">
+                    <i class="ti ti-point"></i><span> Create Role</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link collapsed" href="#" aria-expanded="false" data-bs-target="#permissions-nav" data-bs-toggle="collapse">
+                <span>
+                  <i class="ti ti-lock-square"></i>
+                </span>
+                <span class="hide-menu">Permissions</span><i class="ti ti-chevron-down"></i>
+              </a>
+              <ul id="permissions-nav" class="collapse sidebar-list" data-bs-parent="#sidebarnav">
+                <li class="sidebar-list-item">
+                  <a href="./permissions-all.html">
+                    <i class="ti ti-point"></i><span> All Permissions</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <!-- End Sidebar navigation -->
+      </div>
+      <!-- End Sidebar scroll-->
+    </aside>
+    <!--  Sidebar End -->
+    <!--  Main wrapper -->
+    <div class="body-wrapper">
+      <!--  Header Start -->
+      <header class="app-header">
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <ul class="navbar-nav">
+            <li class="nav-item d-block d-xl-none">
+              <a class="nav-link sidebartoggler nav-icon-hover" id="headerCollapse" href="javascript:void(0)">
+                <i class="ti ti-menu-2"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link nav-icon-hover" href="javascript:void(0)">
+                <i class="ti ti-bell-ringing"></i>
+                <div class="notification bg-primary rounded-circle"></div>
+              </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link nav-icon-hover" href="javascript:void(0)">
+                  <i class="ti ti-message"></i>
+                </a>
+              </li>
+          </ul>
+          <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
+            <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
+              <li class="nav-item dropdown">
+                <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  <img src="../assets/images/profile/user-1.jpg" alt="" width="35" height="35" class="rounded-circle">
+                </a>
+                <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
+                  <div class="message-body">
+                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                      <i class="ti ti-user-circle fs-6"></i>
+                      <p class="mb-0 fs-3">My Profile</p>
+                    </a>
+                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                      <i class="ti ti-building fs-6"></i>
+                      <p class="mb-0 fs-3">My Organization</p>
+                    </a>
+                    <!--<a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                      <i class="ti ti-list-check fs-6"></i>
+                      <p class="mb-0 fs-3">My Task</p>
+                    </a>-->
+                    <a href="./authentication-login.html" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+      <!--  Header End -->
+      <div class="container-fluid">
+        <!-- Outer Tab -->
+        <div class="d-flex justify-content-center">
+          <div class="card d-inline-block">
+            <div class="card-body py-1 px-4">
+              <div class="row text-center">
+                <div class="col-md-12 p-0">
+                    <a href="patients-dashboard-general.html" class="btn btn-light m-1 btn-pagenav-notselected">Dashboard</a>
+                    <a href="patients-aboutpatient.html" class="btn btn-light m-1 btn-pagenav-notselected">About Patient</a>
+                    <a href="patients-logbook-BG.html" class="btn btn-light m-1 btn-pagenav-notselected">Logbook</a>
+                    <a href="#" class="btn btn-primary m-1 active">Health Data</a>
+                </div>
+            </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-md-4 text-center">
+                    <p class="fs-4 fw-semibold">Patient: Albert Hui (40 y/o)</p>
+                </div>
+                <div class="col-md-4 text-center">
+                    <p class="fs-4 fw-semibold">Gender: Male</p>
+                </div>
+                <div class="col-md-4 text-center">
+                    <p class="fs-4 fw-semibold">Diabetes Type: Type 1</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <a href="./patients-healthdata-add.html" class="btn btn-primary m-1 btn-with-icon"><i class="ti ti-plus"></i>Add Health Data</a>
+                    <button type="button" class="btn btn-primary m-1 btn-with-icon" id="export_healthdata_button"><i class="ti ti-file-export"></i>Export</button>
+                </div>
+            </div>
+
+            <!-- delete dialog box start-->
+            <div class="modal fade" id="delete_health_data_modal" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered modal-sm">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Delete Health Data</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">Are you sure you want to delete this data?</div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                      <button type="button" class="btn btn-danger">Delete</button>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <!-- delete dialog box end-->
+
+            <!-- checkboxes -->
+            <div class="row">
+              <div class="col-md-12 text-center mt-3">
+                <label class="mx-2">
+                  <input type="checkbox" id="checkbox-general" class="checkbox form-check-input" checked>
+                  General
+                </label>
+                <label class="mx-2">
+                  <input type="checkbox" id="checkbox-glucose" class="checkbox form-check-input" checked>
+                  Glucose
+                </label>
+                <label class="mx-2">
+                  <input type="checkbox" id="checkbox-lipids" class="checkbox form-check-input" checked>
+                  Lipids
+                </label>
+              </div>
+            </div>
+
+            <div class="table-responsive table" style="overflow-y: hidden;">
+                <table class="table text-nowrap mb-0 align-middle datatable">
+                    <thead class="text-dark fs-4">
+                        <tr style="background-color: #3ab4b6" class="health-data-tr-title">
+                          <th colspan="3" class="border-bottom-0">
+                            <h6 class="fw-semibold mb-0"> </h6>
+                          </th>
+                          <th colspan="6" class="category_general border-bottom-0">
+                            <h6 class="fw-semibold mb-0">General</h6>
+                          </th>
+                          <th colspan="1" class="category_glucose border-bottom-0">
+                            <h6 class="fw-semibold mb-0">Glucose</h6>
+                          </th>
+                          <th colspan="4" class="category_lipids border-bottom-0">
+                            <h6 class="fw-semibold mb-0">Lipids</h6>
+                          </th>
+                        </tr>
+                        <tr style="background-color: #7ecbcc;">
+                            <th class="border-bottom-0">
+                              <h6 class="fw-semibold mb-0">Action</h6>
+                            </th>
+                            <th class="border-bottom-0">
+                              <h6 class="fw-semibold mb-0">Data Originate</h6>
+                            </th>
+                            <th class="border-bottom-0">
+                              <h6 class="fw-semibold mb-0">Date</h6>
+                            </th>
+                            <th class="category_general border-bottom-0">
+                              <h6 class="fw-semibold mb-0">Weight(kg)</h6>
+                            </th>
+                            <th class="category_general border-bottom-0">
+                              <h6 class="fw-semibold mb-0">Height(cm)</h6>
+                            </th>
+                            <th class="category_general border-bottom-0">
+                              <h6 class="fw-semibold mb-0">SBP/DBP(mmHg)</h6>
+                            </th>
+                            <th class="category_general border-bottom-0">
+                              <h6 class="fw-semibold mb-0">Pulse Rate(bpm)</h6>
+                            </th>
+                            <th class="category_general border-bottom-0">
+                              <h6 class="fw-semibold mb-0">celsius(°C)</h6>
+                            </th>
+                            <th class="category_general border-bottom-0">
+                              <h6 class="fw-semibold mb-0">fahrenheit(°F)</h6>
+                            </th>
+                            <th class="category_glucose border-bottom-0">
+                              <h6 class="fw-semibold mb-0">a1cPercentage(%)</h6>
+                            </th>
+                            <th class="category_lipids border-bottom-0">
+                              <h6 class="fw-semibold mb-0">CHO(mmol/L)</h6>
+                            </th>
+                            <th class="category_lipids border-bottom-0">
+                              <h6 class="fw-semibold mb-0">HDL(mmol/L)</h6>
+                            </th>
+                            <th class="category_lipids border-bottom-0">
+                              <h6 class="fw-semibold mb-0">LDL-C(mmol/L)</h6>
+                            </th>
+                            <th class="category_lipids border-bottom-0">
+                              <h6 class="fw-semibold mb-0">TG(mmol/L)</h6>
+                            </th>
+                          </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                          <td class="border-bottom-0">
+                            <p class="mb-0 fw-normal">
+                                <a href="#" class="mx-2 fs-5"><i class="ti ti-pencil"></i></a>
+                                <a href="#" class="mx-2 fs-5" data-bs-toggle="modal" data-bs-target="#delete_health_data_modal"><i class="ti ti-trash"></i></a>
+                            </p>
+                          </td>
+                          <td class="border-bottom-0">
+                            <p class="mb-0 fw-normal">Patient</p>
+                          </td>
+                          <td class="border-bottom-0">
+                            <p class="mb-0 fw-normal">07 May 2023 19:30</p>
+                          </td>
+                          <td class="category_general border-bottom-0">
+                            <p class="mb-0 fw-normal">67.0</p>
+                          </td>
+                          <td class="category_general border-bottom-0">
+                            <p class="mb-0 fw-normal">172.0</p>
+                          </td>
+                          <td class="category_general border-bottom-0">
+                            <p class="mb-0 fw-normal">122/85</p>
+                          </td>
+                          <td class="category_general border-bottom-0">
+                            <p class="mb-0 fw-normal">75</p>
+                          </td>
+                          <td class="category_general border-bottom-0">
+                            <p class="mb-0 fw-normal">37.0</p>
+                          </td>
+                          <td class="category_general border-bottom-0">
+                            <p class="mb-0 fw-normal">99.0</p>
+                          </td>
+                          <td class="category_glucose border-bottom-0" data-toggle="tooltip">
+                            <p class="mb-0 fw-normal tooltip-trigger" data-lotview="1" data-instid="1" data-testid="1" data-operator="3.1" data-ga="11">5.1</p>
+                          </td>
+                          <td class="category_lipids border-bottom-0">
+                            <p class="mb-0 fw-normal">4.8</p>
+                          </td>
+                          <td class="category_lipids border-bottom-0">
+                            <p class="mb-0 fw-normal">1.6</p>
+                          </td>
+                          <td class="category_lipids border-bottom-0">
+                            <p class="mb-0 fw-normal">2.8</p>
+                          </td>
+                          <td class="category_lipids border-bottom-0">
+                            <p class="mb-0 fw-normal">2.5</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="border-bottom-0">
+                            <p class="mb-0 fw-normal">
+                                <a href="#" class="mx-2 fs-5"><i class="ti ti-pencil"></i></a>
+                                <a href="#" class="mx-2 fs-5" data-bs-toggle="modal" data-bs-target="#delete_health_data_modal"><i class="ti ti-trash"></i></a>
+                            </p>
+                          </td>
+                          <td class="border-bottom-0">
+                            <p class="mb-0 fw-normal">Patient</p>
+                          </td>
+                          <td class="border-bottom-0">
+                            <p class="mb-0 fw-normal">07 May 2023 19:30</p>
+                          </td>
+                          <td class="category_general border-bottom-0">
+                            <p class="mb-0 fw-normal">67.0</p>
+                          </td>
+                          <td class="category_general border-bottom-0">
+                            <p class="mb-0 fw-normal">172.0</p>
+                          </td>
+                          <td class="category_general border-bottom-0">
+                            <p class="mb-0 fw-normal">122/85</p>
+                          </td>
+                          <td class="category_general border-bottom-0">
+                            <p class="mb-0 fw-normal">75</p>
+                          </td>
+                          <td class="category_general border-bottom-0">
+                            <p class="mb-0 fw-normal">37.0</p>
+                          </td>
+                          <td class="category_general border-bottom-0">
+                            <p class="mb-0 fw-normal">99.0</p>
+                          </td>
+                          <td class="category_glucose border-bottom-0" data-toggle="tooltip">
+                            <p class="mb-0 fw-normal" data-lotview="1" data-instid="1" data-testid="1" data-operator="3.1" data-ga="11">5.1</p>
+                          </td>
+                          <td class="category_lipids border-bottom-0">
+                            <p class="mb-0 fw-normal">4.8</p>
+                          </td>
+                          <td class="category_lipids border-bottom-0">
+                            <p class="mb-0 fw-normal">1.6</p>
+                          </td>
+                          <td class="category_lipids border-bottom-0">
+                            <p class="mb-0 fw-normal">2.8</p>
+                          </td>
+                          <td class="category_lipids border-bottom-0">
+                            <p class="mb-0 fw-normal">2.5</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="border-bottom-0">
+                            <p class="mb-0 fw-normal">
+                                <a href="#" class="mx-2 fs-5"><i class="ti ti-pencil"></i></a>
+                                <a href="#" class="mx-2 fs-5" data-bs-toggle="modal" data-bs-target="#delete_health_data_modal"><i class="ti ti-trash"></i></a>
+                            </p>
+                          </td>
+                          <td class="border-bottom-0">
+                            <p class="mb-0 fw-normal">Patient</p>
+                          </td>
+                          <td class="border-bottom-0">
+                            <p class="mb-0 fw-normal">07 May 2023 19:30</p>
+                          </td>
+                          <td class="category_general border-bottom-0">
+                            <p class="mb-0 fw-normal">67.0</p>
+                          </td>
+                          <td class="category_general border-bottom-0">
+                            <p class="mb-0 fw-normal">172.0</p>
+                          </td>
+                          <td class="category_general border-bottom-0">
+                            <p class="mb-0 fw-normal">122/85</p>
+                          </td>
+                          <td class="category_general border-bottom-0">
+                            <p class="mb-0 fw-normal">75</p>
+                          </td>
+                          <td class="category_general border-bottom-0">
+                            <p class="mb-0 fw-normal">37.0</p>
+                          </td>
+                          <td class="category_general border-bottom-0">
+                            <p class="mb-0 fw-normal">99.0</p>
+                          </td>
+                          <td class="category_glucose border-bottom-0" data-toggle="tooltip">
+                            <p class="mb-0 fw-normal" data-lotview="1" data-instid="1" data-testid="1" data-operator="3.1" data-ga="11">5.1</p>
+                          </td>
+                          <td class="category_lipids border-bottom-0">
+                            <p class="mb-0 fw-normal">4.8</p>
+                          </td>
+                          <td class="category_lipids border-bottom-0">
+                            <p class="mb-0 fw-normal">1.6</p>
+                          </td>
+                          <td class="category_lipids border-bottom-0">
+                            <p class="mb-0 fw-normal">2.8</p>
+                          </td>
+                          <td class="category_lipids border-bottom-0">
+                            <p class="mb-0 fw-normal">2.5</p>
+                          </td>
+                        </tr>
+                        
+                        
+                    </tbody>
+                </table>
+            </div>
+                  
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
+  <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/sidebarmenu.js"></script>
+  <script src="../assets/js/app.min.js"></script>
+  <script src="../assets/libs/simplebar/dist/simplebar.js"></script>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+  <!-- datatable JS-->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+
+  <!-- Buttons JS --> <!-- for export csv-->
+  <script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
+  
+
+  <!-- Script for datatable and export function in datatable -->
+  <script>
+    $(document).ready(function() {
+      var table = $('.datatable').DataTable({
+        lengthMenu: [5, 10, 25, 100], // Define the available entries options
+        pageLength: 5, // Set the initial number of entries per page
+        columnDefs: [
+          {targets: [0], orderable: false}
+        ],
+        dom: 'Bfrtip',
+        buttons: [{
+          extend: 'csv',
+          filename: 'health_data_Albert_Hui',
+          text: 'Export',
+          exportOptions: {
+            columns: ':not(:first-child)'
+          }
+        }
+        ],
+        responsive: true
+      });  
+
+      $('#export_healthdata_button').on('click', function() {
+        table.button('.buttons-csv').trigger();
+      });
+      
+    });
+  </script>
+
+  <!-- Script for checkboxes -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const checkbox_general = document.getElementById('checkbox-general');
+      const checkbox_glucose = document.getElementById('checkbox-glucose');
+      const checkbox_lipids = document.getElementById('checkbox-lipids');
+
+      var table_cells_general = document.querySelectorAll('.category_general');
+      var table_cells_glucose = document.querySelectorAll('.category_glucose');
+      var table_cells_lipids = document.querySelectorAll('.category_lipids');
+
+      function eventCheckboxGeneral() {
+        checkbox_general.addEventListener('change', function() {
+          if (this.checked) {
+            table_cells_general.forEach(cell => {
+              cell.style.display = "";
+            })
+          }
+          else {
+            table_cells_general.forEach(cell => {
+              cell.style.display = "none";
+            })
+          }
+        })
+      }
+
+      function eventCheckboxGlucose() {
+        checkbox_glucose.addEventListener('change', function() {
+          if (this.checked) {
+            table_cells_glucose.forEach(cell => {
+              cell.style.display = "table-cell";
+            })
+          }
+          else {
+            table_cells_glucose.forEach(cell => {
+              cell.style.display = "none";
+            })
+          }
+        })
+      }
+
+      function eventCheckboxLipids() {
+        checkbox_lipids.addEventListener('change', function() {
+          if (this.checked) {
+            table_cells_lipids.forEach(cell => {
+              cell.style.display = "table-cell";
+            })
+          }
+          else {
+            table_cells_lipids.forEach(cell => {
+              cell.style.display = "none";
+            })
+          }
+        })
+      }
+
+      function runScript() {
+        eventCheckboxGeneral(); eventCheckboxGlucose(); eventCheckboxLipids();
+      }
+
+      runScript();
+
+    })
+
+   // Initialize the tooltip
+   $(document).ready(function () {
+  $('[data-toggle="tooltip"]').tooltip({
+    trigger: 'hover',
+    placement: 'right',
+    html: true,
+    title: function () {
+      const lotView = $(this).data('lotview');
+      const instID = $(this).data('instid');
+      const testID = $(this).data('testid');
+      const operator = $(this).data('operator');
+      const ga = $(this).data('ga');
+      const a1cPercentage = $(this).text();
+
+      // Check if any of the data attributes is empty
+      if (!lotView && !instID && !testID && !operator && !ga) {
+        return 'No information available';
+      }
+
+      // Build the tooltip content
+      let tooltipContent = '';
+
+      // Append the data attributes if they exist
+      if (lotView) {
+        tooltipContent += `<strong>Lot View:</strong> ${lotView}<br>`;
+      }
+      if (instID) {
+        tooltipContent += `<strong>Inst ID:</strong> ${instID}<br>`;
+      }
+      if (testID) {
+        tooltipContent += `<strong>Test ID:</strong> ${testID}<br>`;
+      }
+      if (operator) {
+        tooltipContent += `<strong>Operator:</strong> ${operator}<br>`;
+      }
+      if (ga) {
+        tooltipContent += `<strong>GA:</strong> ${ga}<br>`;
+      }
+
+      // Append the a1cPercentage value
+      tooltipContent += `<strong>a1cPercentage(%):</strong> ${a1cPercentage}`;
+
+      return tooltipContent;
+    },
+  });
+});
+  </script>
+</body>
+
+</html>

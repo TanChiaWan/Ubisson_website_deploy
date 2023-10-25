@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BioTectiveDRC</title>
+  <link rel="shortcut icon" type="image/png" href="../assets/images/logos/SmallBioTectiveLogo.png" />
+  <link rel="stylesheet" href="../assets/css/styles.mintry.css" />
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+  <!--  Body Wrapper -->
+  <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+    data-sidebar-position="fixed" data-header-position="fixed">
+    <!-- Sidebar Start -->
+    <aside class="left-sidebar">
+      <!-- Sidebar scroll-->
+      <div>
+        <div class="brand-logo d-flex align-items-center justify-content-between">
+          <a href="./index.html" class="text-nowrap logo-img">
+            <img src="../assets/images/logos/BioTective Logo.png" width="205" alt="" />
+          </a>
+          <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
+            <i class="ti ti-x fs-8"></i>
+          </div>
+        </div>
+        <!-- Sidebar navigation-->
+        <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
+          <ul id="sidebarnav">
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./index2.html" aria-expanded="false">
+                <span>
+                  <i class="ti ti-layout-dashboard"></i>
+                </span>
+                <span class="hide-menu">Dashboard</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link collapsed" href="#" aria-expanded="false" data-bs-target="#patients-nav" data-bs-toggle="collapse">
+                <span>
+                  <i class="ti ti-user"></i>
+                </span>
+                <span class="hide-menu">Patients</span><i class="ti ti-chevron-down"></i>
+              </a>
+              <ul id="patients-nav" class="collapse sidebar-list" data-bs-parent="#sidebarnav">
+                <li class="sidebar-list-item">
+                  <a href="./patients-list-withorganization.html">
+                    <i class="ti ti-point"></i><span> List</span>
+                  </a>
+                </li>
+                <li class="sidebar-list-item">
+                  <a href="./patients-create.html">
+                    <i class="ti ti-point"></i><span> Create Patient</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./index.html" aria-expanded="false">
+                <span>
+                  <i class="ti ti-arrow-autofit-up"></i>
+                </span>
+                <span class="hide-menu">Hyper Events</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./sample-page.html" aria-expanded="false">
+                <span>
+                  <i class="ti ti-arrow-autofit-down"></i>
+                </span>
+                <span class="hide-menu">Hypo Events</span>
+              </a>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link" href="./practicegroups.html" aria-expanded="false">
+                <span>
+                  <i class="ti ti-users"></i>
+                </span>
+                <span class="hide-menu">My Working Groups</span>
+              </a>
+            </li>
+            <li class="nav-small-cap">
+              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+              <span class="hide-menu">MANAGEMENT</span>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link collapsed" href="#" aria-expanded="false" data-bs-target="#organizations-nav" data-bs-toggle="collapse">
+                <span>
+                  <i class="ti ti-building-hospital"></i>
+                </span>
+                <span class="hide-menu">Organizations</span><i class="ti ti-chevron-down"></i>
+              </a>
+              <ul id="organizations-nav" class="collapse sidebar-list" data-bs-parent="#sidebarnav">
+                <li class="sidebar-list-item">
+                  <a href="./organizations-old.html">
+                    <i class="ti ti-point"></i><span> All Organization</span>
+                  </a>
+                </li>
+                <li class="sidebar-list-item">
+                  <a href="./organizations-create.html">
+                    <i class="ti ti-point"></i><span> Create Organization</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link collapsed" href="#" aria-expanded="false" data-bs-target="#users-nav" data-bs-toggle="collapse">
+                <span>
+                  <i class="ti ti-stethoscope"></i>
+                </span>
+                <span class="hide-menu">Users</span><i class="ti ti-chevron-down"></i>
+              </a>
+              <ul id="users-nav" class="collapse sidebar-list" data-bs-parent="#sidebarnav">
+                <li class="sidebar-list-item">
+                  <a href="./users-all.html">
+                    <i class="ti ti-point"></i><span> All Users</span>
+                  </a>
+                </li>
+                <li class="sidebar-list-item">
+                  <a href="./users-create.html">
+                    <i class="ti ti-point"></i><span> Create User</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link collapsed" href="#" aria-expanded="false" data-bs-target="#roles-nav" data-bs-toggle="collapse">
+                <span>
+                  <i class="ti ti-license"></i>
+                </span>
+                <span class="hide-menu">Roles</span><i class="ti ti-chevron-down"></i>
+              </a>
+              <ul id="roles-nav" class="collapse sidebar-list" data-bs-parent="#sidebarnav">
+                <li class="sidebar-list-item">
+                  <a href="./roles-all.html">
+                    <i class="ti ti-point"></i><span> All Roles</span>
+                  </a>
+                </li>
+                <li class="sidebar-list-item">
+                  <a href="./roles-create.html">
+                    <i class="ti ti-point"></i><span> Create Role</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="sidebar-item">
+              <a class="sidebar-link collapsed" href="#" aria-expanded="false" data-bs-target="#permissions-nav" data-bs-toggle="collapse">
+                <span>
+                  <i class="ti ti-lock-square"></i>
+                </span>
+                <span class="hide-menu">Permissions</span><i class="ti ti-chevron-down"></i>
+              </a>
+              <ul id="permissions-nav" class="collapse sidebar-list" data-bs-parent="#sidebarnav">
+                <li class="sidebar-list-item">
+                  <a href="./permissions-all.html">
+                    <i class="ti ti-point"></i><span> All Permissions</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <!-- End Sidebar navigation -->
+      </div>
+      <!-- End Sidebar scroll-->
+    </aside>
+    <!--  Sidebar End -->
+    <!--  Main wrapper -->
+    <div class="body-wrapper">
+      <!--  Header Start -->
+      <header class="app-header">
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <ul class="navbar-nav">
+            <li class="nav-item d-block d-xl-none">
+              <a class="nav-link sidebartoggler nav-icon-hover" id="headerCollapse" href="javascript:void(0)">
+                <i class="ti ti-menu-2"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link nav-icon-hover" href="javascript:void(0)">
+                <i class="ti ti-bell-ringing"></i>
+                <div class="notification bg-primary rounded-circle"></div>
+              </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link nav-icon-hover" href="javascript:void(0)">
+                  <i class="ti ti-message"></i>
+                </a>
+              </li>
+          </ul>
+          <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
+            <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
+              <li class="nav-item dropdown">
+                <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  <img src="../assets/images/profile/user-1.jpg" alt="" width="35" height="35" class="rounded-circle">
+                </a>
+                <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
+                  <div class="message-body">
+                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                      <i class="ti ti-user-circle fs-6"></i>
+                      <p class="mb-0 fs-3">My Profile</p>
+                    </a>
+                    <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                      <i class="ti ti-building fs-6"></i>
+                      <p class="mb-0 fs-3">My Organization</p>
+                    </a>
+                    <!--<a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                      <i class="ti ti-list-check fs-6"></i>
+                      <p class="mb-0 fs-3">My Task</p>
+                    </a>-->
+                    <a href="./authentication-login.html" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+      <!--  Header End -->
+      <div class="container-fluid">
+        <!-- Outer Tab -->
+        <div class="d-flex justify-content-center">
+          <div class="card d-inline-block">
+            <div class="card-body py-1 px-4">
+              <div class="row text-center">
+                <div class="col-md-12 p-0">
+                    <a href="#" class="btn btn-primary m-1 active">Dashboard</a>
+                    <a href="patients-aboutpatient.html" class="btn btn-light m-1 btn-pagenav-notselected">About Patient</a>
+                    <a href="patients-logbook-BG.html" class="btn btn-light m-1 btn-pagenav-notselected">Logbook</a>
+                    <a href="patients-healthdata.html" class="btn btn-light m-1 btn-pagenav-notselected">Health Data</a>
+                </div>
+            </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <!-- Inner Tab -->
+            <div class="row">
+              <div class="col-md-12 d-flex justify-content-center">
+                  <a href="patients-dashboard-general.html" class="btn btn-light m-2 mb-4">General</a>
+                  <a href="patients-dashboard-BG.html" class="btn btn-light m-2 mb-4">BG</a>
+                  <a href="patients-dashboard-BP.html" class="btn btn-light m-2 mb-4">BP</a>
+                  <a href="#" class="btn btn-secondary m-2 mb-4 active">Cholesterol</a>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-4 text-center">
+                    <p class="fs-4 fw-semibold">Patient: Albert Hui (40 y/o)</p>
+                </div>
+                <div class="col-md-4 text-center">
+                    <p class="fs-4 fw-semibold">Gender: Male</p>
+                </div>
+                <div class="col-md-4 text-center">
+                    <p class="fs-4 fw-semibold">Diabetes Type: Type 1</p>
+                </div>
+            </div>
+  
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body p-0">
+                        <div id="chart-container w-100 text-center">
+                            <canvas id="cholesterol1"></canvas>
+                        </div>
+                        <script>
+                          // Data for morning and evening values for each day
+                          const data = {
+                              labels: ['29-5-2023', '30-5-2023', '31-5-2023', '1-6-2023', '2-6-2023', '3-6-2023', '4-6-2023'],
+                              ldlValues: [2.6, 2.0, 1.6, 2.2, 2.4, 1.9, 2.1],
+                              hdlValues: [1.6, 1.9, 2.1, 1.8, 2.2, 2.0, 1.7],
+                              tgValues: [1.7, 1.5, 1.0, 1.3, 0.8, 1.5, 1.2],
+                              tcValues: [5.2, 5.0, 4.2, 4.8, 4.0, 3.4, 4.2 ]
+                          };
+                          
+                          // Create a new Chart object
+                          const chartMenu = new Chart(document.getElementById('cholesterol1'), {
+                              type: 'bar',
+                              data: {
+                                  labels: data.labels,
+                                  datasets: [
+                                      {
+                                          label: 'LDL',
+                                          data: data.ldlValues,
+                                          backgroundColor: 'rgba(0,173,181, 0.5)',
+                                          borderColor: 'rgba(0,173,181, 1)',
+                                          borderWidth: 1
+                                      },
+                                      {
+                                          label: 'HDL',
+                                          data: data.hdlValues,
+                                          backgroundColor: 'rgba(153, 153, 153, 0.5)',
+                                          borderColor: 'rgba(153,153,153, 1)',
+                                          borderWidth: 1
+                                      },
+                                      {
+                                          label: 'TG',
+                                          data: data.tgValues,
+                                          backgroundColor: 'rgba(255, 22, 22, 0.5)',
+                                          borderColor: 'rgba(255, 22, 22, 1)',
+                                          borderWidth: 1
+                                      },
+                                      {
+                                          label: 'TC',
+                                          data: data.tcValues,
+                                          backgroundColor: 'rgba(14,111,197, 0.5)',
+                                          borderColor: 'rgba(14,111,197, 1)',
+                                          borderWidth: 1
+                                      }
+                                  ]
+                                },
+                                options: {
+                                  aspectRatio: 2.5,
+                                  responsive: true,
+                                  plugins: {
+                                    title: {
+                                    display: true,
+                                    text: ''
+                                    }
+                                  },
+                                  scales: {
+                                    x: {
+                                    title: {
+                                      display: true,
+                                      text: 'Days',
+                                      color: '#000000',
+                                      font: {
+                                        size: 12,
+                                        weight: 'bold'
+                                      }
+                                    },
+                                    grid: {
+                                      display: false
+                                    }
+                                    },
+                                    y: {
+                                      title: {
+                                        display: true,
+                                        text: 'Cholesterol Level (mmol/L)',
+                                        color: '#000000',
+                                        font: {
+                                          size: 12,
+                                          weight: 'bold'
+                                        }
+                                      },
+                                      grid: {
+                                        display: false
+                                      },
+                                      min: 0,
+                                      max: 5.2,
+                                    }
+                                    }
+                                },
+                          });
+
+                      </script>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+              <div class="card">
+                  <div class="card-body p-0">
+                      <div id="chart-container w-100 text-center">
+                          <canvas id="cholesterol2"></canvas>
+                      </div>
+                      <script type="module">
+                        // Create a new Chart object
+                        const data2 = {
+                                        labels: ['29-5-2023', '30-5-2023', '31-5-2023', '1-6-2023', '2-6-2023', '3-6-2023', '4-6-2023'],
+                                        ldlValues: [2.6, 2.0, 1.6, 2.2, 2.4, 1.9, 2.1],
+                                        hdlValues: [1.6, 1.9, 2.1, 1.8, 2.2, 2.0, 1.7],
+                                        tgValues: [1.7, 1.5, 1.0, 1.3, 0.8, 1.5, 1.2],
+                                        tcValues: [5.2, 5.0, 4.2, 4.8, 4.0, 3.4, 4.2 ]
+
+                                    };
+                                    
+                                    // Create a new Chart object
+                                    const chartMenu2 = new Chart(document.getElementById('cholesterol2'), {
+                                        type: 'line',
+                                        data: {
+                                            labels: data.labels,
+                                            datasets: [
+                                                {
+                                                    label: 'LDL',
+                                                    data: data.ldlValues,
+                                                    backgroundColor: 'rgba(0,173,181, 0.5)',
+                                                    borderColor: 'rgba(0,173,181, 1)',
+                                                    borderWidth: 1
+                                                },
+                                                {
+                                                    label: 'HDL',
+                                                    data: data.hdlValues,
+                                                    backgroundColor: 'rgba(153, 153, 153, 0.5)',
+                                                    borderColor: 'rgba(153,153,153, 1)',
+                                                    borderWidth: 1
+                                                },
+                                                {
+                                                    label: 'TG',
+                                                    data: data.tgValues,
+                                                    backgroundColor: 'rgba(255, 22, 22, 0.5)',
+                                                    borderColor: 'rgba(255, 22, 22, 1)',
+                                                    borderWidth: 1
+                                                },
+                                                {
+                                                    label: 'TC',
+                                                    data: data.tcValues,
+                                                    backgroundColor: 'rgba(14,111,197, 0.5)',
+                                                    borderColor: 'rgba(14,111,197, 1)',
+                                                    borderWidth: 1
+                                                }
+                                            ]
+                                          },
+                                          options: {
+                                            aspectRatio: 2.5,
+                                            responsive: true,
+                                            plugins: {
+                                              title: {
+                                                display: true,
+                                                text: ''
+                                              }
+                                            },
+                                            scales: {
+                                              x: {
+                                              title: {
+                                                display: true,
+                                                text: 'Days',
+                                                color: '#000000',
+                                                font: {size: 12,
+                                                  weight: 'bold'
+                                                }
+                                              },
+                                              grid: {
+                                                display: false
+                                              }
+                                            },
+                                            y: {
+                                              title: {
+                                                display: true,
+                                                text: 'Cholesterol Level (mmol/L)',
+                                                color: '#000000',
+                                                font: {
+                                                  size: 12,
+                                                  weight: 'bold'
+                                                }},
+                                              grid: {
+                                                display: false
+                                              },
+                                                min: 0,
+                                                max: 5.2,
+                                            }
+                                            }
+                                          },
+                                    });
+
+                    </script>
+                  </div>
+              </div>
+            </div>
+            
+            </div>
+
+
+
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
+  <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/sidebarmenu.js"></script>
+  <script src="../assets/js/app.min.js"></script>
+  <script src="../assets/libs/simplebar/dist/simplebar.js"></script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+</body>
+
+</html>

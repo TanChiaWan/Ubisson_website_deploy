@@ -1,0 +1,278 @@
+* {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    font-weight: 700;
+}
+
+.loginimg {
+    float: left;
+    width: 33.33%;
+    z-index: 10;
+}
+
+.bio-tective-logo {
+    border: none;
+    height: 35vh;
+    margin-left: 50%;
+    margin-top: 35%;
+    width: 17.71vw;
+    background-position: cover;
+    display: flex;
+}
+
+.error {
+    text-align: center;
+    line-height: 1.85vh;
+    font-size: 1.25vw;
+    bottom: 13vh;
+    left: 8vw;
+    z-index: 9;
+    min-height: 1.85vh;
+    min-width: 19vw;
+    position: relative;
+    padding: 1.85vh;
+    border: 0.15vw solid red;
+}
+
+.loginline {
+    height: 10%;
+    margin-top: 16%;
+    width: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    border: none;
+    z-index: 10;
+}
+
+.loginline {
+    height: 70vh;
+    margin-top: 10vh;
+    width: 0.52vw;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    border: none;
+    z-index: 10;
+}
+
+.title {
+    color: black;
+    font-size: 2.08vw;
+    font-weight: 700;
+    line-height: 9.26vh;
+    min-height: 3.59vh;
+    min-width: 46.88vw;
+    padding-left: 7.81vw;
+}
+
+.overlap-group {
+    top: 20vh;
+    height: 42.51vh;
+    position: relative;
+    width: 33.85vw;
+    margin-left: -9.9vw;
+}
+
+.rectangle-373 {
+    background-color: #7ecbcc;
+    border: 0.22vw solid #3BB4B6;
+    border-radius: 2.24vw 2.24vw 0px 0px;
+    height: 10vh;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 35.73vw;
+}
+
+.log-in {
+    color: white;
+    font-size: 1.8vw;
+    font-weight: 600;
+    left: 15.5vw;
+    letter-spacing: 0;
+    line-height: 1.56vw;
+    position: absolute;
+    top: 2.9vh;
+}
+
+.rectangle-1 {
+    background-color: var(--white);
+    border: 0.22vw solid #3BB4B6;
+    border-radius: 2.24vw;
+    height: 51vh;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 35.73vw;
+}
+
+.organisation-id {
+    left: 3.02vw;
+    font-size: 1.48vw;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 1.48vw;
+    position: absolute;
+    top: 14.22vh;
+    white-space: nowrap;
+}
+
+.password {
+    left: 3.02vw;
+    font-size: 1.48vw;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 1.48vw;
+    position: absolute;
+    top: 33.5vh;
+    white-space: nowrap;
+}
+
+.username {
+    left: 3.02vw;
+    letter-spacing: 0;
+    font-size: 1.48vw;
+    font-weight: 600;
+    line-height: 1.48vw;
+    position: absolute;
+    top: 23.56vh;
+    white-space: nowrap;
+}
+
+.remember-me {
+    color: #707070;
+    font-family: "Segoe UI";
+    font-size: 1.3vw;
+    font-weight: 400;
+    left: 14.79vw;
+    letter-spacing: 0;
+    line-height: 1.3vw;
+    position: absolute;
+    top: 43vh;
+    white-space: nowrap;
+}
+
+.rectangle-2 {
+    background-color: var(--mercury);
+    border: 0.1vw solid;
+    border-color: #3BB4B6;
+    border-radius: 3.733vw;
+    height: 6.15vh;
+    left: 15.73vw;
+    position: absolute;
+    top: 13vh;
+    width: 18vw;
+}
+
+.rectangle-3 {
+    background-color: var(--mercury);
+    border: 0.1vw solid;
+    border-color: #3BB4B6;
+    border-radius: 3.733vw;
+    height: 6.15vh;
+    left: 15.73vw;
+    position: absolute;
+    top: 22.5vh;
+    width: 18vw;
+}
+
+.rectangle-4 {
+    background-color: var(--mercury);
+    border: 0.1vw solid;
+    border-color: #3BB4B6;
+    border-radius: 3.733vw;
+    height: 6.15vh;
+    left: 15.73vw;
+    position: absolute;
+    top: 32vh;
+    width: 18vw;
+}
+
+.remember {
+    position: absolute;
+    left: 21vh;
+    top: 43vh;
+    width: 5vw;
+    height: 2vh;
+}
+
+.loginbutton {
+    background-color: var(--white);
+    border: 0.22vw solid #3BB4B6;
+    border-radius: 1.04vw;
+    bottom: -10.42vh;
+    position: absolute;
+    z-index: 9;
+    width: 7.29vw;
+    padding: 0.39vw;
+    letter-spacing: 0;
+    line-height: 1.48vw;
+    font-weight: 600;
+    font-size: 1.48vw;
+    min-height: 2.78vh;
+}
+
+.logindiv {
+    color: #707070;
+    font-family: "Segoe UI";
+    font-size: 1.3vw;
+    font-weight: 400;
+    left: 14.79vw;
+    letter-spacing: 0;
+    line-height: 1.3vw;
+    position: absolute;
+    top: 50vh;
+    white-space: nowrap;
+}
+
+.inputnumber::-webkit-outer-spin-button,
+.inputnumber::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.inputnumber {
+    border: none;
+    outline: none;
+    font-size: 1.35vw;
+    background-color: transparent;
+    height: 4.15vh;
+    left: 16.67vw;
+    top: 14.22vh;
+    width: 20.02vw;
+    position: absolute;
+}
+
+.usernamefld {
+    border: none;
+    outline: none;
+    font-size: 1.35vw;
+    background-color: transparent;
+    height: 4.15vh;
+    left: 16.67vw;
+    position: absolute;
+    top: 23.56vh;
+    width: 20.02vw;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active,
+input:-webkit-autofill::first-line {
+    font-size: 26px !important;
+    transition: background-color 9999s ease-in-out 0s;
+}
+
+.passwordfld {
+    border: none;
+    outline: none;
+    font-size: 1.35vw;
+    background-color: transparent;
+    height: 3.15vh;
+    left: 16.67vw;
+    position: absolute;
+    top: 33.5vh;
+    width: 20.02vw;
+}

@@ -1,0 +1,119 @@
+* {
+    font-family: 'Poppins', sans-serif;  
+    /*background: #F5F5F5; */
+}
+
+/* general sidebar */
+.sidebar {
+    height: 90vh;
+    width: 270px;
+    position: fixed;
+    z-index: 1;
+    top: 5vh;
+    left: 5vw;
+    background-color: #7ECBCC;
+    overflow-x: hidden;
+    padding-top: 20px; 
+    border-radius: 20px;
+}
+
+#sidebar_biotective_logo {
+    width: 55px;
+    position: relative;
+    margin-left: 30px;
+    background-color: #7ECBCC;
+}
+
+#side_logo_title {
+    color: #1B6B88;
+    font-size: 19px;
+    background-color: #7ECBCC;
+    margin-left: 10px;
+}
+
+#sidebar_icon_up {
+    width: 15px;
+    display: block;
+    position: relative;
+    margin: auto;
+    top: 10px;
+    background-color: #7ECBCC;
+}
+
+#nav_menu {
+    width: 200px;
+    height: 400px;
+    margin: auto;
+    overflow-y: auto;
+    position: relative;
+    top: 15px;
+    -ms-overflow-style: none;  /* hide scrollbar for IE and Edge */
+    scrollbar-width: none;  /* hide scrollbar for Firefox */
+    color: white;
+    background-color: #7ECBCC;
+}
+/* hide scrollbar for Chrome, Safari and Opera */
+#nav_menu::-webkit-scrollbar {
+    display: none;
+}
+
+#sidebar_icon_down {
+    width: 15px;
+    display: block;
+    position: relative;
+    margin: auto;
+    top: 20px;
+    background-color: #7ECBCC;
+}
+
+li {
+    margin-top: 10px;
+}
+
+.nav_items {
+    color: white;
+    background-color: #7ECBCC;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.nav_items:hover {
+    color: #1B6B88;
+    opacity: 50%;
+}
+
+.nav_items:active {
+    color: #1B6B88;
+}
+
+.submenu_items {
+    padding-left: 20px;
+}
+
+
+/* General Content */
+.content {
+    padding-top: 5vh;
+    padding-left: 50px;
+}
+
+.subtitle {
+    padding-top: 12px;
+    font-size: 14px;
+}
+
+.table-striped>tr:nth-child(odd){
+    background-color: white;
+}
+
+.table-striped>tr:nth-child(even){
+    background-color: #E8F0F0;
+}
+
+/* All Organization */
+#all_organization_search_text_field {
+    width: 13vw;
+    border-radius: 10px;
+    border-color: #7ECBCC;
+}
+
