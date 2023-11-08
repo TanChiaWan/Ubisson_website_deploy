@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Logbook;
-use App\Models\patient;
+use App\Models\Patient;
 class LogbookController extends Controller
 {
 

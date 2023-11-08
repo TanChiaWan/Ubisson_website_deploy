@@ -20,12 +20,12 @@ class General extends Seeder
         \App\Models\diagnosis::factory(100)->create();
         \App\Models\healthdata::factory(100)->create();
         \App\Models\logbook::factory(100)->create();
-        \App\Models\practicegroup::factory(1)->create();
+        //\App\Models\practicegroup::factory(1)->create();
   
         $logbooks = \App\Models\logbook::all();
 
  
-$practice_groups = \App\Models\PracticeGroup::all();
+//$practice_groups = \App\Models\PracticeGroup::all();
 
 foreach ($logbooks as $logbook) {
     $matchingPatient = \App\Models\Patient::where('patient_id', $logbook->patient_id_FK)->first();

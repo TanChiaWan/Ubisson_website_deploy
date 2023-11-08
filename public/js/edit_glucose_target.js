@@ -18,5 +18,5 @@ function updateGlucoseTargets() {
     localStorage.setItem("hba1c", hba1c);
 
     // Redirect back to MyAboutPatient.html to display the updated values
-    location.href = "{{ route('aboutpatient', ['patientId' => $patient->patient_id]) }}";
+    location.href = "/aboutpatient/{patient.patient_id}";
 }

@@ -3,7 +3,7 @@
 namespace App\Providers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
-use App\Models\Professional; // Import the Professional model
+use App\Models\professional; // Import the Professional model
 class ViewComposerServiceProvider extends ServiceProvider
 {
     /**
@@ -28,7 +28,7 @@ class ViewComposerServiceProvider extends ServiceProvider
                 $professional_id = $professional->professional_id;
                 $user = Professional::where('professional_id', $professional_id)->first();
                 
-             $view->with('user', $user);
+            $view->with('user', $user);
             }
             
             

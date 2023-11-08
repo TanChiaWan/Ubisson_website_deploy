@@ -10,7 +10,7 @@ use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
-use App\Models\organization;
+use App\Models\Organization;
 class RoleController extends Controller
 {
     /**

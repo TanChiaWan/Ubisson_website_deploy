@@ -161,7 +161,7 @@ Route::post('editrole/{id}/update', [RoleController::class, 'update'])->name('up
 Route::get('/updateorganization/{organizationid}', function ($organizationid) {
     // Retrieve the patient information based on the $patientId
  
-    $organization = App\Models\organization::find($organizationid);
+    $organization = App\Models\Organization::find($organizationid);
     // Pass the patient information to the view
     return view('updateorganization', compact('organization'));
 })->name('updateorganization');
@@ -170,7 +170,7 @@ Route::get('/updateorganization/{organizationid}', function ($organizationid) {
 Route::get('/editorg/{organizationid}', function ($organizationid) {
     // Retrieve the patient information based on the $patientId
  
-    $organization = App\Models\organization::find($organizationid);
+    $organization = App\Models\Organization::find($organizationid);
     // Pass the patient information to the view
     return view('editorg', compact('organization'));
 })->name('editorg');
@@ -204,7 +204,7 @@ Route::get('/hyporeport', [TableController::class, 'viewhyporeport'])->name('hyp
 
 Route::post('/logbookbg', function (Request $request) {
     // Retrieve the patient information based on the $patientId
-    $logbook = App\Models\logbook::all();
+    $logbook = App\Models\Logbook::all();
     $professional_id = $request->input('professional_id');
     $patientId = $request->input('patient_id');
     $patient = App\Models\Patient::find($patientId);
@@ -216,7 +216,7 @@ Route::post('/logbookbg', function (Request $request) {
 
 Route::post('/logbook_bg2',  function (Request $request) {
     // Retrieve the patient information based on the $patientId
-    $logbook = App\Models\logbook::all();
+    $logbook = App\Models\Logbook::all();
     $professional_id = $request->input('professional_id');
     $patientId = $request->input('patient_id');
     $patient = App\Models\Patient::find($patientId);
@@ -227,7 +227,7 @@ Route::post('/logbook_bg2',  function (Request $request) {
 
 Route::post('/logbookbp', function (Request $request) {
     // Retrieve the patient information based on the $patientId
-    $logbook = App\Models\logbook::all();
+    $logbook = App\Models\Logbook::all();
     $professional_id = $request->input('professional_id');
     $patientId = $request->input('patient_id');
     $patient = App\Models\Patient::find($patientId);
@@ -616,7 +616,7 @@ Route::any('/dashboard_bg', function (Request $request) {
     $patientId = $request->input('patient_id');
     $patient = App\Models\Patient::find($patientId);
     $user = App\Models\Professional::find($professional_id);
-    $logbook = App\Models\logbook::where('patient_id_FK', $patientId)->get();
+    $logbook = App\Models\Logbook::where('patient_id_FK', $patientId)->get();
     // Retrieve the patient information based on the $patientId
     $healthdata = App\Models\healthdata::where('patient_id_FK', $patientId)->get();
    
@@ -666,7 +666,7 @@ Route::get('/prac4/{practice_group_id}', function ($practice_group_id) {
     // Retrieve the patient information based on the $patientId
     $professionalingroup = App\Models\professionalingroup::all();
     $practicegroup = App\Models\PracticeGroup::find($practice_group_id);
-    $professional = App\Models\professional::all();
+    $professional = App\Models\Professional::all();
  // Pass the patient information to the view
  return view('practice_group_add_professional', compact('practicegroup','professional','professionalingroup'));
 
@@ -752,7 +752,7 @@ Route::get('/praticegroupdetail/{practice_group_id}', function ($practice_group_
     $practicegroup = App\Models\PracticeGroup::find($practice_group_id);
     $patientingroup = App\Models\patientingroup::all();
     $patient = App\Models\Patient::all();
-    $logbook = App\Models\logbook::all();
+    $logbook = App\Models\Logbook::all();
     // Pass the patient information to the view
     $user = auth()->user();
     return view('practice_group_detail', [

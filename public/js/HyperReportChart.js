@@ -1,87 +1,65 @@
-// Get a reference to the dropdown element
-const dropdown = document.getElementById('event_type');
+document.addEventListener('DOMContentLoaded', function() {
+  var ctx = document.getElementById('myChart').getContext('2d');
 
-// Add event listener to the dropdown element
-dropdown.addEventListener('change', function() {
-  // Get the selected value
-  const selectedValue = dropdown.value;
+  var bgLevels = @json($bgLevels);
+  var period = @json($period);
+  var bgLogbookDate = @json($bg_logbook_date);
+  var criteria1 = @json($criteria1);
+  var criteria2 = @json($criteria2);
 
-  // Update the chart data and labels based on the selected value
-  if (selectedValue === 'blood_glucose') {
-    myChart.data.datasets[0].data = [12, 19, 3, 5, 2, 3, 15];
-    myChart.data.datasets[1].data = [8, 5, 9, 15, 10, 6, 12];
-    myChart.options.scales.x.title.text = 'Days';
-    myChart.options.scales.y.title.text = 'Number of people';
-  } else if (selectedValue === 'blood_pressure') {
-    myChart.data.datasets[0].data = [10, 15, 8, 12, 5, 9, 18];
-    myChart.data.datasets[1].data = [7, 12, 6, 10, 16, 8, 14];
-    myChart.options.scales.x.title.text = 'Days';
-    myChart.options.scales.y.title.text = 'Number of people';
-  }
+  var chartData = {
+      labels: bgLogbookDate, // Use the logbook dates as labels
+      datasets: [{
+          label: 'Blood Glucose Value',
+          data: bgLevels,
+          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          borderColor: 'rgba(255, 99, 132, 1)',
+          borderWidth: 1
+      }, {
+          label: 'Criteria 1',
+          data: Array(bgLevels.length).fill(criteria1),
+          borderColor: 'rgba(0, 0, 0, 0.5)',
+          borderWidth: 1,
+          borderDash: [5, 5],
+          fill: false,
+          pointRadius: 0,
+          showLine: true
+      }, {
+          label: 'Criteria 2',
+          data: Array(bgLevels.length).fill(criteria2),
+          borderColor: 'rgba(0, 0, 0, 0.5)',
+          borderWidth: 1,
+          borderDash: [5, 5],
+          fill: false,
+          pointRadius: 0,
+          showLine: true
+      }]
+  };
 
-  // Update the chart
-  myChart.update();
-});
-
-const canvas = document.getElementById('myChart');
-const ctx = canvas.getContext('2d');
-
-//Define the chart data and options
-var chartData = {
-  labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-  datasets: [{
-    label: 'Morning',
-    data: [12, 19, 3, 5, 2, 3, 15],
-    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-    borderColor: 'rgba(255, 99, 132, 1)',
-    borderWidth: 3,
-    fill: false
-  }, {
-    label: 'Evening',
-    data: [8, 5, 9, 15, 10, 6, 12],
-    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-    borderColor: 'rgba(54, 162, 235, 1)',
-    borderWidth: 3,
-    fill: false
-  }]
-};
-
-var chartOptions = {
-  scales: {
-    x: {
-      title: {
-        display: true,
-        text: 'Days',
-        color: '#000000',
-        font: {
-          size: 16,
-          weight: 'bold'
-        }
-      },
-      grid: {
-        display: false
+  var chartOptions = {
+      scales: {
+          xAxes: [{
+              scaleLabel: {
+                  display: true,
+                  labelString: 'Logbook Date'
+              }
+          }],
+          yAxes: [{
+              scaleLabel: {
+                  display: true,
+                  labelString: 'Value'
+              },
+              ticks: {
+                  min: 0,
+                  max: 20,
+              }
+          }]
       }
-    },
-    y: {
-      title: {
-        display: true,
-        text: 'Number of people',
-        color: '#000000',
-        font: {
-          size: 16,
-          weight: 'bold'
-        }
-      },
-      grid: {
-        display: false
-      }
-    }
-  }
-};
+  };
 
-// Create the chart
-var myChart = new Chart(ctx, {
-  type: 'line',
-  data: chartData,
-  options: chartOptions
+  var myChart = new Chart(ctx, {
+      type: 'line',
+      data: chartData,
+      options: chartOptions
+  });
 });

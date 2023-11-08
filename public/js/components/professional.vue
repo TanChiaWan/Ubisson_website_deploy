@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1 class="title">All Users</h1>
-    <p class="subtitle">{{ professionals.length.toString() }} Users</p>
+    <p class="subtitle">{{ filteredUsersCount }} Users</p>
 
     <div class="search_block">
       <p class="search_label">
@@ -30,8 +30,8 @@
           <td>{{ professional.professional_email_address }}</td>
           <td>{{ professional.status }}</td>
           <td>
-            <a href="#"><i class="fa fa-eye"></i></a>
-            <a href="#"><i class="fa fa-archive" aria-hidden="true"></i></a>
+            <a :href="`${myAboutPatientRoute}/${professional.professional_id}`"><i class="fa fa-eye" ></i></a>
+
           </td>
         </tr>
       </table>
@@ -65,6 +65,7 @@ export default {
   },
   data() {
     return {
+      myAboutPatientRoute: '/myuser',
       searchTerm: '',
       perPage: 5,
       currentPage: 1,
@@ -82,7 +83,9 @@ export default {
     return nameMatch || emailMatch || roleMatch || statusMatch;
   });
 },
-
+filteredUsersCount() {
+  return this.filteredUsers.length;
+},
     displayedUsers() {
       const start = (this.currentPage - 1) * this.perPage;
       const end = start + this.perPage;
@@ -90,6 +93,9 @@ export default {
     },
   },
   methods: {
+    getUserShowLink(userId) {
+    return '/users/' + userId; // Replace this with the actual URL pattern for your user show page
+  },
     getPageNumber() {
       return Math.ceil(this.filteredUsers.length / this.perPage);
     },
