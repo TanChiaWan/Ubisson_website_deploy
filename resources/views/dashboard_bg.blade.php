@@ -143,14 +143,14 @@
                 <div class="card">
                     <div class="card-body p-0">
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="chart-container">
-                                    <canvas id="time_in_range" style="height: 426px; width: 426px;"></canvas>
+                            <div class="col-md-6" >
+                                <div  style="margin-left: 1vw;margin-bottom: 2vh;">
+                                    <canvas id="time_in_range"></canvas>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="chart-container">
-                                    <canvas id="second_pie_chart" style="height: 426px; width: 426px;"></canvas>
+                            <div class="col-md-6" >
+                                <div  style="margin-right: 1vw;margin-bottom: 2vh;">
+                                    <canvas id="second_pie_chart" ></canvas>
                                 </div>
                             </div>
                         </div>
@@ -178,191 +178,40 @@
                 </div>
             </div>
         </div> -->
-        <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
-
-        <script type='module'>
-
+        
+        <script>
     document.addEventListener("DOMContentLoaded", function () {
-        const data = [
+        const data1 = [
             { area: "Hyper", count: 0, percentage: 0 },
             { area: "Normal", count: 0, percentage: 0 },
             { area: "Hypo", count: 0, percentage: 0 },
         ];
-// Calculate the total count
-const totalCount = data.reduce((sum, item) => sum + item.count, 0);
+        const totalCount1 = data1.reduce((sum, item) => sum + item.count, 0);
 
-// Convert counts to percentages
-data.forEach(item => {
-    item.percentage = (item.count / totalCount) * 100;
-});
-        // Assuming $logbook->bg_level and $patients->targetBG_low_BC and $patients->targetBG_high_BC are available
+        // Convert counts to percentages
+        data1.forEach(item => {
+            item.percentage = (item.count / totalCount1) * 100;
+        });
 
-        const dateRangeInput = document.getElementById('date-range');
-        const logbook = {!! json_encode($logbook) !!};
-        const patient = {!! json_encode($patient) !!};
-        let chart = null;
-
-
-            // Reset data
-            data.forEach(item => {
-                item.count = 0;
-                item.percentage = 0;
-            });
-
-            // Loop through logbookData and update data2 based on the filter criteria
-            logbook.forEach(entry => {
-                const bgLevel = parseFloat(entry.bg_level);
-                const targetLow = parseFloat(patient.targetBG_low_BC);
-                const targetHigh = parseFloat(patient.targetBG_high_C);
-
-                if (bgLevel > targetHigh) {
-                    data[0].count++; // Increment Hyper count
-                } else if (bgLevel < targetLow) {
-                    data[2].count++; // Increment Hypo count
-                } else {
-                    data[1].count++; // Increment Normal count
-                }
-            });
-
-            // Calculate the total count for data2
-            const totalCount1 = data.reduce((total, item) => total + item.count, 0);
-
-            // Calculate and update the percentages for data2
-            data.forEach(item => {
-                item.percentage = ((item.count / totalCount1) * 100).toFixed(2);
-            });
-
-new Chart(document.getElementById("time_in_range"), {
-        type: "bar",
-        data: {
-            labels: ["Combined"],
-            datasets: [
-                {
-                    label: "Hyper",
-                    data: [data[0].percentage], // Use percentage data
-                    backgroundColor: "#EC1F28",
-                },
-                {
-                    label: "Normal",
-                    data: [data[1].percentage], // Use percentage data
-                    backgroundColor: "#67C56D",
-                },
-                {
-                    label: "Hypo",
-                    data: [data[2].percentage], // Use percentage data
-                    backgroundColor: "#668DC4",
-                },
-            ],
-        },
-        options: {
-            indexAxis: 'y',
-            maintainAspectRatio: false,
-            plugins: {
-     
-                title: {
-                    display: true,
-                    text: "Time in Range (Before Consumption)",
-                    font: {
-                        size: 18,
-                        color: "black",
-                    },
-                },
-               
-                afterDraw: function (chart) {
-                    const ctx = chart.ctx;
-                    ctx.textAlign = 'center';
-                    ctx.textBaseline = 'top';
-                    ctx.fillStyle = 'black';
-
-                    chart.data.datasets.forEach(function (dataset, datasetIndex) {
-                        for (var i = 0; i < dataset.data.length; i++) {
-                            var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
-                            var barEndX = model.x;
-                            var barEndY = model.base + 10;
-
-                            // Display the value below the bar
-                            ctx.fillText(dataset.data[i].toFixed(2) + '%', barEndX, barEndY);
-
-                            // Calculate the total value of this data point
-                            var total = dataset.data[i] + chart.data.datasets[(datasetIndex + 1) % chart.data.datasets.length].data[i];
-                            var meta = chart.getDatasetMeta((datasetIndex + 1) % chart.data.datasets.length);
-                            var posX = meta.data[i]._model.x;
-                            var posY = meta.data[i]._model.y;
-
-                            // Display the total value on top of the bar
-                            ctx.fillText(total.toFixed(2) + '%', posX + 4, posY - 12);
-                        }
-                    });
-                },
-            },
-            scales: {
-                x: {
-                    ticks: { mirror: true },
-                    stacked: true,
-                    display: false,
-                },
-                y: {
-                    ticks: { mirror: true },
-                    stacked: true,
-                    beginAtZero: true,
-                    display: false,
-                },
-            },
-            onRender: function (chart) {
-                var ctx = chart.ctx;
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'top'; // Change the baseline to 'top' to place the text below the bars
-                ctx.fillStyle = 'black'; // Color of the text
-
-                chart.data.datasets.forEach(function (dataset) {
-                    for (var i = 0; i < dataset.data.length; i++) {
-                        var model = dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
-                        var barEndX = model.x;
-                        var barEndY = model.base + 10; // Adjust the Y position to place the text below the bars
-
-                        // Display the value below the bar
-                        ctx.fillText(dataset.data[i].toFixed(2) + '%', barEndX, barEndY);
-                    }
-                });
-
-                // Add code to display total values on top of the bars
-                chart.data.datasets[0].data.forEach(function (data, index) {
-                    var total = data + chart.data.datasets[1].data[index];
-                    var meta = chart.getDatasetMeta(1);
-                    var posX = meta.data[index]._model.x;
-                    var posY = meta.data[index]._model.y;
-                    ctx.fillStyle = 'black';
-                    ctx.fillText(total.toFixed(2) + '%', posX + 4, posY - 16); // Adjust the Y position to place the text above the bars
-                });
-            },
-        },
-    });
-
-
-
-    });
-</script>
-
-<script type='module'>
-    document.addEventListener("DOMContentLoaded", function () {
         const data2 = [
             { area: "Hyper", count: 0, percentage: 0 },
             { area: "Normal", count: 0, percentage: 0 },
             { area: "Hypo", count: 0, percentage: 0 },
         ];
-        const totalCount = data2.reduce((sum, item) => sum + item.count, 0);
+        const totalCount2 = data2.reduce((sum, item) => sum + item.count, 0);
 
-// Convert counts to percentages
-data2.forEach(item => {
-    item.percentage = (item.count / totalCount) * 100;
-});
+        // Convert counts to percentages
+        data2.forEach(item => {
+            item.percentage = (item.count / totalCount2) * 100;
+        });
+
         // Assuming $logbook->bg_level and $patients->targetBG_low_BC and $patients->targetBG_high_BC are available
 
         const dateRangeInput = document.getElementById('date-range');
         const logbook = {!! json_encode($logbook) !!};
         const patient = {!! json_encode($patient) !!};
-        let chart = null;
+        let chart1 = null;
+        let chart2 = null;
 
         // Set up Flatpickr datepicker
         flatpickr(dateRangeInput, {
@@ -378,26 +227,68 @@ data2.forEach(item => {
                     return entryDate >= startDate && entryDate <= endDate;
                 });
 
-                // Update data2 with the filtered logbook data
+                // Update data1 with the filtered logbook data
                 updateData1(filteredLogbook);
 
-                // Destroy the existing chart if it exists
-                if (chart) {
-                    chart.destroy();
+                // Update data2 with the filtered logbook data
+                updateData2(filteredLogbook);
+
+                // Destroy the existing charts if they exist
+                if (chart1) {
+                    chart1.destroy();
+                }
+                if (chart2) {
+                    chart2.destroy();
                 }
 
-                // Update the chart with the filtered data2
-                chart = createChart(data2);
+                // Update the charts with the filtered data
+                chart1 = createChart(data1, "time_in_range", "Time in Range (Before Consumption)");
+                chart2 = createChart(data2, "second_pie_chart", "Time in Range (After Consumption)");
             }
         });
 
-        // Initialize data2 with all logbook data
+        // Initialize data1 with all logbook data
         updateData1(logbook);
 
-        // Initialize the chart with data2
-        chart = createChart(data2);
+        // Initialize data2 with all logbook data
+        updateData2(logbook);
+
+        // Initialize the charts with data1 and data2
+        chart1 = createChart(data1, "time_in_range", "Time in Range (Before Consumption)");
+        chart2 = createChart(data2, "second_pie_chart", "Time in Range (After Consumption)");
 
         function updateData1(logbookData) {
+            // Reset data1
+            data1.forEach(item => {
+                item.count = 0;
+                item.percentage = 0;
+            });
+
+            // Loop through logbookData and update data1 based on the filter criteria
+            logbookData.forEach(entry => {
+                const bgLevel = parseFloat(entry.bg_level);
+                const targetLow = parseFloat(patient.targetBG_low_BC);
+                const targetHigh = parseFloat(patient.targetBG_high_BC);
+
+                if (bgLevel > targetHigh) {
+                    data1[0].count++; // Increment Hyper count
+                } else if (bgLevel < targetLow) {
+                    data1[2].count++; // Increment Hypo count
+                } else {
+                    data1[1].count++; // Increment Normal count
+                }
+            });
+
+            // Calculate the total count for data1
+            const totalCount1 = data1.reduce((total, item) => total + item.count, 0);
+
+            // Calculate and update the percentages for data1
+            data1.forEach(item => {
+                item.percentage = ((item.count / totalCount1) * 100).toFixed(2);
+            });
+        }
+
+        function updateData2(logbookData) {
             // Reset data2
             data2.forEach(item => {
                 item.count = 0;
@@ -420,84 +311,86 @@ data2.forEach(item => {
             });
 
             // Calculate the total count for data2
-            const totalCount1 = data2.reduce((total, item) => total + item.count, 0);
+            const totalCount2 = data2.reduce((total, item) => total + item.count, 0);
 
             // Calculate and update the percentages for data2
             data2.forEach(item => {
-                item.percentage = ((item.count / totalCount1) * 100).toFixed(2);
+                item.percentage = ((item.count / totalCount2) * 100).toFixed(2);
             });
         }
 
-        function createChart(data) {
-    return new Chart(document.getElementById("second_pie_chart"), {
-        type: "bar",
-        data: {
-            labels: ["Combined"],
-            datasets: [
-                {
-                    label: "Hyper",
-                    data: [data[0].percentage], // Use percentage data
-                    backgroundColor: "#EC1F28",
+        function createChart(data, chartId, chartTitle) {
+            return new Chart(document.getElementById(chartId), {
+                type: "bar",
+                data: {
+                    labels: ["Combined"],
+                    datasets: [
+                        {
+                            label: "Hyper",
+                            data: [data[0].percentage], // Use percentage data
+                            backgroundColor: "#EC1F28",
+                        },
+                        {
+                            label: "Normal",
+                            data: [data[1].percentage], // Use percentage data
+                            backgroundColor: "#67C56D",
+                        },
+                        {
+                            label: "Hypo",
+                            data: [data[2].percentage], // Use percentage data
+                            backgroundColor: "#668DC4",
+                        },
+                    ],
                 },
-                {
-                    label: "Normal",
-                    data: [data[1].percentage], // Use percentage data
-                    backgroundColor: "#67C56D",
-                },
-                {
-                    label: "Hypo",
-                    data: [data[2].percentage], // Use percentage data
-                    backgroundColor: "#668DC4",
-                },
-            ],
-        },
-        options: {
-            indexAxis: 'y',
-            maintainAspectRatio: false,
-            plugins: {
-                datalabels: {
-                    display: true,
-                    anchor: 'start',
-                    align: 'top',
-                    color: 'black',
-                    font: {
-                        weight: 'bold'
+                options: {
+                    indexAxis: 'y',
+                    maintainAspectRatio: false,
+                    plugins: {
+                        datalabels: {
+                            display: true,
+                            anchor: 'start',
+                            align: 'top',
+                            color: 'black',
+                            font: {
+                                weight: 'bold'
+                            },
+                            formatter: function (value, context) {
+                                return value.toFixed(2) + '%'; // Display percentages with two decimal places
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: chartTitle,
+                            font: {
+                                size: 18,
+                                color: "black",
+                            },
+                        },
+                        legend: {
+                            display: true,
+                            position: "top",
+                        },
                     },
-                    formatter: function (value, context) {
-                        return value.toFixed(2) + '%'; // Display percentages with two decimal places
-                    }
-                },
-                title: {
-                    display: true,
-                    text: "Time in Range (After Consumption)",
-                    font: {
-                        size: 18,
-                        color: "black",
+                    scales: {
+                        x: {
+                            ticks: { mirror: true },
+                            stacked: true,
+                            display: false,
+                        },
+                        y: {
+                            ticks: { mirror: true },
+                            stacked: true,
+                            beginAtZero: true,
+                            display: false,
+                        },
                     },
                 },
-                legend: {
-                    display: true,
-                    position: "top",
-                },
-            },
-            scales: {
-                x: {
-                    ticks: { mirror: true },
-                    stacked: true,
-                    display: false,
-                },
-                y: {
-                    ticks: { mirror: true },
-                    stacked: true,
-                    beginAtZero: true,
-                    display: false,
-                },
-            },
-        },
-    });
-}
+            });
+        }
     });
 </script>
+
+
 
     
 
@@ -507,7 +400,13 @@ data2.forEach(item => {
 
 
 
+<div class="tab_nav my-3">
+                  <label for="date-range">Select Date Range:</label>
+                  <input type="text" id="date-range2" name="date-range" class="tabnav2" style="overflow: hidden; border: 1px solid #3BB4B6; border-radius: 1vw; background-color: white; margin-bottom: 2vh;margin-top: 2vh; margin-left: 1vw; margin-right: 1vw; width: 20vw;">
 
+                
+
+                </div>
 
     <div class="card">
         <div class="card-body p-0">
@@ -523,9 +422,9 @@ data2.forEach(item => {
     </div>
 
 
-    <script defer>
+    <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const dateRangeInput = document.getElementById('date-range');
+        const dateRangeInput = document.getElementById('date-range2');
 
         flatpickr(dateRangeInput, {
             mode: 'range',
@@ -541,7 +440,7 @@ data2.forEach(item => {
             @foreach ($logbook as $logbooks)
             @if ($logbooks->patient_id_FK === $patient->patient_id && strpos($logbooks->bg_period, 'Before') === 0)
             {
-                date: '{{ date('Y-m-d', strtotime($logbooks->bg_logbook_date)) }}',
+                date: '{{ date("Y-m-d", strtotime($logbooks->bg_logbook_date)) }}',
                 level: '{{ $logbooks->bg_level }}',
                 period: '{{ $logbooks->bg_period }}',
             },
@@ -556,7 +455,7 @@ data2.forEach(item => {
             @foreach ($logbook as $logbooks)
             @if ($logbooks->patient_id_FK === $patient->patient_id && strpos($logbooks->bg_period, 'After') === 0)
             {
-                date: '{{ date('Y-m-d', strtotime($logbooks->bg_logbook_date)) }}',
+                date: '{{ date("Y-m-d", strtotime($logbooks->bg_logbook_date)) }}',
                 level: '{{ $logbooks->bg_level }}',
                 period: '{{ $logbooks->bg_period }}',
             },
@@ -586,7 +485,7 @@ data2.forEach(item => {
             dates.sort((a, b) => new Date(a) - new Date(b));
             const formattedDates = dates.map(date => {
                 const dateParts = date.split('-');
-                return `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
+                return `${dateParts[0]}-${dateParts[1]}-${dateParts[2]}`;
             });
 
             return new Chart(

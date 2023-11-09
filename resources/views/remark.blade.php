@@ -158,7 +158,7 @@
                                                 return Carbon\Carbon::parse($month)->month;
                                             }) as $month => $monthGroup)
                                         
-                                <h5 class="fw-bold" data-dates="{{ ($monthGroup->pluck('remark_created_date')) }}">{{ $month }}</h5>
+                                <h5 class="fw-bold month" data-dates="{{ ($monthGroup->pluck('remark_created_date')) }}">{{ $month }}</h5>
 
                                                     <ul>
                                                         @foreach ($monthGroup as $remark)
@@ -268,28 +268,55 @@ document.addEventListener("DOMContentLoaded", function() {
         return true; // If no status element is found, consider it a match
     }
 
-    // Function to update the timeline based on selected date range and status filters
-    function updateTimeline() {
-        const filterDateStart = dateRangeInput._flatpickr.selectedDates[0];
-        const filterDateEnd = dateRangeInput._flatpickr.selectedDates[1];
-        
-        const selectedStatus = document.querySelector(".status-filter.active")?.getAttribute("data-status");
+   // Function to update the timeline based on selected date range and status filters
+// Function to update the timeline based on selected date range and status filters
+function updateTimeline() {
+    const filterDateStart = dateRangeInput._flatpickr.selectedDates[0];
+    const filterDateEnd = dateRangeInput._flatpickr.selectedDates[1];
 
-        timelineItems.forEach(item => {
-            const itemDateStr = item.querySelector(".text")?.textContent;
-            const itemDate = new Date(itemDateStr);
+    const formatDate = (date) => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    };
 
-            const itemShouldDisplay = (
-                isDateInRange(itemDate, filterDateStart, filterDateEnd) &&
-                doesItemMatchStatus(item, selectedStatus)
-            );
+    const formattedStartDate = formatDate(filterDateStart);
+    const formattedEndDate = formatDate(filterDateEnd);
 
-            item.style.display = itemShouldDisplay ? "block" : "none";
+    const selectedStatus = document.querySelector(".status-filter.active")?.getAttribute("data-status");
 
-            // Log itemShouldDisplay and other relevant information
-            console.log(`Item: ${itemDateStr}, Should Display: ${itemShouldDisplay}`);
+    timelineItems.forEach(item => {
+        // Get the child remarks
+        const childRemarks = item.querySelectorAll(".container-fluid");
+
+        let shouldDisplay = false;
+
+        childRemarks.forEach(remark => {
+            const remarkDateStr = remark.getAttribute("data-remark-date");
+            const formattedRemarkDate = formatDate(new Date(remarkDateStr));
+
+            if (formattedRemarkDate) {
+                const isInRange = isDateInRange(formattedRemarkDate, formattedStartDate, formattedEndDate);
+                const matchesStatus = doesItemMatchStatus(remark, selectedStatus);
+                const shouldDisplayRemark = isInRange && matchesStatus;
+
+                remark.style.display = shouldDisplayRemark ? "block" : "none";
+
+                shouldDisplay = shouldDisplay || shouldDisplayRemark;
+            }
         });
-    }
+
+        // Check if the month header should be displayed or hidden
+        const monthHeader = item.querySelector(".month");
+console.log(monthHeader);
+const monthRemarks = item.querySelectorAll(".container-fluid");
+const shouldDisplayMonth = Array.from(monthRemarks).some(remark => remark.style.display === "block");
+monthHeader.style.display = shouldDisplayMonth ? "block" : "none";
+    });
+}
+
+
 
     // Initialize Flatpickr for the date range input
     flatpickr(dateRangeInput, {

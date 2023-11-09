@@ -78,7 +78,6 @@ document.addEventListener('DOMContentLoaded', function() {
         'Before Dinner',
         'After Dinner',
         'Bedtime',
-        'Midnight'
     ];
 if(bg_period){ // Sort bg_period based on the custom order
     bg_period.sort(function(a, b) {

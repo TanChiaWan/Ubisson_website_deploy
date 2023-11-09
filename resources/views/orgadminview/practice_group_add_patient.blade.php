@@ -21,7 +21,7 @@
         <p class="mb-0">{{ $practicegroup->name }}</p>
 
     
-        <form method="POST" action="{{ route('orgpractice_group_detailadd', ['practice_group_id' => $practicegroup->practice_group_id,'organization_id' => $practicegroup->organizationid_FK]) }}">
+        <form method="POST" action="{{ route('orgpractice_group_detailadd', ['practice_group_id' => $practicegroup->practice_group_id]) }}">
           @csrf    
           <div class="row mb-4">
             <div class="col-md-6">

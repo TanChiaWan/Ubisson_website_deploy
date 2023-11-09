@@ -27,7 +27,7 @@
       <!-- Sidebar scroll-->
       <div>
         <div class="brand-logo d-flex align-items-center justify-content-between">
-          <a href="{{ route('home') }}" class="text-nowrap logo-img">
+          <a href="{{ route('homeorg') }}" class="text-nowrap logo-img">
             <img src="../assets/images/logos/BioTective Logo.png" width="205" alt="" />
           </a>
           <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
@@ -51,7 +51,7 @@
          
           
             <li class="sidebar-item">
-              <a class="sidebar-link" href="{{ route('home') }}" aria-expanded="false">
+              <a class="sidebar-link" href="{{ route('homeorg') }}" aria-expanded="false">
                 <span>
                   <i class="ti ti-layout-dashboard"></i>
                 </span>
@@ -59,7 +59,7 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link collapsed" href="#" aria-expanded="false" data-bs-target="#patients-nav" data-bs-toggle="collapse">
+              <a class="sidebar-link collapsed" href="javascript:void(0);" aria-expanded="false" data-bs-target="#patients-nav" data-bs-toggle="collapse">
                 <span>
                   <i class="ti ti-user"></i>
                 </span>
@@ -67,20 +67,20 @@
               </a>
               <ul id="patients-nav" class="collapse sidebar-list" data-bs-parent="#sidebarnav">
                 <li class="sidebar-list-item">
-                <a href="{{ route('orgall_patients', ['organization_id' => $organizationid]) }}">
+                <a href="{{ route('orgall_patients') }}">
                     <i class="ti ti-point"></i><span> List</span>
                 </a>
 
                 </li>
                 <li class="sidebar-list-item">
-                  <a href="{{ route('create_patient') }}">
+                  <a href="{{ route('create_patientorg') }}">
                     <i class="ti ti-point"></i><span> Create Patient</span>
                   </a>
                 </li>
               </ul>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="{{ route('hyper') }}" aria-expanded="false">
+              <a class="sidebar-link" href="{{ route('hyperorg') }}" aria-expanded="false">
                 <span>
                   <i class="ti ti-arrow-autofit-up"></i>
                 </span>
@@ -88,7 +88,7 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="{{ route('hypo') }}" aria-expanded="false">
+              <a class="sidebar-link" href="{{ route('hypoorg') }}" aria-expanded="false">
                 <span>
                   <i class="ti ti-arrow-autofit-down"></i>
                 </span>
@@ -96,49 +96,60 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="{{ route('orgpracticegroup', ['organization_id' => $organizationid]) }}" aria-expanded="false">
+              <a class="sidebar-link" href="{{ route('orgpracticegroup') }}" aria-expanded="false">
                 <span>
                   <i class="ti ti-users"></i>
                 </span>
                 <span class="hide-menu">My Working Groups</span>
               </a>
             </li>
-            <li class="nav-small-cap">
-              <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-              <span class="hide-menu">MANAGEMENT</span>
-            </li>
+            <?php
+$professional_account_role = $user->professional_account_role;
+
+// Check if $professional_account_role matches the pattern "Admin" with optional 1 to 4 numbers
+if (preg_match('/^Admin(\d{1,4})?$/', $professional_account_role)) {
+?>
+<li class="nav-small-cap">
+    <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+    <span class="hide-menu">Management</span>
+</li>
+
+<li class="sidebar-item">
+    <a class="sidebar-link collapsed" href="javascript:void(0);" aria-expanded="false" data-bs-target="#users-nav" data-bs-toggle="collapse">
+        <span>
+            <i class="ti ti-stethoscope"></i>
+        </span>
+        <span class="hide-menu">Users</span><i class="ti ti-chevron-down"></i>
+    </a>
+    <ul id="users-nav" class="collapse sidebar-list" data-bs-parent="#sidebarnav">
+        <li class="sidebar-list-item">
+            <a href="{{ route('all_userorg') }}">
+                <i class="ti ti-point"></i><span> All Users</span>
+            </a>
+        </li>
+        <li class="sidebar-list-item">
+            <a href="{{ route('createuser') }}">
+                <i class="ti ti-point"></i><span> Create User</span>
+            </a>
+        </li>
+    </ul>
+</li>
+<?php
+}
+?>
+
+
+
+
+
             
-            <li class="sidebar-item">
-              <a class="sidebar-link collapsed" href="#" aria-expanded="false" data-bs-target="#users-nav" data-bs-toggle="collapse">
-                <span>
-                  <i class="ti ti-stethoscope"></i>
-                </span>
-                <span class="hide-menu">Users</span><i class="ti ti-chevron-down"></i>
-              </a>
-              <ul id="users-nav" class="collapse sidebar-list" data-bs-parent="#sidebarnav">
-                <li class="sidebar-list-item">
-                  <a href="{{ route('all_user') }}">
-                    <i class="ti ti-point"></i><span> All Users</span>
-                  </a>
-                </li>
-                <li class="sidebar-list-item">
-                  <a href="{{ route('users.create') }}">
-                    <i class="ti ti-point"></i><span> Create User</span>
-                  </a>
-                </li>
-                <li class="sidebar-list-item">
-                  <a href="{{ route('import.form') }}">
-                    <i class="ti ti-point"></i><span> Import User</span>
-                  </a>
-                </li>
-              </ul>
-            </li>
             
             
           </ul>
         </nav>
         <!-- End Sidebar navigation -->
       </div>
+      
       <!-- End Sidebar scroll-->
     </aside>
     <!--  Sidebar End -->
@@ -170,15 +181,15 @@
               <li class="nav-item dropdown">
                 <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown"
                   aria-expanded="false">
-                  <img src="" alt="" width="35" height="35" class="rounded-circle">
+                  <img src="{{ $user->professional_image }}" alt="" width="35" height="35" class="rounded-circle">
                 </a>
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
                   <div class="message-body">
-                    <a href="" class="d-flex align-items-center gap-2 dropdown-item">
+                    <a href="{{ route('myprofileorg') }}" class="d-flex align-items-center gap-2 dropdown-item">
                       <i class="ti ti-user-circle fs-6"></i>
                       <p class="mb-0 fs-3">My Profile</p>
                     </a>
-                    <a href="{{ route('myorganization') }}" class="d-flex align-items-center gap-2 dropdown-item">
+                    <a href="{{ route('myorganizationorg') }}" class="d-flex align-items-center gap-2 dropdown-item">
                       <i class="ti ti-building fs-6"></i>
                       <p class="mb-0 fs-3">My Organization</p>
                     </a>

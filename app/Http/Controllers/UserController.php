@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Spatie\Permission\Models\Permission;
 use App\Models\Professional;
-use App\Models\Organization;
+use App\Models\organization;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
@@ -31,7 +31,17 @@ class UserController extends Controller
         $permission = Permission::get();
         return view('users.create', compact('roles', 'permission', 'organizations'));
     }
-
+    public function createorg(): View
+    {
+        $user = session('authenticated_user');
+        $organizationid = session('organizationid');
+        $roles = Role::pluck('name', 'organizationid')->all();
+        $organizations = Organization::pluck('organization_name', 'organizationid')->all();
+        $permission = Permission::get();
+        $selectedOrganization = Organization::where('organizationid',$organizationid)->first();
+        $selectedOrganizationnname = $selectedOrganization->organization_name;
+        return view('/orgadminview/create', compact('roles', 'permission', 'organizations','organizationid','selectedOrganizationnname','user'));
+    }
     public function loadRoles(Request $request)
     {
         $selectedOrganization = $request->input('selectedOrganization');
@@ -132,6 +142,69 @@ $user->permissions()->sync($permissions);
    
        return redirect()->route('all_user')->with('success', 'User created successfully');
    }
+
+   public function storeuserorg(Request $request): RedirectResponse
+{
+    $organizationid = session('organizationid');
+    $organization = Organization::where('organizationid', $organizationid)->first();
+    $organizationname = $organization->organization_name;
+    $this->validate($request, [
+        'professional_image' => 'required|image|mimes:jpeg,png,jpg,gif',
+        'professional_name' => 'required|string|max:255',
+        'professional_email_address' => 'required|email|unique:professionals,professional_email_address|max:255',
+        'password' => 'required|string|min:8|confirmed',
+        'professional_mobile_phone' => 'required|string|max:20',
+       
+        'professional_gender' => 'required|in:Male,Female',
+        'username'=> 'required|string|max:255',
+        'professional_type_of_profession' => 'required|in:Nurse,Therapist,Dietitians,Certified Diabetes Educator,Examiner,Doctor,Administration Staff,Pharmacist,Person In Charge',
+        'temperature_unit'=>'required',
+        'professional_account_role'=>'required',
+        'permissions' => 'required',
+    ]);
+    $user = new Professional();
+    if ($request->hasFile('professional_image')) {
+        $imagePath = $request->file('professional_image')->store('professional_image', 'public');
+        $user->professional_image = $imagePath;
+    }
+       // Fetch the selected organization and its name
+      
+      
+
+       $user->professional_name = $request->input('professional_name');
+       $user->professional_email_address = $request->input('professional_email_address');
+       $user->password = Hash::make($request->input('password'));
+       $user->plain_password = $request->input('password');
+       $user->professional_mobile_phone = $request->input('professional_mobile_phone');
+       $user->organization_name = $organizationname;
+       $user->organizationid_FK = $organizationid;
+       $user->professional_gender = $request->input('professional_gender');
+       $user->username = $request->input('username');
+       $user->professional_type_of_profession = $request->input('professional_type_of_profession');
+       $user->temperature_unit = $request->input('temperature_unit');
+       // Hash the password
+       $user->professional_account_role = $request->input('professional_account_role');
+       $roleName = $request->input('professional_account_role');
+       $role = Role::where('name', $roleName)->first();
+       if ($role) {
+        $user->role_id = $role->id;
+
+        $user->save();
+    }
+       
+       $input = $request->except('permissions'); // Use $request instead of $input
+   
+       // Sync user permissions
+       $permissions = $request->input('permissions', []); // Assuming the permissions are coming from your form
+
+// Sync the user's permissions
+$user->permissions()->sync($permissions);
+   
+       // Assign role to the user
+       $user -> save();
+   
+       return redirect()->route('all_userorg')->with('success', 'User created successfully');
+   }
     
     /**
      * Show the form for editing the specified resource.
@@ -168,6 +241,7 @@ $user->permissions()->sync($permissions);
 
      public function update(Request $request, $id): RedirectResponse
 {
+    
     $user = Professional::findOrFail($id);
     $this->validate($request, [
         'professional_image' => 'required|image|mimes:jpeg,png,jpg,gif',
@@ -241,89 +315,178 @@ $user->permissions()->sync($permissions);
 
 }
 
-    //  public function update(Request $request, $id): RedirectResponse
-    //  {
-    //     $professionalss = Professional::findOrFail($id);
-        
-    //      $this->validate($request, [
-    //         'professional_image' => 'required|image|mimes:jpeg,png,jpg,gif',
-    //         'professional_name' => [
-    //             'required',
-    //             'string',
-    //             'max:255',
-    //             Rule::unique('professionals', 'professional_name')->ignore($professionalss->professional_id,'professional_id'),
-    //         ],
-    //         'professional_email_address' => [
-    //             'required',
-    //             'email',
-    //             'max:255',
-    //             Rule::unique('professionals', 'professional_email_address')->ignore($professionalss->professional_id,'professional_id'),
-    //         ],
-    //         'password' => 'required|string|min:6|confirmed',
-    //         'professional_mobile_phone' => 'required|string|max:20',
-    //         'organization_name' => 'required|exists:organizations,organizationid',
-    //         'professional_gender' => 'required|in:Male,Female',
-    //         'username'=> 'required|string|max:255',
-    //         'professional_type_of_profession' => 'required|in:Nurse,Therapist,Dietitians,Certified Diabetes Educator,Examiner,Doctor,Administration Staff,Pharmacist,Person In Charge',
-    //         'professional_account_role'=>'required',
-    //         'permissions' => 'required',
-    //      ]);
+public function updateorg(Request $request): RedirectResponse
 
-         
 
-    //      $selectedOrganizationId = $request->input('organization_name');
-        
-    //      $selectedOrganization = Organization::where('organizationid', $selectedOrganizationId)->first();
-         
-    //      $selectedOrganizationName = $selectedOrganization ? $selectedOrganization->organization_name : '';
-         
-    //      $request->merge(['organization_name' => $selectedOrganizationName]);
-    //      $request->merge(['organizationid_FK' => $selectedOrganizationId]);
-         
-    //      if (!empty($input['password'])) {
-    //          $input['password'] = Hash::make($input['password']);
-    //      } 
-    //      $input = $request->except('permissions');
-        
-    //      $user = Professional::find($id);
-    
-         
-    //      $user->update($input);
-         
-         
+{ 
+
+    $organizationid = session('organizationid');
+    $organization = Organization::where('organizationid', $organizationid)->first();
+    $organizationname = $organization->organization_name;
+$professional_id = $request->input('professional_id');
+
+$user =Professional::where('professional_id', $professional_id)->first();
+
+    $this->validate($request, [
+        'current_image' => 'required|url',
+        'professional_name' => [
+            'string',
+            'max:255',
+        ],
+        'professional_email_address' => [
+            'email',
+            'max:255',
+            
+        ],
+        'password' => 'required|string|min:6|confirmed',
+        'professional_mobile_phone' => 'required|string|max:20',
+        'professional_gender' => 'required|in:Male,Female',
+        'username'=> 'required|string|max:255',
+        'professional_type_of_profession' => 'required|in:Nurse,Therapist,Dietitians,Certified Diabetes Educator,Examiner,Doctor,Administration Staff,Pharmacist,Person In Charge',
+        'professional_account_role'=>'required',
+        'permissions' => 'required',
+     ]);
+     $currentImageURL = $request->input('current_image');
      
-    //      $permissions = $request->input('permissions', []);
-    //      $user->permissions()->sync($permissions, []);
-    //      $roleName = $request->input('professional_account_role');
-    //      $role = Role::where('name', $roleName)->first();
-         
-    //      if ($role) {
-    //          $user->role_id = $role->id;
-    //          $user->save();
-             
-    //      }
-    //      DB::table('model_has_roles')->where('model_id', $id)->delete();
-    
+     $newImageFile = $request->file('new_image');
+     $basename = basename($currentImageURL);
+
+     if ($newImageFile) {
+        // Handle uploading a new image
+        $imagePath = $newImageFile->store('professional_image', 'public');
+        $user->professional_image = $imagePath;
+    } else {
        
-    //      return redirect()->route('myprofile')
-    //          ->with('success', 'User updated successfully');
-    //  }
-     
-    
-    
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    /*public function destroy($id): RedirectResponse
-    {
-        Professional::find($id)->delete();
-        return redirect()->route('all_user')
-                        ->with('successUser deleted successfully');
+        $user->professional_image = 'professional_image/' . $basename;
+        // No new image was uploaded; keep the current image URL
+       
+        
     }
-    */
+    // Update user information
+    $user->professional_name = $request->input('professional_name');
+    $user->professional_email_address = $request->input('professional_email_address');
+    $user->professional_mobile_phone = $request->input('professional_mobile_phone');
+
+   
+
+    // Update organization information
+
+
+
+    $user->organizationid_FK = $organizationid;
+    $user->organization_name = $organizationname;
+    $user->professional_gender = $request->input('professional_gender');
+    $user->username = $request->input('username');
+    $user->professional_type_of_profession = $request->input('professional_type_of_profession');
+    $user->temperature_unit = $request->input('temperature_unit');
+    $user->professional_account_role = $request->input('professional_account_role');
+
+    // Hash the password (if it's being updated)
+    if ($request->filled('password')) {
+        $user->password = Hash::make($request->input('password'));
+    }
+
+    // Assign role to the user
+    $roleName = $request->input('professional_account_role');
+    $role = Role::where('name', $roleName)->first();
+    if ($role) {
+        $user->role_id = $role->id;
+    }
+
+    $user->save();
+
+    // Sync user permissions
+    $permissions = $request->input('permissions', []);
+    $user->permissions()->sync($permissions);
+    DB::table('model_has_roles')->where('model_id', $professional_id)->delete();
+    $user->save();
+    return redirect()->route('myuserorg')->with('success', 'User updated successfully');
+
+}
+
+public function updateorgmyprofile(Request $request): RedirectResponse
+
+
+{ 
+
+    $organizationid = session('organizationid');
+    $organization = Organization::where('organizationid', $organizationid)->first();
+    $organizationname = $organization->organization_name;
+
+        $user = session('authenticated_user');
+        $professional_id = $user->professional_id;
+
+    $this->validate($request, [
+        'current_image' => 'required|url',
+        'professional_name' => [
+            'string',
+            'max:255',
+        ],
+        'professional_email_address' => [
+            'email',
+            'max:255',
+            
+        ],
+        'password' => 'required|string|min:6|confirmed',
+        'professional_mobile_phone' => 'required|string|max:20',
+        'professional_gender' => 'required|in:Male,Female',
+        'username'=> 'required|string|max:255',
+        'professional_type_of_profession' => 'required|in:Nurse,Therapist,Dietitians,Certified Diabetes Educator,Examiner,Doctor,Administration Staff,Pharmacist,Person In Charge',
+        'professional_account_role'=>'required',
+        'permissions' => 'required',
+     ]);
+     $currentImageURL = $request->input('current_image');
+     $newImageFile = $request->file('new_image');
+     if ($newImageFile) {
+        // Handle uploading a new image
+        $imagePath = $newImageFile->store('professional_image', 'public');
+        $user->professional_image = $imagePath;
+    } else {
+        $user->professional_image = 'professional_image/' . basename($currentImageURL);
+        // No new image was uploaded; keep the current image URL
+   
+    }
+    // Update user information
+    $user->professional_name = $request->input('professional_name');
+    $user->professional_email_address = $request->input('professional_email_address');
+    $user->professional_mobile_phone = $request->input('professional_mobile_phone');
+
+   
+
+    // Update organization information
+
+
+ 
+    $user->organizationid_FK = $organizationid;
+    $user->organization_name = $organizationname;
+    $user->professional_gender = $request->input('professional_gender');
+    $user->username = $request->input('username');
+    $user->professional_type_of_profession = $request->input('professional_type_of_profession');
+    $user->temperature_unit = $request->input('temperature_unit');
+    $user->professional_account_role = $request->input('professional_account_role');
+
+    // Hash the password (if it's being updated)
+    if ($request->filled('password')) {
+        $user->password = Hash::make($request->input('password'));
+    }
+
+    // Assign role to the user
+    $roleName = $request->input('professional_account_role');
+    $role = Role::where('name', $roleName)->first();
+    if ($role) {
+        $user->role_id = $role->id;
+    }
+
+    $user->save();
+
+    // Sync user permissions
+    $permissions = $request->input('permissions', []);
+    $user->permissions()->sync($permissions);
+    DB::table('model_has_roles')->where('model_id', $professional_id)->delete();
+    $user->save();
+    return redirect()->route('myprofileorgs')->with('success', 'User updated successfully');
+
+}
     
 
     public function practicegroupadd(Request $request): RedirectResponse
@@ -344,8 +507,9 @@ $user->permissions()->sync($permissions);
 
     return redirect()->route('practicegroup');
 }
-public function practicegroupaddorg(Request $request, $organization_id): RedirectResponse
+public function practicegroupaddorg(Request $request): RedirectResponse
 {
+    $organization_id = session('organizationid');
     $validatedData = $request->validate([
         'name' => 'required|string|max:255',
         'subTitle' => 'nullable|string|max:255',
@@ -357,6 +521,6 @@ public function practicegroupaddorg(Request $request, $organization_id): Redirec
     $newPracticeGroup->organizationid_FK = $organization_id; 
     $newPracticeGroup->save();
 
-    return redirect()->route('orgpracticegroup', ['organization_id' => $organization_id]);
+    return redirect()->route('orgpracticegroup');
 }
 }

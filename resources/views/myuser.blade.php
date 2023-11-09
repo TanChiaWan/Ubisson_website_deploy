@@ -92,7 +92,7 @@
                     <p>{{ $professionalss->professional_account_role }}</p>
                   </div>
                 </div>
-                <legend class="form-fieldset-title">Permissions</legend>
+              
 
                 <a href="{{ route('all_user') }}" class="btn btn-primary">Back</a>
             </form>

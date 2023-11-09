@@ -70,28 +70,74 @@ class MedicationController extends Controller
 public function saveMedication(Request $request)
 {
 
+
     // Validate the form data (you can add more validation rules)
     $request->validate([
-        'medication_id' => 'required|exists:medication,id',
-        'dosage' => 'required',
+        'medication_id' => 'required',
+        'medication-type' => 'required',
+        'dosage-unit' => 'required',
+        'dosage-times' => 'required',
         'taken' => 'required', // Add any other validation rules here
+        'taken_time' =>'required',
+        'timesaday' =>'required',
     ]);
 
     // Access the selected medication_id and brand_name
     $medicationId = $request->input('medication_id');
-    
-
+    $dosageTimes = $request->input('dosage-times');
+    $dosageUnit = $request->input('dosage-unit');
+    $dosage = "$dosageTimes $dosageUnit";
+ 
     // Create a new MedicationInDiagnosis record
     MedicationInDiagnosis::create([
         'medication_id' => $request->input('medication_id'),
         'diagnosis_id' => $request->input('diagnosis_id'),
-        'dosage' => $request->input('dosage'),
+        'dosage' => $dosage,
+        'taken_time' => $request->input('taken_time'),
         'taken' => $request->input('taken'),
+        'medicationtype' => $request->input('medication-type'),
+        'timesaday' => $request->input('timesaday'),
         // Add any other fields you want to save here
     ]);
 
     // Redirect back or to a specific page after saving
     return redirect()->route('medicationreport')->with('success', 'Medication added successfully');
+}
+public function saveMedicationorg(Request $request)
+{
+
+
+    // Validate the form data (you can add more validation rules)
+    $request->validate([
+        'medication_id' => 'required',
+        'medication-type' => 'required',
+        'dosage-unit' => 'required',
+        'dosage-times' => 'required',
+        'taken' => 'required', // Add any other validation rules here
+        'taken_time' =>'required',
+        'timesaday' =>'required',
+    ]);
+
+    // Access the selected medication_id and brand_name
+    $medicationId = $request->input('medication_id');
+    $dosageTimes = $request->input('dosage-times');
+    $dosageUnit = $request->input('dosage-unit');
+    $dosage = "$dosageTimes $dosageUnit";
+ 
+    // Create a new MedicationInDiagnosis record
+    MedicationInDiagnosis::create([
+        'medication_id' => $request->input('medication_id'),
+        'diagnosis_id' => $request->input('diagnosis_id'),
+        'dosage' => $dosage,
+        'taken_time' => $request->input('taken_time'),
+        'taken' => json_encode($request->input('taken')),
+        'medicationtype' => $request->input('medication-type'),
+        'timesaday' => $request->input('timesaday'),
+        // Add any other fields you want to save here
+    ]);
+
+    // Redirect back or to a specific page after saving
+    return redirect()->route('medicationreportorg')->with('success', 'Medication added successfully');
 }
 
 

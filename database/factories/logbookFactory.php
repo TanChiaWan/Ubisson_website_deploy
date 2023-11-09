@@ -43,12 +43,13 @@ class LogbookFactory extends Factory
             'bg_period' => $bgPeriods[0], // Set the first bg_period
             'bp_period' => $this->faker->randomElement(['Morning', 'Night']),
             'bg_logbook_date' => $bgLogbookDates[$bgPeriods[0]], // Use the same date for the first bg_period
-            'bg_level' => $this->faker->randomFloat(1, 2, 10), 
+            'bg_level' => $this->faker->randomFloat(1, 2, 20), 
             'carbohydrate' => $this->faker->numberBetween(20, 100),
             'rapid' => $this->faker->numberBetween(1.0, 10.0),
             'exercise' => $this->faker->numberBetween(20, 100),
             'image' => $this->faker->imageUrl(),
             'image_title' => $this->faker->sentence(5, true),
+         
 
         ];
     }

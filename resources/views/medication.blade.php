@@ -147,7 +147,23 @@
                 </div>
             </div>
             @endif
-                 
+            <div class="modal fade" id="confirmActivationModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm Action</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to proceed with this action?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirmActivation">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
                       
                   <form>
                     <!-- Allergy Information -->
@@ -547,35 +563,54 @@ const DATATABLES_URL = 'https://cdn.datatables.net/1.10.25/js/jquery.dataTables.
             const isActive = checkbox.dataset.active === '1';
             checkbox.checked = isActive;
 
-            checkbox.addEventListener('change', function() {
+            checkbox.addEventListener('click', function() {
                 const newActiveState = this.checked;
                 const diagnosisId = this.dataset.diagnosisId;
-                
-                // Send AJAX request to update the active status
-                fetch(`/update-diagnosis-active/${diagnosisId}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    body: JSON.stringify({ active: newActiveState })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        // Update the label text
-                        
-                        // Automatically refresh the page
-                        location.reload();
+                const confirmActivationModal = document.getElementById('confirmActivationModal');
+                const confirmActivationBtn = document.getElementById('confirmActivation');
+
+                // Add a click event listener to the Activate button
+               
+                    event.preventDefault(); // Prevent immediate toggling of the checkbox
+                    confirmActivationModal.dataset.diagnosisId = diagnosisId; // Store diagnosisId in the modal
+                    $('#confirmActivationModal').modal('show'); // Show the confirmation modal
+              
+
+                // Add a click event listener to the Confirm button in the modal
+                confirmActivationBtn.addEventListener('click', function() {
+                    const storedDiagnosisId = confirmActivationModal.dataset.diagnosisId;
+                    if (storedDiagnosisId === diagnosisId) {
+                        // Send AJAX request to update the active status
+                        fetch(`/update-diagnosis-active/${diagnosisId}`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            body: JSON.stringify({ active: newActiveState })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                // Update the label text
+                                // Automatically refresh the page
+                                location.reload();
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error updating active status:', error);
+                        });
                     }
-                })
-                .catch(error => {
-                    console.error('Error updating active status:', error);
+
+                    // Close the confirmation modal
+                    $('#confirmActivationModal').modal('hide');
                 });
             });
         });
     });
 </script>
+
+
 
 
 

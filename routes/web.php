@@ -38,16 +38,17 @@ Route::post('/login', [LoginController::class, 'login'])->name('login');
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-
+Route::any('/orghome', [TableController::class, 'indexorg'])->name('homeorg');
 Route::get('/all-organization', [TableController::class, 'index'])->name('all_organization');
 Route::get('/all_user', [TableController::class, 'index2'])->name('all_user');
+Route::any('/organization-all_user', [TableController::class, 'index2org'])->name('all_userorg');
 Route::get('/all_role', [TableController::class, 'index3'])->name('all_role');
 Route::get('/all_permission', [TableController::class, 'index4'])->name('all_permission');
 Route::get('/all_patient', [TableController::class, 'index5'])->name('all_patient');
-Route::get('/orgall_patients/{organization_id}', [TableController::class, 'index5org'])->name('orgall_patients');
+Route::get('/orgall_patients', [TableController::class, 'index5org'])->name('orgall_patients');
 
 Route::get('/all_patient2', [TableController::class, 'index6'])->name('all_patient2');
-Route::get('/orgall_patient2/{organization_id}', [TableController::class, 'index6org'])->name('orgall_patient2');
+Route::get('/orgall_patient2', [TableController::class, 'index6org'])->name('orgall_patient2');
 
 Route::get('/create_org', [TableController::class, 'index7'])->name('create_org');
 
@@ -60,9 +61,11 @@ Route::post('/orglogout', [LoginController::class, 'logout2'])->name('logout2');
 Route::get('organizations/{organizationid_FK}', [TableController::class, 'show'])->name('organizations.show');
 Route::post('create', [CreateController::class, 'insert'])->name('insert.create');
 Route::get('create_patient', [TableController::class, 'index11'])->name('create_patient');
+Route::get('/organization-create_patient', [TableController::class, 'index11org'])->name('create_patientorg');
 Route::post('create2', [CreateController::class, 'insert2'])->name('insert2.create');
+Route::post('/org-create-patient', [CreateController::class, 'insert2org'])->name('insert2.createorg');
 Route::post('/update/{patient_id}', [CreateController::class, 'update'])->name('update-patient');
-
+Route::post('/updateorg', [CreateController::class, 'updateorg'])->name('update-patientorg');
 
 
 
@@ -79,6 +82,26 @@ Route::post('/editpage', function (Request $request) {
 })->name('editpage');
 
 
+Route::post('/org-editpage', function (Request $request) {
+    // Retrieve the patient information based on the $patientId
+    if (session()->has('patient')) {
+        $patient = session('patient');
+        $patientId = $patient->patientId;
+    } else {
+        $patientId = session('patient_id');
+        $patient = App\Models\Patient::find($patientId);
+    }
+  
+        $professionalId = session('professional_id');
+        $organizationid = session('organization_id');
+    $organizations = Organization::all();
+    $user = session('authenticated_user');
+   $professional_id = $user->professional_id;
+ 
+
+    // Pass the patient information to the view
+    return view('/orgadminview/editpage', compact('patient','organizations','user'));
+})->name('editpageorg');
 Route::any('/aboutpatient',function (Request $request) {
     // Retrieve the patient information based on the $patientId
     $organizations = Organization::all();
@@ -86,12 +109,15 @@ Route::any('/aboutpatient',function (Request $request) {
     $professional_id = $request->input('professional_id');
     $patientId = $request->input('patient_id');
     $patient = App\Models\Patient::find($patientId);
+   
     $user = App\Models\Professional::find($professional_id);
     // Pass the patient information to the view
     return view('aboutpatient', compact('patient','organizations','user','chat_messages'));
 
 
 })->name('aboutpatient');
+
+
 
 Route::get('/aboutpatient_glucosetarget/{patientId}', function ($patientId) {
     // Retrieve the patient information based on the $patientId
@@ -112,30 +138,134 @@ Route::get('/aboutpatient_targetrange/{patientId}', function ($patientId) {
 
 
 })->name('edit_patient_target_range');
-Route::get('/patient/{patientId}/{organization_id}', function ($patientId, $organization_id) {
+
+Route::any('/org-aboutpatient_glucosetarget', function (Request $request) {
+    $user = session('authenticated_user');
+  
+    if (session()->has('patient')) {
+        $patient = session('patient');
+        $patientId = $patient->patient_id;
+    } else {
+        $patientId = session('patient_id');
+        $patient = App\Models\Patient::find($patientId);
+    }
     // Retrieve the patient information based on the $patientId
     $organizations = Organization::all();
-    $patient = App\Models\Patient::find($patientId);
-
+   
     // Pass the patient information to the view
-    return view('/orgadminview/aboutpatient', [
-        'patient' => $patient,
-        'organizations' => $organizations,
-        'organizationid' => $organization_id,
-    ]);
-})->name('patient');
+    return view('/orgadminview/edit_patient_glucose_target', compact('patient','organizations','user'));
 
 
-Route::get('/myuser/{professional_id}', function ($professional_id) {
+})->name('edit_patient_glucose_targetorg');
+
+Route::any('/org-aboutpatient_targetrange', function (Request $request) {
+    $user = session('authenticated_user');
+    if (session()->has('patient')) {
+        $patient = session('patient');
+        $patientId = $patient->patientId;
+    } else {
+        $patientId = session('patient_id');
+        $patient = App\Models\Patient::find($patientId);
+    }
+    // Retrieve the patient information based on the $patientId
+    $organizations = Organization::all();
+    // Pass the patient information to the view
+    return view('/orgadminview/edit_patient_target_range', compact('patient','organizations','user'));
+
+
+})->name('edit_patient_target_rangeorg');
+Route::any('organization/aboutpatient/', function (Request $request) {
+    // Retrieve the patient information based on the $patientId
+
+       
+    if (session()->has('patient')) {
+        $patient = session('patient');
+        $patientId = $patient->patientId;
+    } else {
+        $patientId = session('patient_id');
+        $patient = App\Models\Patient::find($patientId);
+    }
+  
+        $professionalId = session('professional_id');
+        $organizationid = session('organization_id');
+    $organizations = Organization::all();
+    $user = session('authenticated_user');
+   $professional_id = $user->professional_id;
+    $organizationid = $request->input('organization_id');
+
+    $organization_id = $request->input('organization_id');
+    session(['organization_id' => $organization_id]);
+    // Pass the patient information to the view
+    return view('/orgadminview/aboutpatient', compact(
+        'patient',
+        'user',
+        'organizations',
+        'organizationid',
+        'organization_id',
+        'patientId',
+        'professionalId'
+    ));
+    
+})->name('aboutpatientorg');
+
+
+ Route::get('/myuser/{professional_id}', function ($professional_id) {
+
+    $organizations = Organization::all();
+     $professionalss = App\Models\Professional::find($professional_id);
+     // Pass the patient information to the view
+    return view('myuser', compact('professionalss','organizations'));
+
+ })->name('myuser');
+Route::get('/org-myprofile', function () {
+    $user = session('authenticated_user'); // Replace with your method of getting the authenticated user
+    $professional_id = $user->professional_id;
     // Retrieve the patient information based on the $patientId
     $organizations = Organization::all();
     $professionalss = App\Models\Professional::find($professional_id);
     // Pass the patient information to the view
-    return view('myuser', compact('professionalss','organizations'));
+    return view('/orgadminview/myprofile', compact('professionalss','organizations','user'));
 
-})->name('myuser');
+})->name('myprofileorg');
+Route::any('/org-myuser', function (Request $request) {
+    $user = session('authenticated_user');
+    if ($request->has('professional_id')) {
+        $professional_id = $request->input('professional_id');
+        session(['professional_id' => $professional_id]);
+    }elseif (session()->has('professional_id')) {
+        $professional_id = session('professional_id');
+        session(['professional_id' => $professional_id]);
+        $user =  App\Models\Professional::where('professional_id', $professional_id)->first();
+    }else {
+        $user = session('authenticated_user');
+        $professional_id = $user->professional_id;
+    }
+ 
+    // Retrieve the patient information based on the $patientId
+    $organizations = Organization::all();
+    $professionalss = App\Models\Professional::find($professional_id);
+    // Pass the patient information to the view
+    return view('/orgadminview/myuser', compact('professionalss','organizations','user'));
 
+})->name('myuserorg');
 
+Route::any('/org-myprofile', function (Request $request) {
+   if (session()->has('professional_id')) {
+        $professional_id = session('professional_id');
+        session(['professional_id' => $professional_id]);
+        $user =  App\Models\Professional::where('professional_id', $professional_id)->first();
+    }else {
+        $user = session('authenticated_user');
+        $professional_id = $user->professional_id;
+    }
+ 
+    // Retrieve the patient information based on the $patientId
+    $organizations = Organization::all();
+    $professionalss = App\Models\Professional::find($professional_id);
+    // Pass the patient information to the view
+    return view('/orgadminview/myprofile', compact('professionalss','organizations'));
+
+})->name('myprofileorgs');
 Route::get('/editmyuser/{professionalid}', function ($professional_id) {
     // Retrieve the patient information based on the $patientId
     $organizations = Organization::pluck('organization_name')->all();
@@ -145,6 +275,56 @@ Route::get('/editmyuser/{professionalid}', function ($professional_id) {
     return view('users.editmyuser', compact('professionalss','roles','organizations'));
 
 })->name('editmyuser');
+Route::post('/org-editmyuser-update', [UserController::class, 'updateorg'])->name('updateuserorg');
+Route::post('/org-editmyuser-updatemyprofile', [UserController::class, 'updateorgmyprofile'])->name('updateorgmyprofile');
+Route::any('/org-editmyuser', function (Request $request) {
+    
+    if ($request->has('professional_id')) {
+        $professional_id = $request->input('professional_id');
+        $user = session('authenticated_user');
+    } elseif (session()->has('professional_id')) {
+        $user = session('authenticated_user');
+        $professional_id = $user->professional_id;
+    
+        $user = App\Models\Professional::where('professional_id', $professional_id)->first();
+        
+    }
+    $organizationid = session('organizationid');
+ 
+    // Retrieve the patient information based on the $patientId
+    $organizations = Organization::pluck('organization_name')->all();
+    $roles = Role::pluck('name', 'organizationid')->all();
+    $professionalss = App\Models\Professional::find($professional_id);
+  
+    // Pass the patient information to the view
+    return view('/orgadminview/editmyuser', compact('professionalss','roles','organizations','organizationid','user'));
+
+})->name('editmyuserorg');
+
+
+Route::any('/org-editmyprofile', function (Request $request) {
+    
+    if ($request->has('professional_id')) {
+        $professional_id = $request->input('professional_id');
+        $user = session('authenticated_user');
+    } elseif (session()->has('professional_id')) {
+        $user = session('authenticated_user');
+        $professional_id = $user->professional_id;
+    
+        $user = App\Models\Professional::where('professional_id', $professional_id)->first();
+        
+    }
+    $organizationid = session('organizationid');
+ 
+    // Retrieve the patient information based on the $patientId
+    $organizations = Organization::pluck('organization_name')->all();
+    $roles = Role::pluck('name', 'organizationid')->all();
+    $professionalss = App\Models\Professional::find($professional_id);
+  
+    // Pass the patient information to the view
+    return view('/orgadminview/editmyprofile', compact('professionalss','roles','organizations','organizationid','user'));
+
+})->name('editmyprofile');
 Route::post('/editmyuser/{id}/update', [UserController::class, 'update'])->name('updateuser');
 Route::get('/editrole/{id}', function ($id) {
     // Retrieve the patient information based on the $patientId
@@ -161,7 +341,7 @@ Route::post('editrole/{id}/update', [RoleController::class, 'update'])->name('up
 Route::get('/updateorganization/{organizationid}', function ($organizationid) {
     // Retrieve the patient information based on the $patientId
  
-    $organization = App\Models\Organization::find($organizationid);
+    $organization = App\Models\organization::find($organizationid);
     // Pass the patient information to the view
     return view('updateorganization', compact('organization'));
 })->name('updateorganization');
@@ -170,13 +350,14 @@ Route::get('/updateorganization/{organizationid}', function ($organizationid) {
 Route::get('/editorg/{organizationid}', function ($organizationid) {
     // Retrieve the patient information based on the $patientId
  
-    $organization = App\Models\Organization::find($organizationid);
+    $organization = App\Models\organization::find($organizationid);
     // Pass the patient information to the view
     return view('editorg', compact('organization'));
 })->name('editorg');
 Route::post('/editorg/{organizationid}', [CreateController::class, 'update2'])->name('update-org');
 
 Route::get('myorganization', [TableController::class, 'show'])->name('myorganization');
+Route::any('/org-myorganization', [TableController::class, 'showorg'])->name('myorganizationorg');
 Route::middleware(['auth'])->group(function () {
     Route::any('/myprofile', function () {
         // Retrieve the currently authenticated user
@@ -197,14 +378,15 @@ Route::get('loadRoles', [UserController::class, 'loadRoles'])->name('loadRoles')
 Route::get('loadPermissions', [UserController::class, 'loadPermissions'])->name('loadPermissions');
 Route::get('/hyper', [TableController::class, 'viewhyper'])->name('hyper');
 Route::get('/hypo', [TableController::class, 'viewhypo'])->name('hypo');
-
+Route::get('/org-hyper', [TableController::class, 'viewhyperorg'])->name('hyperorg');
+Route::get('/org-hypo', [TableController::class, 'viewhypoorg'])->name('hypoorg');
 Route::get('/hyperreport', [TableController::class, 'viewhyperreport'])->name('hyperreport');
 Route::get('/hyporeport', [TableController::class, 'viewhyporeport'])->name('hyporeport');
-
-
+Route::any('/org-create', [UserController::class, 'createorg'])->name('createuser');
+Route::any('/org-createuser', [UserController::class, 'storeuserorg'])->name('storeuserorg');
 Route::post('/logbookbg', function (Request $request) {
     // Retrieve the patient information based on the $patientId
-    $logbook = App\Models\Logbook::all();
+    $logbook = App\Models\logbook::all();
     $professional_id = $request->input('professional_id');
     $patientId = $request->input('patient_id');
     $patient = App\Models\Patient::find($patientId);
@@ -216,7 +398,7 @@ Route::post('/logbookbg', function (Request $request) {
 
 Route::post('/logbook_bg2',  function (Request $request) {
     // Retrieve the patient information based on the $patientId
-    $logbook = App\Models\Logbook::all();
+    $logbook = App\Models\logbook::all();
     $professional_id = $request->input('professional_id');
     $patientId = $request->input('patient_id');
     $patient = App\Models\Patient::find($patientId);
@@ -224,10 +406,40 @@ Route::post('/logbook_bg2',  function (Request $request) {
     // Pass the patient information to the view
     return view('logbook_bg2', compact('patient','logbook','user'));
 })->name('logbook_bg2');
+Route::any('/organization/logbook_bg2', function (Request $request) {
+    // Retrieve the patient information based on the $patientId
+    $logbook = App\Models\logbook::all();
+    if (session()->has('patient')) {
+        $patient = session('patient');
+        $patientId = $patient->patient_id;
+        $organization_id = session('organizationid');
+    } elseif (session()->has('patient_id')){
+        $patientId = session('patient_id');
+        $patient = App\Models\Patient::find($patientId);
+        $organization_id = session('organizationid');
+    }
+    $user = session('authenticated_user');
+    $professional_id = $user->professional_id;
+
+    // Additional code
+    $organizations = App\Models\Organization::all();
+
+
+    // Pass the patient information, logbook, and other data to the view
+    return view('/orgadminview/logbook_bg2', [
+        'patient' => $patient,
+        'logbook' => $logbook,
+        'user' => $user,
+        'organizations' => $organizations,
+        'organization_id' => $organization_id,
+        'patientId' => $patientId,
+        'professional_id' => $professional_id,
+    ]);
+})->name('logbook_bg2org');
 
 Route::post('/logbookbp', function (Request $request) {
     // Retrieve the patient information based on the $patientId
-    $logbook = App\Models\Logbook::all();
+    $logbook = App\Models\logbook::all();
     $professional_id = $request->input('professional_id');
     $patientId = $request->input('patient_id');
     $patient = App\Models\Patient::find($patientId);
@@ -236,11 +448,77 @@ Route::post('/logbookbp', function (Request $request) {
     return view('logbook_bp', compact('patient','logbook','user'));
 })->name('logbook_bp');
 
+
+
+
+Route::any('/organization/healthdata', function (Request $request) {
+    $healthdata = App\Models\healthdata::all();
+
+    if (session('patient') !== null) {
+        $patient = session('patient');
+        $patientId = $patient->patient_id;
+        $organization_id = session('organizationid');
+        
+    } elseif (session('patient_id') !== null){
+        $patientId = session('patient_id');
+        $patient = App\Models\Patient::find($patientId);
+        $organization_id = session('organizationid');
+    }
+    $user = session('authenticated_user');
+    $professional_id = $user->professional_id;
+    // Additional code
+    $organizations = App\Models\Organization::all();
+    $organizationid = session('organization_id');
+    $singleHealthData = App\Models\healthdata::where('patient_id_FK', $patientId)->first();
+
+    return view('/orgadminview/healthdata', compact(
+        'patient',
+        'user',
+        'organizations',
+        'organizationid',
+        'patientId',
+        'singleHealthData',
+        'healthdata',
+        'professional_id',
+        'patientId'
+    ));
+})->name('healthdataorg');
+Route::any('/organization/addhealthdata', function (Request $request) {
+    $healthdata = App\Models\healthdata::all();
+  
+    if (session('patient') !== null) {
+        $patient = session('patient');
+        $patientId = $patient->patient_id;
+        $organization_id = session('organizationid');
+        
+    } elseif (session('patient_id') !== null){
+        $patientId = session('patient_id');
+        $patient = App\Models\Patient::find($patientId);
+        $organization_id = session('organizationid');
+    }
+    
+    $organizations = App\Models\Organization::all();
+    $user = session('authenticated_user');
+    $professional_id = $user->professional_id;
+    $singleHealthData = App\Models\healthdata::where('patient_id_FK', $patientId)->first();
+    return view('/orgadminview/addhealthdata', [
+        'patient' => $patient,
+        'user' => $user,
+        'organizations' => $organizations,
+        'organizationid' => $organization_id,
+        'patientId' => $patientId,
+       'singleHealthData' => $singleHealthData,
+        'healthdata' => $healthdata,
+        'professional_id' => $professional_id,
+    ]);
+})->name('addhealthdataorg');
 Route::any('/healthdata', function (Request $request) {
     $healthdata = App\Models\healthdata::all();
     if ($request->has('professional_id') && $request->has('patient_id')) {
         $professional_id = $request->input('professional_id');
         $patientId = $request->input('patient_id');
+        session(['patient_id' => $patientId]);
+        session(['professional_id' => $professional_id]);
     } else {
         $patientId = session('patient_id');
         $professional_id = session('professional_id');
@@ -257,6 +535,8 @@ Route::POST('/addhealthdata', function (Request $request) {
     if ($request->has('professional_id') && $request->has('patient_id')) {
         $professional_id = $request->input('professional_id');
         $patientId = $request->input('patient_id');
+        session(['patient_id' => $patientId]);
+        session(['professional_id' => $professional_id]);
     } else {
         $patientId = session('patient_id');
         $professional_id = session('professional_id');
@@ -267,6 +547,8 @@ Route::POST('/addhealthdata', function (Request $request) {
     $singleHealthData = App\Models\healthdata::where('patient_id_FK', $patientId)->first();
     return view('addhealthdata', compact('patient', 'healthdata', 'singleHealthData','user'));
 })->name('addhealthdata');
+
+
 Route::delete('/healthdata/{healthdata_id}', [HealthDataController::class, 'delete'])->name('deleteHealthData');
 
 Route::POST('/edithealthdata/{healthdata_id}', function (Request $request, $healthdata_id) {
@@ -284,67 +566,190 @@ Route::POST('/edithealthdata/{healthdata_id}', function (Request $request, $heal
 
     return view('edithealthdata', compact('patient', 'healthdata', 'singleHealthData','user','healthdata_id'));
 })->name('edithealthdata');
+Route::any('/org-edithealthdata', function (Request $request) {
+    $healthdata = App\Models\healthdata::all();
+ 
+    $healthdata_id = $request->input('healthdata_id');
+    if (session('patient') !== null) {
+        $patient = session('patient');
+        $patientId = $patient->patient_id;
+        $organization_id = session('organizationid');
+        
+    } elseif (session('patient_id') !== null){
+        $patientId = session('patient_id');
+        $patient = App\Models\Patient::find($patientId);
+      
+        $organization_id = session('organizationid');
+    }
+  $user = session('authenticated_user');
+  $organizationid = session('organizationid');
+    $singleHealthData = App\Models\healthdata::where('patient_id_FK', $patientId)
+    ->where('healthdata_id', $healthdata_id)
+    ->first();
+
+    return view('/orgadminview/edithealthdata', compact('patient', 'healthdata', 'singleHealthData','user','healthdata_id','organizationid'));
+})->name('edithealthdataorg');
 
 
+Route::any('organization/logbookbg', function (Request $request) {
 
-Route::get('/logbookbg/{patientId}/{organizationid}', function ($patientId,$organizationid) {
+    
+    if (session()->has('patient')) {
+        $patient = session('patient');
+        $patientId = $patient->patient_id;
+        $organization_id = session('organizationid');
+    } elseif (session()->has('patient_id')){
+        $patientId = session('patient_id');
+        $patient = App\Models\Patient::find($patientId);
+        $organization_id = session('organizationid');
+    }
+    $user = session('authenticated_user');
+    $professional_id = $user->professional_id;
     // Retrieve the patient information based on the $patientId
     $logbook = App\Models\logbook::all();
-    $patient = App\Models\patient::find($patientId);
+  
     // Pass the patient information to the view
-    return view('/orgadminview/logbook_bg', ['patient'=>$patient,'organizationid'=>$organizationid,'logbook'=>$logbook]);
+    return view('/orgadminview/logbook_bg', ['patient'=>$patient,'logbook'=>$logbook,
+    'organization_id' => $organization_id,
+    'user' => $user,
+'professional_id' => $professional_id,
+]);
 })->name('logbook_bgorg');
 
-Route::get('/logbookbp/{patientId}/{organizationid}', function ($patientId,$organizationid) {
+Route::any('organization/logbookbp', function (Request $request) {
+
+    
+    if (session()->has('patient')) {
+        $patient = session('patient');
+        $patientId = $patient->patient_id;
+        $organization_id = session('organizationid');
+    } elseif (session()->has('patient_id')){
+        $patientId = session('patient_id');
+        $patient = App\Models\Patient::find($patientId);
+        $organization_id = session('organizationid');
+    }
+    $user = session('authenticated_user');
+    $professional_id = $user->professional_id;
+
     // Retrieve the patient information based on the $patientId
     $logbook = App\Models\logbook::all();
-    $patient = App\Models\patient::find($patientId);
+  
     // Pass the patient information to the view
-    return view('/orgadminview/logbook_bp', ['patient'=>$patient,'organizationid'=>$organizationid,'logbook'=>$logbook]);
+    return view('/orgadminview/logbook_bp', ['patient'=>$patient,'patientId' => $patientId,
+    'organization_id' => $organization_id,
+    'logbook' => $logbook,
+    'user' => $user,
+'professional_id' => $professional_id]);
 })->name('logbook_bporg');
 
-Route::get('/healthdata/{patientId}/{organizationid}', function ($patientId,$organizationid) {
-    // Retrieve the patient information based on the $patientId
-    $healthdata = App\Models\healthdata::all();
-    $patient = App\Models\patient::find($patientId);
-    // Pass the patient information to the view
-    return view('/orgadminview/healthdata', ['patient'=>$patient,'healthdata'=>$healthdata,'organizationid'=>$organizationid]);
-})->name('healthdataorg');
 
-
-Route::get('/dashboard_bg/{patientId}/{organizationid}', function ($patientId,$organizationid) {
+Route::any('organization/dashboard_bg', function (Request $request) {
     // Retrieve the patient information based on the $patientId
 
-    $patient = App\Models\patient::find($patientId);
+    if (session('patient') !== null) {
+        $patient = session('patient');
+        $patientId = $patient->patient_id;
+        $organization_id = session('organizationid');
+    } elseif (session('patient_id') !== null){
+        $patientId = session('patient_id');
+        $patient = App\Models\Patient::find($patientId);
+        $organization_id = session('organizationid');
+    }
+    $user = session('authenticated_user');
+    $professional_id = $user->professional_id;
+
+    $logbook = App\Models\logbook::where('patient_id_FK', $patientId)->get();
+    // Retrieve the patient information based on the $patientId
+    $healthdata = App\Models\healthdata::where('patient_id_FK', $patientId)->get();
+
     // Pass the patient information to the view
-    return view('/orgadminview/dashboard_bg', ['patient'=>$patient,'organizationid'=>$organizationid]);
+    return view('/orgadminview/dashboard_bg', compact('patient', 'organization_id', 'user', 'healthdata', 'logbook'));
+
 })->name('dashboard_bgorg');
 
-Route::get('/dashboard_bp/{patientId}/{organizationid}', function ($patientId,$organizationid) {
+Route::any('organization/dashboard_bp', function (Request $request) {
     // Retrieve the patient information based on the $patientId
-    
-    $patient = App\Models\patient::find($patientId);
+
+
+    if (session('patient') !== null) {
+        $patient = session('patient');
+        $patientId = $patient->patient_id;
+        $organization_id = session('organizationid');
+        
+    } elseif (session('patient_id') !== null){
+        $patientId = session('patient_id');
+        $patient = App\Models\Patient::find($patientId);
+        $organization_id = session('organizationid');
+    }
+    $user = session('authenticated_user');
+    $professional_id = $user->professional_id;
+  
+
+    $logbook = App\Models\logbook::where('patient_id_FK', $patientId)->get();
+    // Retrieve the patient information based on the $patientId
+    $healthdata = App\Models\healthdata::where('patient_id_FK', $patientId)->get();    
+ 
     // Pass the patient information to the view
-    return view('/orgadminview/dashboard_bp', ['patient'=>$patient,'organizationid'=>$organizationid]);
+    return view('/orgadminview/dashboard_bp', ['patient'=>$patient,
+    'organization_id' => $organization_id,
+    
+    'user' => $user,
+    'healthdata' => $healthdata,'logbook' => $logbook]);
 })->name('dashboard_bporg');
-
-Route::get('/dashboard_cho/{patientId}/{organizationid}', function ($patientId,$organizationid) {
+Route::any('organization/dashboard_cho', function (Request $request) {
     // Retrieve the patient information based on the $patientId
-   
-    $patient = App\Models\patient::find($patientId);
-    // Pass the patient information to the view
-    return view('/orgadminview/dashboard_cholesterol', ['patient'=>$patient,'organizationid'=>$organizationid]);
-})->name('dashboard_choorg');
+    if (session('patient') !== null) {
+        $patient = session('patient');
+        $patientId = $patient->patient_id;
+        $organization_id = session('organizationid');
+        
+    } elseif (session('patient_id') !== null){
+        $patientId = session('patient_id');
+        $patient = App\Models\Patient::find($patientId);
+        $organization_id = session('organizationid');
+    }
+    $user = session('authenticated_user');
+    $professional_id = $user->professional_id;
+  
 
-Route::match(['get', 'post'], '/dashboard_generals', function () {
+    $logbook = App\Models\logbook::where('patient_id_FK', $patientId)->get();
     // Retrieve the patient information based on the $patientId
-
-    $patientId = request()->query('patientId');
-    $organizationid = request()->query('organizationid');
-    $professional_id = request()->query('professional_id');
+    $healthdata = App\Models\healthdata::where('patient_id_FK', $patientId)->get();
     
-    $patient = App\Models\Patient::find($patientId);
-    $user = App\Models\Professional::find($professional_id);
+
+    // Pass the patient information to the view
+    return view('/orgadminview/dashboard_cholesterol', ['patient'=>$patient,
+    'organization_id' => $organization_id,
+    'user' => $user,
+    'healthdata' => $healthdata,'logbook' => $logbook]);
+})->name('dashboard_choorg');
+Route::match(['get', 'post'], '/dashboard_generals', function (Request $request) {
+    // Retrieve the patient information based on the $patientId
+    if ($request->has('patient_id')) {
+        $patientId = $request->input('patient_id');
+        $professional_id = $request->input('professional_id');
+        $organizationid = $request->input('organization_id');
+        $organization_id = $request->input('organization_id');
+        $patient = App\Models\Patient::find($patientId);
+        session(['patient_id' => $patientId]);
+        session(['professional_id' => $professional_id]);
+        session(['organization_id' => $organizationid]);
+        session(['organization_id' => $organization_id]);
+        session(['patient' => $patient]);
+    } elseif (session('patient_id') !== null) {
+        $patientId = session('patient_id');
+        $patient = App\Models\Patient::find($patientId);
+        $organization_id = session('organizationid');
+    } else if (session('patient') !== null) {
+        $patient = session('patient');
+        $patientId = $patient->patient_id;
+        $organization_id = session('organizationid');
+    }
+
+    $user = session('authenticated_user');
+    $professional_id = $user->professional_id;
+   
+   
     $chat_messages = App\Models\ChatMessage::all();
     $healthdata = App\Models\healthdata::where('patient_id_FK', $patientId)->get();
     function calculateBMI($weight, $height)
@@ -396,7 +801,7 @@ $secondlatestweight = App\Models\healthdata::where('patient_id_FK', $patientId)
     ->value('weight');
 
     
-
+    
 $latestHeight = App\Models\healthdata::where('patient_id_FK', $patientId)
     ->orderByDesc('date')
     ->value('height');
@@ -414,21 +819,22 @@ $secondLatestHeight = App\Models\healthdata::where('patient_id_FK', $patientId)
 
 $secondLatestBMI = calculateBMI($secondlatestweight, $secondLatestHeight);
     // Pass the patient information to the view
-    return view('/orgadminview/dashboard_general', [
-        'patient' => $patient,
-        'organizationid' => $organizationid,
-        'user' => $user,
-        'healthdata' => $healthdata,
-        'chat_messages' => $chat_messages,
-        'latestweight' => $latestweight, 
-        'secondlatestweight' => $secondlatestweight,
-        'secondLatestBMI' => $secondLatestBMI,
-        'latestBMI'=> $latestBMI,
-        'secondlatestcarbon' => $secondlatestcarbon,
-        'latestcarbon' => $latestcarbon,
-        'secondlatestactivity' => $secondlatestactivity,
-        'latestactivity' => $latestactivity,
-    ]);
+    return view('/orgadminview/dashboard_general', compact(
+        'patient',
+        'organization_id',
+        'user',
+        'healthdata',
+        'chat_messages',
+        'latestweight',
+        'secondlatestweight',
+        'secondLatestBMI',
+        'latestBMI',
+        'secondlatestcarbon',
+        'latestcarbon',
+        'secondlatestactivity',
+        'latestactivity'
+    ));
+    
 })->name('dashboard_generalorg');
 
 
@@ -509,6 +915,7 @@ $secondLatestBMI = calculateBMI($secondlatestweight, $secondLatestHeight);
     return view('dashboard_general', [
         'patient' => $patient,
         'user' => $user,
+      
         'healthdata' => $healthdata,
         'chat_messages' => $chat_messages,
         'latestweight' => $latestweight, 
@@ -521,7 +928,7 @@ $secondLatestBMI = calculateBMI($secondlatestweight, $secondLatestHeight);
         'latestactivity' => $latestactivity,
     ]);
 })->name('dashboard_general');
-Route::any('/dashboard_generals', function (Request $request) {
+Route::any('/dashboard_generalss', function (Request $request) {
     // Retrieve the patient information based on the $patientId
     $professional_id = $request->input('professional_id');
     $patientId = $request->input('patient_id');
@@ -616,7 +1023,7 @@ Route::any('/dashboard_bg', function (Request $request) {
     $patientId = $request->input('patient_id');
     $patient = App\Models\Patient::find($patientId);
     $user = App\Models\Professional::find($professional_id);
-    $logbook = App\Models\Logbook::where('patient_id_FK', $patientId)->get();
+    $logbook = App\Models\logbook::where('patient_id_FK', $patientId)->get();
     // Retrieve the patient information based on the $patientId
     $healthdata = App\Models\healthdata::where('patient_id_FK', $patientId)->get();
    
@@ -659,14 +1066,15 @@ Route::POST('/dashboard_cho', function (Request $request) {
 Route::get('/createpermission', [TableController::class, 'index14'])->name('createpermission');
 Route::post('create3', [CreateController::class, 'insert3'])->name('insert3.create3');
 Route::post('/healthdata/{patient_id}', [CreateController::class, 'inserthealthdata'])->name('create.healthdata');
+Route::post('/organization/healthdatas/{patient_id}', [CreateController::class, 'inserthealthdataorg'])->name('create.healthdataorg');
 Route::post('/healthdata-update/{patient_id}-{healthdata_id}', [CreateController::class, 'updatehealthdata'])->name('update-healthdata');
-
+Route::post('/org-healthdata-update', [CreateController::class, 'updatehealthdataorgs'])->name('update-healthdataorg');
 Route::get('prac3', [TableController::class, 'index17'])->name('prac3');
 Route::get('/prac4/{practice_group_id}', function ($practice_group_id) {
     // Retrieve the patient information based on the $patientId
     $professionalingroup = App\Models\professionalingroup::all();
     $practicegroup = App\Models\PracticeGroup::find($practice_group_id);
-    $professional = App\Models\Professional::all();
+    $professional = App\Models\professional::all();
  // Pass the patient information to the view
  return view('practice_group_add_professional', compact('practicegroup','professional','professionalingroup'));
 
@@ -684,14 +1092,17 @@ Route::get('/prac5/{practice_group_id}', function ($practice_group_id) {
 
 
 })->name('prac5');
-Route::get('/addpracticegroup/{organization_id}', [TableController::class, 'practice'])->name('practice');
-Route::get('/professionalingroupadd/{practice_group_id}-{organization_id}', function ($practice_group_id,$organization_id) {
+Route::get('/addpracticegroup', [TableController::class, 'practice'])->name('practice');
+Route::post('/professionalingroupadd/{practice_group_id}', function ($practice_group_id) {
+    $organization_id = session('organizationid');
+    $user = session('authenticated_user');
     // Retrieve the patient information based on the $patientId
     $professionalingroup = App\Models\professionalingroup::all();
     $practicegroup = App\Models\PracticeGroup::find($practice_group_id);
     $professional = App\Models\Professional::where('organizationid_FK', $organization_id)->get();
  // Pass the patient information to the view
  return view('/orgadminview/practice_group_add_professional', [
+    'user' => $user,
     'practicegroup' => $practicegroup,
     'professional' => $professional,
     'professionalingroup' => $professionalingroup,
@@ -702,17 +1113,21 @@ Route::get('/professionalingroupadd/{practice_group_id}-{organization_id}', func
 })->name('orgprac4');
 
 
-Route::get('/patientingroupadd/{practice_group_id}-{organization_id}', function ($practice_group_id,$organization_id) {
+Route::post('/patientingroupadd/{practice_group_id}', function ($practice_group_id) {
     // Retrieve the patient information based on the $patientId
+    $organization_id = session('organizationid');
+    $user = session('authenticated_user');
+
     $practicegroup = App\Models\PracticeGroup::find($practice_group_id);
     $patient = App\Models\Patient::where('organizationid_FK', $organization_id)->get();;
     $patientingroup = App\Models\patientingroup::all();
     
     return view('/orgadminview/practice_group_add_patient',[
+        'user'=>$user,
         'patient' => $patient,
         'practicegroup' => $practicegroup,
         'patientingroup' => $patientingroup,
-        'organizationid' => $organization_id]
+        ]
     );
 
 
@@ -745,14 +1160,14 @@ Route::post('/redirect-to-previous', function () {
 
 Route::get('/practicegroup', [TableController::class, 'practicegroup'])->name('practicegroup');
 Route::post('/createpracticegroup', [UserController::class, 'practicegroupadd'])->name('insert4.createpracticegroup');
-Route::post('/createpracticegrouporg/{organization_id}', [UserController::class, 'practicegroupaddorg'])->name('orginsert4.createpracticegroup');
-Route::get('/praticegroupdetail/{practice_group_id}', function ($practice_group_id) {
+Route::post('/createpracticegrouporg', [UserController::class, 'practicegroupaddorg'])->name('orginsert4.createpracticegroup');
+Route::any('/praticegroupdetail/{practice_group_id}', function ($practice_group_id) {
     // Retrieve the patient information based on the $patientId
    
     $practicegroup = App\Models\PracticeGroup::find($practice_group_id);
     $patientingroup = App\Models\patientingroup::all();
     $patient = App\Models\Patient::all();
-    $logbook = App\Models\Logbook::all();
+    $logbook = App\Models\logbook::all();
     // Pass the patient information to the view
     $user = auth()->user();
     return view('practice_group_detail', [
@@ -769,26 +1184,29 @@ Route::get('/praticegroupdetail/{practice_group_id}', function ($practice_group_
 Route::post('/practicegroupdetailadd/{practice_group_id}', [TableController::class, 'addPatientInGroup'])->name('practice_group_detailadd');
 Route::post('/practicegroupdetailadd2/{practice_group_id}', [TableController::class, 'addProfessionalInGroup'])->name('practice_group_detailadd2');
 Route::get('/practicegroupdetaildelete/{practice_group_id}', [TableController::class, 'deletePracticeGroup'])->name('practice_group_detaildelete');
+
 Route::get('/export/{practice_group_id}', [TableController::class, 'export'])->name('export');
 Route::get('/exports/{patientId}', [TableController::class, 'exports'])->name('exports');
 Route::post('/deletes', [TableController::class, 'deletehealthdata'])->name('deletes');
+Route::post('/org-deletes', [TableController::class, 'deletehealthdataorg'])->name('deletesorg');
 Route::get('/deletemedication/{medicationId}', [TableController::class, 'deletemedication'])->name('deletemedication');
-Route::get('/14.167.2.15/organization/{organizationId}', [LoginController::class, 'ipaddress'])
+Route::get('/organization/{organizationId}', [LoginController::class, 'ipaddress'])
     ->where('organizationId', '[0-9]+')
-    ->middleware(['redirect.organization']) // Use the middleware here
     ->name('custom.login');
-Route::post('/orglogin/{organizationId}', [LoginController::class, 'orglogin'])->name('orglogin');
+Route::any('/orghome{organizationId}', [LoginController::class, 'orglogin'])->name('orglogin');
 
-Route::get('/orgpracticegroup/{organization_id}', [TableController::class, 'orgpracticegroup'])->name('orgpracticegroup');
+Route::get('/orgpracticegroup', [TableController::class, 'orgpracticegroup'])->name('orgpracticegroup');
 
 
-Route::get('/praticegroupdetails/{practice_group_id}-{organization_id}', function ($practice_group_id,$organization_id) {
+Route::any('/praticegroupdetails/{practice_group_id}', function (Request $request, $practice_group_id) {
     // Retrieve the patient information based on the $patientId
-   
+    $organizationid = session('organizationid');
+
     $practicegroup = App\Models\PracticeGroup::find($practice_group_id);
 
     $user = session('authenticated_user');
-    $patientingroup = App\Models\patientingroup::all();
+    
+    $patientingroup = App\Models\patientingroup::where('group_id', $practice_group_id)->get();
     $patient = App\Models\Patient::all();
     $logbook = App\Models\logbook::all();
     // Pass the patient information to the view
@@ -799,28 +1217,33 @@ Route::get('/praticegroupdetails/{practice_group_id}-{organization_id}', functio
         'patientingroup' => $patientingroup,
         'logbook' => $logbook,
         'patient' => $patient,
-        'organizationid' => $organization_id,
+        'organizationid' => $organizationid
     ]);
 
 })->name('orgpractice_group_detail');
 
 Route::post('/update_logbook/{logbook_id}', [LogbookController::class, 'updateLogbook'])->name('update.logbook');
-Route::post('/practicegroupdetailadd/{practice_group_id}/{organization_id}', [TableController::class, 'orgaddPatientInGroup'])->name('orgpractice_group_detailadd');
+Route::post('/practicegroupdetailadd/{practice_group_id}', [TableController::class, 'orgaddPatientInGroup'])->name('orgpractice_group_detailadd');
 Route::post('/practicegroupdetailadd2/{practice_group_id}/{organization_id}', [TableController::class, 'orgaddProfessionalInGroup'])->name('orgpractice_group_detailadd2');
 Route::get('/practicegroupdetaildelete/{practice_group_id}/{organization_id}', [TableController::class, 'orgdeletePracticeGroup'])->name('orgpractice_group_detaildelete');
 Route::get('/download_template', [TableController::class, 'downloadTemplate'])->name('download_template');
-
-Route::get('/export/{practice_group_id}/{organization_id}', [TableController::class, 'exportorg'])->name('exportorg');
+Route::get('/download_templateuser', [TableController::class, 'downloadTemplateorg'])->name('download_templateuser');
+Route::any('/org-export', [TableController::class, 'exportorg'])->name('exportorg');
 Route::get('/importform', [TableController::class, 'showForm'])->name('import.form');
 Route::post('/import', [TableController::class, 'import'])->name('import');
+Route::post('/importuser', [TableController::class, 'importuser'])->name('importuser');
 Route::post('/import_medication', [TableController::class, 'import_medication'])->name('import_medication');
 Route::post('/{patient_id}/updateglucosetarget', [CreateController::class, 'updateglucosetarget'])->name('healthdata.update');
 Route::post('/{patient_id}/updatetargetrange', [CreateController::class, 'updatetargetrange'])->name('healthdata.update2');
+Route::any('/org-updateglucosetarget', [CreateController::class, 'updateglucosetargetorg'])->name('healthdata.updateorg');
+Route::any('/org-updatetargetrange', [CreateController::class, 'updatetargetrangeorg'])->name('healthdata.update2org');
 Route::post('/send-message/{patient_id}', [ChatController::class, 'sendMessage'])->name('sendMessage');
 Route::any('/remark',function (Request $request) {
     if ($request->has('professional_id') && $request->has('patient_id')) {
         $professional_id = $request->input('professional_id');
         $patientId = $request->input('patient_id');
+        session(['patient_id' => $patientId]);
+        session(['professional_id' => $professional_id]);
     } else {
         $patientId = session('patient_id');
         $professional_id = session('professional_id');
@@ -839,11 +1262,55 @@ Route::any('/remark',function (Request $request) {
 
 
 })->name('remark');
+Route::any('/organization-remark',function (Request $request) {
+
+        
+    if (session()->has('patient')) {
+        $patient = session('patient');
+        $patientId = $patient->patient_id;
+    } else {
+        $patientId = session('patient_id');
+        $patient = App\Models\Patient::find($patientId);
+    }
+
+$user = session('authenticated_user');
+$professionalId = $user->professional_id;
+    $organizationid = session('organization_id');
+    
+  
+ 
+    // Retrieve the patient information based on the $patientId
+    $organizations = Organization::all();
+    $chat_messages = App\Models\ChatMessage::all();
+    $user = App\Models\Professional::find($professionalId);
+    $remark = App\Models\Remark::where('patient_id_FK', $patientId)->get();
+    $professional = App\Models\Professional::all();
+
+    // Pass the patient information to the view
+    return view('/orgadminview/remark', compact(
+        'patientId',
+        'professionalId',
+        
+        'organizationid',
+      
+        'patient',
+        'user',
+        'organizations',
+        'chat_messages',
+        'remark',
+        'professional'
+    ));
+    
+
+
+})->name('remarkorg');
 
 Route::any('/medication',function (Request $request) {
     if ($request->has('professional_id') && $request->has('patient_id')) {
         $professional_id = $request->input('professional_id');
         $patientId = $request->input('patient_id');
+        session(['patient_id' => $patientId]);
+        session(['professional_id' => $professional_id]);
     } else {
         $patientId = session('patient_id');
         $professional_id = session('professional_id');
@@ -867,12 +1334,74 @@ Route::any('/medication',function (Request $request) {
 
 })->name('medicationreport');
 
+Route::any('/organizations-medication', function (Request $request) {
+
+if (session()->has('patient')) {
+    $patient = session('patient');
+    $patientId = $patient->patient_id;
+} else {
+    $patientId = session('patient_id');
+    $patient = App\Models\Patient::find($patientId);
+}
+
+$user = session('authenticated_user');
+$professionalId = $user->professional_id;
+
+    $organizationid = session('organizationid');
+  
+
+
+
+  
+   
+    $organizations = Organization::all();
+    $chat_messages = App\Models\ChatMessage::all();
+    $medication = App\Models\Medication::inRandomOrder()->first();
+    $singleDiagnosis = $request->input('diagnosisid');
+    
+
+    $diagnosis = \App\Models\Diagnosis::where('patient_id_FK', $patientId)
+    ->where('diagnosis_id', $singleDiagnosis)
+    ->first();
+    $medicationindiagnosis = App\Models\MedicationInDiagnosis::all();
+    $professional =App\Models\Professional::all();
+    $allergy = App\Models\Allergy::where('patient_id_FK', $patientId)->get();
+    $singleallergy =App\Models\Allergy::where('patient_id_FK', $patientId)->first();
+    $diagnosis = App\Models\Diagnosis::where('patient_id_FK', $patientId)->get();
+
+    return view('/orgadminview/medication', compact(
+        'patient',
+        'medication',
+        'organizations',
+        'user',
+        'patientId',
+        'professionalId',
+        'organizationid',
+       
+        'chat_messages',
+        'professional',
+        'allergy',
+        'diagnosis',
+        'singleallergy',
+        'medicationindiagnosis'
+    ));
+    
+})->name('medicationreportorg');
+
+
 Route::post('/addallergy',function (Request $request) {
     // Retrieve the patient information based on the $patientId
     $organizations = Organization::all();
     $chat_messages = App\Models\ChatMessage::all();
-    $professional_id = $request->input('professional_id');
-    $patientId = $request->input('patient_id');
+    if ($request->has('professional_id') && $request->has('patient_id')) {
+        $professional_id = $request->input('professional_id');
+        $patientId = $request->input('patient_id');
+        session(['patient_id' => $patientId]);
+        session(['professional_id' => $professional_id]);
+    } else {
+        $patientId = session('patient_id');
+        $professional_id = session('professional_id');
+    }
     $patient = App\Models\Patient::find($patientId);
     $user = App\Models\Professional::find($professional_id);
     $remark = App\Models\Remark::where('patient_id_FK', $patientId)->get();
@@ -883,27 +1412,114 @@ Route::post('/addallergy',function (Request $request) {
 
 })->name('addallergy');
 
+Route::any('/organization-addallergy', function (Request $request) {
+  
+        $organizations = Organization::all();
+        $chat_messages = App\Models\ChatMessage::all();
+        if (session()->has('patient_id')) {
+            $patientId = session('patient_id');
+        } elseif ($request->has('patient_id')) {
+            $patientId = $request->input('patient_id');
+        }
+        
+        if (session()->has('professional_id')) {
+            $professional_id = session('professional_id');
+            $professionalId = session('professionalId');
+        } elseif ($request->has('professional_id')) {
+            $professional_id = $request->input('professional_id');
+            $professionalId = $request->input('professional_id');
+        }
+        
+        if (session()->has('organizationid')) {
+            $organizationid = session('organizationid');
+            $organization_id = session('organizationid');
+        } elseif ($request->has('organization_id')) {
+            $organizationid = $request->input('organization_id');
+            $organization_id = $request->input('organization_id');
+        }
+        
+        session(['patient_id' => $patientId]);
+        session(['organization_id' => $organizationid]);
+        session(['organization_id' => $organization_id]);
+        session(['professional_id' => $professional_id]);
+        session(['professionalId' => $professionalId]);
+        $patient = App\Models\Patient::find($patientId);
+        
+        $user = App\Models\Professional::find($professional_id);
+        $remark = App\Models\Remark::where('patient_id_FK', $patientId)->get();
+        $professional = App\Models\Professional::all();
+    
+        // Pass the patient information to the view
+        return view('/orgadminview/addallergy', compact(
+            'patient',
+            'organizations',
+            'user',
+            'chat_messages',
+            'remark',
+            'professional',
+            'patientId',
+            'professional_id', // Assuming these are the same
+            'professionalId',  // Assuming these are the same
+            'organizationid',
+            'organization_id', // Assuming these are the same
+        ));
+        
+        
+})->name('addallergyorg');
+    
+
 Route::any('/addremark',function (Request $request) {
     // Retrieve the patient information based on the $patientId
     $organizations = Organization::all();
     $chat_messages = App\Models\ChatMessage::all();
-    $professional_id = $request->input('professional_id');
-    $patientId = $request->input('patient_id');
+    if ($request->has('professional_id') && $request->has('patient_id')) {
+        $professional_id = $request->input('professional_id');
+        $patientId = $request->input('patient_id');
+        session(['patient_id' => $patientId]);
+        session(['professional_id' => $professional_id]);
+    } else {
+        $patientId = session('patient_id');
+        $professional_id = session('professional_id');
+        
+    }
     $patient = App\Models\Patient::find($patientId);
     $user = App\Models\Professional::find($professional_id);
     $remark = App\Models\Remark::where('patient_id_FK', $patientId)->get();
     $professional = App\Models\Professional::all();
     // Pass the patient information to the view
     return view('addremark', compact('patient','organizations','user','chat_messages','remark','professional'));
-
-
 })->name('addremark');
+
+Route::any('/organization-addremark', function (Request $request) {
+    $organizations = Organization::all();
+    $chat_messages = App\Models\ChatMessage::all();
+    
+    if (session()->has('patient')) {
+        $patient = session('patient');
+        $patientId = $patient->patient_id;
+    } else {
+        $patientId = session('patient_id');
+        $patient = App\Models\Patient::find($patientId);
+    }
+
+$user = session('authenticated_user');
+$professionalId = $user->professional_id;
+$organizationid = session('organizationid');
+
+    $remark = App\Models\Remark::where('patient_id_FK', $patientId)->get();
+    $professional = App\Models\Professional::all();
+
+    // Pass all the variables to the view
+    return view('/orgadminview/addremark',['organizationid'=>$organizationid,'user'=>$user],);
+})->name('addremarkorg');
 
 Route::any('/adddiagnosis',function (Request $request) {
     // Retrieve the patient information based on the $patientId
     if ($request->has('professional_id') && $request->has('patient_id')) {
         $professional_id = $request->input('professional_id');
         $patientId = $request->input('patient_id');
+        session(['patient_id' => $patientId]);
+        session(['professional_id' => $professional_id]);
     } else {
         $patientId = session('patient_id');
         $professional_id = session('professional_id');
@@ -925,11 +1541,67 @@ Route::any('/adddiagnosis',function (Request $request) {
 
 
 })->name('adddiagnosis');
+
+Route::any('/organization-adddiagnosis',function (Request $request) {     
+    // Retrieve the patient information based on the $patientId
+    if ($request->has('professional_id') && $request->has('patient_id')) {
+        $patientId = $request->input('patient_id');
+        $professional_id = $request->input('professional_id');
+        $organizationid = $request->input('organization_id');
+     
+        session(['patient_id' => $patientId]);
+        session(['professional_id' => $professional_id]);
+        session(['organization_id' => $organizationid]);
+        $organization_id = $request->input('organization_id');
+        session(['organization_id' => $organization_id]);
+    } else {
+        $patientId = session('patient_id');
+        $organization_id = session('organization_id');
+        $organizationid = session('organization_id');
+        $professional_id = session('professional_id');
+      
+    
+    }
+    $medication = App\Models\Medication::all();
+
+
+    $medicationindiagnosis   = App\Models\MedicationInDiagnosis::all();
+    $organizations = Organization::all();
+    $chat_messages = App\Models\ChatMessage::all();
+   
+   
+    $patient = App\Models\Patient::find($patientId);
+
+    $user = App\Models\Professional::find($professional_id);
+    $remark = App\Models\Remark::where('patient_id_FK', $patientId)->get();
+    $professional = App\Models\Professional::all();
+    // Pass the patient information to the view
+    return view('/orgadminview/adddiagnosis', [
+        'patient' => $patient,
+        'organizations' => $organizations,
+        'user' => $user,
+        'chat_messages' => $chat_messages,
+        'remark' => $remark,
+        'professional' => $professional,
+        'medication' => $medication,
+
+        'medicationindiagnosis' => $medicationindiagnosis,
+        'patientId' => $patientId,
+        'professionalId' => $professional_id,
+        'professional_id' => $professional_id,
+        'organizationid' => $organizationid,
+        'organization_id' => $organization_id,
+    ]);
+
+
+})->name('adddiagnosisorg');
 Route::any('/edit-diagnosis/{diagnosisId}', function (Request $request, $diagnosisId) {
     // Retrieve the patient information based on the $patientId
     if ($request->has('professional_id') && $request->has('patient_id')) {
         $professional_id = $request->input('professional_id');
         $patientId = $request->input('patient_id');
+        session(['patient_id' => $patientId]);
+        session(['professional_id' => $professional_id]);
     } else {
         $patientId = session('patient_id');
         $professional_id = session('professional_id');
@@ -960,17 +1632,77 @@ Route::any('/edit-diagnosis/{diagnosisId}', function (Request $request, $diagnos
         'diagnosis' => $diagnosis,
     ]);
 })->name('edit-diagnosis');
+
+Route::any('/organization-edit-diagnosis', function (Request $request) {
+    // Retrieve the patient information based on the $patientId
+    $organizations = Organization::all();
+    $chat_messages = App\Models\ChatMessage::all();
+    $organizationid = $request->input('organization_id');
+
+    $patientId = session('patient_id');
+    $professional_id = session('professional_id');
+    $professionalId = session('professional_id');
+
+    session(['organization_id' => $organizationid]);
+    $organization_id = $request->input('organization_id');
+    session(['organization_id' => $organization_id]);
+
+    $patient = App\Models\Patient::find($patientId);
+    $medication = App\Models\Medication::all();
+    $medicationindiagnosis = App\Models\MedicationInDiagnosis::all();
+    $organizations = Organization::all();
+    $chat_messages =  App\Models\ChatMessage::all();
+   
+
+    $diagnosisId = $request->input('diagnosisid'); // Assuming the name of the ID field in your model
+    $diagnosis = App\Models\Diagnosis::where('patient_id_FK', $patientId)
+    ->where('diagnosis_id', $diagnosisId)
+    ->first();
+    session(['diagnosisId' => $diagnosisId]);
+    $diagnosisId = session('diagnosisId');
+    $user =  App\Models\Professional::find($professional_id);
+    $remark = App\Models\Remark::where('patient_id_FK', $patientId)->get();
+    $professional =  App\Models\Professional::all();
+
+    // Use compact to pass variables to the view
+    return view('/orgadminview/editdiagnosis', [
+        'patient' => $patient,
+        'organizations' => $organizations,
+        'user' => $user,
+        'chat_messages' => $chat_messages,
+        'remark' => $remark,
+        'professional' => $professional,
+        'medication' => $medication,
+        'medicationindiagnosis' => $medicationindiagnosis,
+        'diagnosis' => $diagnosis,
+        'diagnosisId' => $diagnosisId,
+        'patientId' => $patientId,
+        'professional_id' => $professional_id, // Assuming these are the same
+        'professionalId' => $professionalId,  // Assuming these are the same
+        'organizationid' => $organizationid,
+        'organization_id' => $organization_id, // Assuming these are the same
+    ]);
+    
+})->name('edit-diagnosisorg');
 Route::get('/delete/{patientId}/{allergy_Id}/{professionalId}', [TableController::class, 'deleteallergy'])->name('deleteallergy');
+Route::get('/org-delete', [TableController::class, 'deleteallergyorg'])->name('deleteallergyorg');
+Route::any('/org-delete-med', [TableController::class, 'deletemedicationorg'])->name('deletemedicationorg');
 Route::post('/patients/remark', [RemarkController::class, 'submitForm'])->name('patients.remark.submit');
+Route::post('/remark/submit', [RemarkController::class, 'submitForms'])->name('patients.remark.submits');
 Route::post('/allergies', [AllergyController::class, 'store'])->name('allergy.store');
+Route::post('/organization-allergies-store', [AllergyController::class, 'storeorg'])->name('allergy.storeorg');
 Route::post('/store-diagnosis-and-medication', [DiagnosisController::class, 'storeDiagnosisAndMedication'])->name('store.diagnosis.medication');
+Route::post('/organization-store-diagnosis-and-medication', [DiagnosisController::class, 'storeDiagnosisAndMedicationorg'])->name('store.diagnosis.medicationorg');
 Route::post('/update-diagnosis-and-medication/{diagnosisId}', [DiagnosisController::class, 'updateDiagnosisAndMedication'])->name('update.diagnosis.medication');
+Route::post('/organization-update-diagnosis-and-medication', [DiagnosisController::class, 'updateDiagnosisAndMedicationorg'])->name('update.diagnosis.medicationorg');
 Route::post('/update-diagnosis-active/{diagnosisId}',[DiagnosisController::class, 'updateActiveStatus']);
 Route::post('/update-diagnosis-inuse/{diagnosisId}', [DiagnosisController::class, 'updateInUseStatus']);
 Route::any('/medication-list',function (Request $request) {
     if ($request->has('professional_id') && $request->has('patient_id')) {
         $professional_id = $request->input('professional_id');
         $patientId = $request->input('patient_id');
+        session(['patient_id' => $patientId]);
+        session(['professional_id' => $professional_id]);
     } else {
         $patientId = session('patient_id');
         $professional_id = session('professional_id');
@@ -994,9 +1726,14 @@ Route::any('/patient-medicine}',function (Request $request) {
     if ($request->has('professional_id') && $request->has('patient_id')) {
         $professional_id = $request->input('professional_id');
         $patientId = $request->input('patient_id');
+        $singleDiagnosis = $request->input('diagnosisid');
+        session(['patient_id' => $patientId]);
+        session(['professional_id' => $professional_id]);
+        session(['diagnosisid' => $singleDiagnosis]);
     } else {
         $patientId = session('patient_id');
         $professional_id = session('professional_id');
+        $singleDiagnosis = session('diagnosisid');
     }
     session(['patient_id' => $patientId, 'professional_id' => $professional_id]);
     $singleDiagnosis = $request->input('diagnosisid');
@@ -1021,13 +1758,54 @@ Route::any('/patient-medicine}',function (Request $request) {
 
 })->name('patient-medicine-create');
 
+Route::any('/organization-patient-medicine}',function (Request $request) {
 
+    $user = session('authenticated_user');
+    $organizationid = $request->input('organization_id');
+
+    $patientId = session('patient_id');
+    $professional_id = session('professional_id');
+    $professionalId = session('professional_id');
+
+
+    session(['organization_id' => $organizationid]);
+    $organization_id = $request->input('organization_id');
+    session(['organization_id' => $organization_id]);
+
+    $patient = App\Models\Patient::find($patientId);
+
+        $singleDiagnosis = session('diagnosisid');
+    
+    $singleDiagnosis = $request->input('diagnosisid');
+   
+    $medication = App\Models\Medication::all();
+
+    $diagnosis = \App\Models\Diagnosis::where('patient_id_FK', $patientId)
+    ->where('diagnosis_id', $singleDiagnosis)
+    ->first();
+
+    // Pass the patient information to the view
+    return view('/orgadminview/patients-medication-create', [
+        'user' => $user,
+        'diagnosis' => $diagnosis,
+        'singleDiagnosis' => $singleDiagnosis,
+        'medication' => $medication,
+        'patient' => $patient,
+        'patientId' => $patientId,
+        'professional_id' => $professional_id,
+        'professionalId' => $professionalId, // If you want to pass both 'professional_id' and 'professionalId'
+        'organizationid' => $organizationid,
+        'organization_id' => $organization_id,
+    ]);
+})->name('patient-medicine-createorg');
 Route::post('/medications', [MedicationController::class, 'store'])->name('medications.store');
 Route::put('/medications/{medicationId}', [MedicationController::class, 'update'])->name('medications.update');
 
 Route::get('/chat', [TableController::class, 'chatpage'])->name('chat');
 Route::any('/search', [LogbookController::class, 'search'])->name('logbook.search');
-Route::post('/search2', [LogbookController::class, 'search2'])->name('logbook.search2');
+Route::any('/search2', [LogbookController::class, 'search2'])->name('logbook.search2');
+Route::any('/org-search', [LogbookController::class, 'searchorg'])->name('logbook.searchorg');
+Route::any('/org-search2', [LogbookController::class, 'search2org'])->name('logbook.search2org');
 Route::get('/report', [LogbookController::class, 'report'])->name('logbook.report');
 Route::any('/reset-password', function (Request $request) {
     $professional_id = $request->input('professional_id');
@@ -1059,6 +1837,8 @@ Route::post('/resetpassword/{professionalid}',function (Request $request, $profe
 
 Route::post('/save-medication', [MedicationController::class, 'saveMedication'])->name('saveMedication');
 // routes/web.php
-
+Route::post('/organization-save-medication', [MedicationController::class, 'saveMedicationorg'])->name('saveMedicationorg');
 
 Route::any('/filter-logbook',[LogbookController::class, 'filterLogbook'])->name('filter-logbook');
+Route::any('/filter-logbookorg',[LogbookController::class, 'filterLogbookorg'])->name('filter-logbookorg');
+Route::any('/mark-as-read',[LogbookController::class, 'markAsRead'])->name('markAsRead');

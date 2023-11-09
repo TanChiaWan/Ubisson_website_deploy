@@ -10,13 +10,17 @@
     <link rel="shortcut icon" type="image/png" href="../assets/images/logos/SmallBioTectiveLogo.png" />
   <link rel="stylesheet" href="../assets/css/styles.mintry.css" />
      <script src="https://unpkg.com/vue@2"></script>
-
+<
      
      <style>
     /* Add hover effect to change text color for the h6 element inside the button */
     button:hover h6 {
         color: grey; /* Your desired hover color here */
     }
+    .read-row {
+    background-color:grey; /* Set the desired background color */
+    
+}
 </style>
 </head>
 
@@ -26,7 +30,7 @@
         Dashboard
     
 </title>
-<body>
+<body onload="filterEntriesByDates('table1'); filterEntriesByDates2('table2'); filterEntriesByDates3('table3'); filterEntriesByDates4('table4');">
   <!--  Body Wrapper -->
 
     <!-- Sidebar Start -->
@@ -55,13 +59,13 @@
                 <div class="row">
                   <div class="col-lg-12">
                     <!-- Yearly Breakup -->
-                    <div class="card overflow-hidden" style="padding-bottom:20px;">
+                    <div class="card overflow-hidden">
                       <div class="card-body">
                         <div class="row align-items-start">
-                          <div class="col-8">
+                          <div class="col-6">
                             <img src="../assets/images/dash-patient.png" alt="Patient Image" style="width: 25%;">
                           </div>
-                          <div class="col-4 text-end">
+                          <div class="col-6 text-end">
                         <h5 class="card-title mb-9 fw-semibold " >Patients</h5>
                       <h2 class="fw-semibold mb-3">{{ $patientsCount }}</h4>
                           
@@ -76,34 +80,48 @@
 
 
                   
-              <div class="col-lg-12">
+              <div class="col-lg-12" >
                 <!-- Monthly Earnings -->
                 <div class="card">
                     <div class="card-body">
-                      <div class="row align-items-start">
+                      <div class="row align-items-start"  >
                         
                       
-                      <div class="col-md-12 mb-4 text-center">
-<button class="btn btn-primary m-2" id="bp-button2" data-table-id="bp-table2">BP</button>
-<button class="btn btn-primary m-2" id="bg-button2" data-table-id="bg-table2">BG</button>
-
-
-</div>
+                    
 
                       <div class="col-lg-12" id="bp-table2">
                       <div class="row align-items-start">
-                      <div class="col-8">
+                      <div class="col-6">
                           <img src="../assets/images/dash-hyper.png" alt="Hyper Image" style="width: 25%;">
+                          <div class="mt-4">
+    <p id="table1-period_info"><span id="table1-period_text" class="pe-2">Since 3 days</span><a href="javascript:void(0);" onclick="handleEditPeriod('table1')"><i class="ti ti-pencil"></i></a></p>
+    <p id="table1-period_edit" style="display: none;">
+        <select id="table1-period_select" onchange="filterEntriesByDates('table1')">
+            <option value="Today" data-days="1">Today</option>
+            <option value="Yesterday" data-days="2">Yesterday</option>
+            <option value="Since 3 days" data-days="3" selected="selected">Since 3 days</option>
+            <option value="Since 7 days" data-days="7" >Since 7 days</option>
+            <option value="Since 14 days" data-days="14">Since 14 days</option>
+            <option value="Since 30 days" data-days="30">Since 30 days</option>
+        </select>
+        <a href="javascript:void(0);" onclick="saveEditPeriod('table1')"><i class="ti ti-check"></i></a>
+    </p>
+</div>
+
+                    
+                          
+                        
                         </div>
-                        <div class="col-4 text-end">
-                        <h5 class="card-title mb-9 fw-semibold"> Hyper Events</h5>
+                       
+                        <div class="col-6 text-end">
+                        <h5 class="card-title mb-3 fw-semibold"> Hyper Events</h5>
                       
-                        <h2 class="fw-semibold mb-3">{{ $hyperbg }}</h4>
+                        <h2 class="mb-3 fw-semibold" id="filtered-count1"></h4>
                      
                       </div>
                         
                       </div>
-    <div class="table-responsive mb-3 " style="max-height: 300px; overflow-y: auto;">
+    <div class="table-responsive mb-3" style="max-height: 300px; overflow-y: auto;">
         <table id="bp-table2" class="table  mb-0 align-middle logbook-table" >
             <tbody>
               
@@ -111,7 +129,7 @@
             $initialRowCount = 3; // Number of rows to show initially
             $rowCount = 0; // Initialize the row count
             @endphp
-            @foreach($logbook as $index => $logbooks)
+            @foreach($logbook->sortByDesc('bp_logbook_date') as $index => $logbooks)
                 @php
                 $patients = $patient->where('patient_id', $logbooks->patient_id_FK)->first();
                 $bp_level2 = $logbooks->bp_level2; // Assuming this is the variable holding bp_level2
@@ -119,7 +137,7 @@
                 @endphp
                 @if ($patients && ($bp_level2 > 80 || $bp_level > 120))
                     @if(($bp_level2 > 60 && $bp_level > 90))
-                        <tr class="col-8" >
+                        <tr class="col-8" id="row{{$logbooks->logbook_id}}" data-id="{{ $logbooks->logbook_id }}"onclick="markLogbookAsRead({{ $logbooks->logbook_id }}, 'bp_read', this)" >
                             <td>
                                 @if (filter_var($patients->patient_image, FILTER_VALIDATE_URL))
                                     <div id="profile-picture" style="width: 42.4px; height: 44px;cursor: unset; background-image: url('{{ $patients->patient_image }}');" class="rounded float-left img-fluid" alt="Responsive Image"></div>
@@ -146,7 +164,7 @@
                                 $formattedDate = implode('/', $dateParts);
       
                                 @endphp
-                                <p class="mb-0 fw-normal">{{ $formattedDate }}</p>
+                                <p class="mb-0 fw-normal table1-bp-logbook-date">{{ $formattedDate }}</p>
                                
                             </td>
                             <td class="border-bottom-0">
@@ -157,25 +175,45 @@
                                 </h6>
                             </td>
                         </tr>
-                        @php
-                        $rowCount++;
-                        @endphp
+                       
                     @endif
                 @endif
             @endforeach
+            @php
+                        $rowCount++;
+                        @endphp
             </tbody>
         </table>
+        
   </div>
   </div>
   <div class="col-lg-12 " id="bg-table2" style="display: none;">
   <div class="row align-items-start">
-                      <div class="col-8">
+                      <div class="col-6">
                           <img src="../assets/images/dash-hyper.png" alt="Hyper Image" style="width: 25%;">
+                         <div class="mt-4">
+    <p id="table2-period_info"><span id="table2-period_text" class="pe-2">Since 3 days</span><a href="javascript:void(0);" onclick="handleEditPeriod2('table2')"><i class="ti ti-pencil"></i></a></p>
+    <p id="table2-period_edit" style="display: none;">
+        <select id="table2-period_select" onchange="filterEntriesByDates2('table2')">
+            <option value="Today" data-days="1">Today</option>
+            <option value="Yesterday" data-days="2">Yesterday</option>
+            <option value="Since 3 days" data-days="3" selected='selected'>Since 3 days</option>
+            <option value="Since 7 days" data-days="7" >Since 7 days</option>
+            <option value="Since 14 days" data-days="14">Since 14 days</option>
+            <option value="Since 30 days" data-days="30">Since 30 days</option>
+        </select>
+        <a href="javascript:void(0);" onclick="saveEditPeriod2('table2')"><i class="ti ti-check"></i></a>
+    </p>
+</div>
+
+
+                        
                         </div>
-                        <div class="col-4 text-end">
-                        <h5 class="card-title mb-9 fw-semibold"> Hyper Events</h5>
+                       
+                        <div class="col-6 text-end">
+                        <h5 class="card-title mb-3 fw-semibold"> Hyper Events</h5>
                       
-                        <h2 class="fw-semibold mb-3">{{ $hyperbp }}</h4>
+                        <h2 class="mb-3 fw-semibold" id="filtered-count2"></h2>
                      
                       </div>
                       </div>
@@ -186,7 +224,7 @@
             $initialRowCount = 3; // Number of rows to show initially
             $rowCount = 0; // Initialize the row count
             @endphp
-            @foreach($logbook as $index => $logbooks)
+            @foreach($logbook->sortByDesc('bg_logbook_date') as $index => $logbooks)
                 @php
                 $patients = $patient->where('patient_id', $logbooks->patient_id_FK)->first();
                 
@@ -194,7 +232,7 @@
                 @endphp
                 @if ($patients && ($bg_level > 7.8))
                     
-                        <tr class="col-8" >
+                        <tr class="col-8"  id="row{{$logbooks->logbook_id}}" data-id="{{ $logbooks->logbook_id }}"  onclick="markLogbookAsRead({{ $logbooks->logbook_id }}, 'bg_read', this)">
                             <td>
                                 @if (filter_var($patients->patient_image, FILTER_VALIDATE_URL))
                                     <div id="profile-picture" style="width: 42.4px; height: 44px;cursor: unset; background-image: url('{{ $patients->patient_image }}');" class="rounded float-left img-fluid" alt="Responsive Image"></div>
@@ -221,7 +259,7 @@
                                 $formattedDate = implode('/', $dateParts);
                           
                                 @endphp
-                                <p class="mb-0 fw-normal">{{ $formattedDate }}</p>
+                                <p class="mb-0 fw-normal table2-bp-logbook-date">{{ $formattedDate }}</p>
                                
                             </td>
                             <td class="border-bottom-0">
@@ -246,9 +284,17 @@
                       
                     </div>
                   </div>
-                  
+                  <div class="col-md-12 mb-4 text-center">
+                        <button class="btn btn-secondary m-2 mb-4 active" id="bg-button2" data-table-id="bg-table2">BG</button>
+<button class="btn btn-light m-2 mb-4" id="bp-button2" data-table-id="bp-table2">BP</button>
+
+
+
+</div>
               </div>
+              
             </div>
+            
           </div>
               
         
@@ -259,10 +305,10 @@
                 <div class="card overflow-hidden">
                   <div class="card-body">
                     <div class="row align-items-start">
-                      <div class="col-8">
+                      <div class="col-6">
                         <img src="../assets/images/dash-practiceg.png" alt="Practicegroups Image" style="width: 25%;">
                       </div>
-                      <div class="col-4 text-end">
+                      <div class="col-6 text-end">
                     <h5 class="card-title mb-9 fw-semibold " >Practice Group</h5>
                   <h2 class="fw-semibold mb-3">{{ $practicegroupCount }}</h4>
                       
@@ -281,23 +327,35 @@
                 <div class="card">
     <div class="card-body">
         
-<div class="col-md-12 text-center">
-<button class="btn btn-primary m-2" id="bp-button" data-table-id="bp-table">BP</button>
-<button class="btn btn-primary m-2" id="bg-button" data-table-id="bg-table">BG</button>
 
-
-</div>
 
 <div class="col-lg-12" id="bp-table" >
 <div class="row align-items-start">
-            <div class="col-8">
+            <div class="col-6">
                 <img src="../assets/images/dash-hypo.png" alt="Hypo Image" style="width: 25%;">
-            </div>
+               <div class="mt-4">
+    <p id="table3-period_info"><span id="table3-period_text" class="pe-2">Since 3 days</span><a href="javascript:void(0);" onclick="handleEditPeriod3('table3')"><i class="ti ti-pencil"></i></a></p>
+    <p id="table3-period_edit" style="display: none;">
+        <select id="table3-period_select" onchange="filterEntriesByDates3('table3')">
+            <option value="Today" data-days="1">Today</option>
+            <option value="Yesterday" data-days="2">Yesterday</option>
+            <option value="Since 3 days" data-days="3" selected="selected">Since 3 days</option>
+            <option value="Since 7 days" data-days="7">Since 7 days</option>
+            <option value="Since 14 days" data-days="14">Since 14 days</option>
+            <option value="Since 30 days" data-days="30">Since 30 days</option>
+        </select>
+        <a href="javascript:void(0);" onclick="saveEditPeriod3('table3')"><i class="ti ti-check"></i></a>
+    </p>
+</div>
+
+
+              </div>
+            
       
-                      <div class="col-4 text-end">
+                      <div class="col-6 text-end">
     <h5 class="card-title mb-3 fw-semibold">Hypo Events</h5>
  
-    <h2 class="mb-3 fw-semibold">{{$hypobp}}</h2>
+    <h2 class="mb-3 fw-semibold"  id="filtered-count3"></h2>
 </div>
 </div>
     <div id="bgTable" class="table-responsive mb-3"  style="max-height: 300px; overflow-y: auto;">
@@ -308,7 +366,7 @@
             $initialRowCount = 3; // Number of rows to show initially
             $rowCount = 0; // Initialize the row count
             @endphp
-            @foreach($logbook as $index => $logbooks)
+            @foreach($logbook->sortByDesc('bp_logbook_date') as $index => $logbooks)
                 @php
                 $patients = $patient->where('patient_id', $logbooks->patient_id_FK)->first();
                 $bp_level2 = $logbooks->bp_level2; // Assuming this is the variable holding bp_level2
@@ -316,7 +374,7 @@
                 @endphp
                 @if ($patients && ($bp_level2 < 60 || $bp_level < 90))
                     @if(($bp_level2 < 80 && $bp_level < 120))
-                        <tr class="col-8">
+                        <tr class="col-8" id="row{{$logbooks->logbook_id}}" data-id="{{ $logbooks->logbook_id }}" onclick="markLogbookAsRead({{ $logbooks->logbook_id }}, 'bp_read', this)">
                             <td>
                                 @if (filter_var($patients->patient_image, FILTER_VALIDATE_URL))
                                     <div id="profile-picture" style="width: 42.4px; height: 44px;cursor: unset; background-image: url('{{ $patients->patient_image }}');" class="rounded float-left img-fluid" alt="Responsive Image"></div>
@@ -343,7 +401,7 @@
     $formattedDate = implode('/', $dateParts);
    
     @endphp
-    <p class="mb-0 fw-normal">{{ $formattedDate }}</p>
+    <p class="mb-0 fw-normal table3-bp-logbook-date">{{ $formattedDate }}</p>
 
 </td>
                             <td class="border-bottom-0">
@@ -366,32 +424,48 @@
         </div>
   <div class="col-lg-12" id="bg-table" style="display: none;">
   <div class="row align-items-start">
-            <div class="col-8">
+            <div class="col-6">
                 <img src="../assets/images/dash-hypo.png" alt="Hypo Image" style="width: 25%;">
-            </div>
+               <div class="mt-4">
+    <p id="table4-period_info"><span id="table4-period_text" class="pe-2">Since 3 days</span><a href="javascript:void(0);" onclick="handleEditPeriod4('table4')"><i class="ti ti-pencil"></i></a></p>
+    <p id="table4-period_edit" style="display: none;">
+        <select id="table4-period_select" onchange="filterEntriesByDates4('table4')">
+            <option value="Today" data-days="1">Today</option>
+            <option value="Yesterday" data-days="2">Yesterday</option>
+            <option value="Since 3 days" data-days="3" selected="selected">Since 3 days</option>
+            <option value="Since 7 days" data-days="7">Since 7 days</option>
+            <option value="Since 14 days" data-days="14">Since 14 days</option>
+            <option value="Since 30 days" data-days="30">Since 30 days</option>
+        </select>
+        <a href="javascript:void(0);" onclick="saveEditPeriod4('table4')"><i class="ti ti-check"></i></a>
+    </p>
+</div>
+
+              </div>
+           
       
-                      <div class="col-4 text-end">
+                      <div class="col-6 text-end">
     <h5 class="card-title mb-3 fw-semibold">Hypo Events</h5>
  
-    <h2 class="mb-3 fw-semibold">{{$hypobg}}</h2>
+    <h2 class="mb-3 fw-semibold"  id="filtered-count4"></h2>
 </div>
 </div>
-        <div id="bgTable" class="table-responsive mb-3" style="max-height: 300px; overflow-y: auto;">
+        <div id="bgTable" class="table-responsive mb-3" style="max-height: 300px; overflow-y: auto; ">
         <table id="bg-table" class="table mb-0 align-middle logbook-table2 bg-table">
         <tbody>
             @php
             $initialRowCount = 3; // Number of rows to show initially
             $rowCount = 0; // Initialize the row count
             @endphp
-            @foreach($logbook as $index => $logbooks)
+            @foreach($logbook->sortByDesc('bg_logbook_date') as $index => $logbooks)
                 @php
                 $patients = $patient->where('patient_id', $logbooks->patient_id_FK)->first();
                
                 $bg_level = $logbooks->bg_level;
                 @endphp
                 @if ($patients && ($bg_level < 4.0))
-                 
-                        <tr class="col-8">
+       
+                        <tr class="col-8" id="row{{$logbooks->logbook_id}}" data-id="{{ $logbooks->logbook_id }}" onclick="markLogbookAsRead({{ $logbooks->logbook_id }}, 'bg_read', this)">
                             <td>
                                 @if (filter_var($patients->patient_image, FILTER_VALIDATE_URL))
                                     <div id="profile-picture" style="width: 42.4px; height: 44px;cursor: unset; background-image: url('{{ $patients->patient_image }}');" class="rounded float-left img-fluid" alt="Responsive Image"></div>
@@ -418,7 +492,7 @@
     $formattedDate = implode('/', $dateParts);
    
     @endphp
-    <p class="mb-0 fw-normal">{{ $formattedDate }}</p>
+    <p class="mb-0 fw-normal table4-bp-logbook-date">{{ $formattedDate }}</p>
 
 </td>
                             <td class="border-bottom-0">
@@ -439,6 +513,13 @@
 </div>
 </div>
     </div>
+    <div class="col-md-12 text-center mb-4">
+    <button class="btn btn-secondary m-2 mb-4 active" id="bg-button" data-table-id="bg-table">BG</button>
+<button  class="btn btn-light m-2 mb-4" id="bp-button" data-table-id="bp-table">BP</button>
+
+
+
+</div>
 </div>
 </div>
 
@@ -448,22 +529,45 @@
   function toggleTable(tableId) {
     const bpTable = document.getElementById('bp-table');
     const bgTable = document.getElementById('bg-table');
-    console.log(tableId);
+  
     if (tableId === 'bp-table') {
       bpTable.style.display = 'block';
       bgTable.style.display = 'none';
+      document.getElementById('bp-button').classList.add('btn','btn-secondary', 'm-2', 'mb-4', 'active');
+      document.getElementById('bg-button').classList.remove('btn','btn-secondary', 'm-2', 'mb-4', 'active');
+      document.getElementById('bg-button').classList.add('btn','btn-light', 'm-2', 'mb-4');
+      document.getElementById('bp-button').style.color = '#fff';
+  document.getElementById('bp-button').style.backgroundColor = '#69abac';
+  document.getElementById('bp-button').style.borderColor = '#69abac';
+  document.getElementById('bg-button').style.color = '#000';
+  document.getElementById('bg-button').style.backgroundColor = '#f6f9fc';
+  document.getElementById('bg-button').style.borderColor = '#f6f9fc';
+
+
+  
+
     } else if (tableId === 'bg-table') {
       bpTable.style.display = 'none';
       bgTable.style.display = 'block';
+      document.getElementById('bg-button').classList.add('btn','btn-secondary', 'm-2', 'mb-4', 'active');
+    document.getElementById('bp-button').classList.remove('btn','btn-secondary', 'm-2', 'mb-4', 'active');
+    document.getElementById('bp-button').classList.add('btn','btn-light', 'm-2', 'mb-4');
+    document.getElementById('bg-button').style.color = '#fff';
+  document.getElementById('bg-button').style.backgroundColor = '#69abac';
+  document.getElementById('bg-button').style.borderColor = '#69abac';
+  document.getElementById('bp-button').style.color = '#000';
+  document.getElementById('bp-button').style.backgroundColor = '#f6f9fc';
+  document.getElementById('bp-button').style.borderColor = '#f6f9fc';
+
     }
 
-    console.log(`Table ${tableId} is now visible.`);
+    
   }
 
   // Add click event listeners to the buttons
   const bpButton = document.getElementById('bp-button');
 const bgButton = document.getElementById('bg-button');
-console.log(bgButton);
+
   bpButton.addEventListener('click', () => {
     toggleTable('bp-table');
   });
@@ -473,7 +577,7 @@ console.log(bgButton);
   });
 
   // Show the BP table by default on page load
-  toggleTable('bp-table');
+  toggleTable('bg-table');
 });
 </script>
 <script>
@@ -482,22 +586,43 @@ console.log(bgButton);
   function toggleTable(tableId) {
     const bpTable = document.getElementById('bp-table2');
     const bgTable = document.getElementById('bg-table2');
-    console.log(tableId);
+   
     if (tableId === 'bp-table2') {
       bpTable.style.display = 'table';
       bgTable.style.display = 'none';
+      document.getElementById('bp-button2').classList.add('btn','btn-secondary', 'm-2', 'mb-4', 'active');
+      document.getElementById('bg-button2').classList.remove('btn','btn-secondary', 'm-2', 'mb-4', 'active');
+      document.getElementById('bg-button2').classList.add('btn','btn-light', 'm-2', 'mb-4');
+      document.getElementById('bp-button2').style.color = '#fff';
+  document.getElementById('bp-button2').style.backgroundColor = '#69abac';
+  document.getElementById('bp-button2').style.borderColor = '#69abac';
+  document.getElementById('bg-button2').style.color = '#000';
+  document.getElementById('bg-button2').style.backgroundColor = '#f6f9fc';
+  document.getElementById('bg-button2').style.borderColor = '#f6f9fc';
+
+
     } else if (tableId === 'bg-table2') {
       bpTable.style.display = 'none';
       bgTable.style.display = 'table';
+      document.getElementById('bg-button2').classList.add('btn','btn-secondary', 'm-2', 'mb-4', 'active');
+    document.getElementById('bp-button2').classList.remove('btn','btn-secondary', 'm-2', 'mb-4', 'active');
+    document.getElementById('bp-button2').classList.add('btn','btn-light', 'm-2', 'mb-4');
+    document.getElementById('bg-button2').style.color = '#fff';
+  document.getElementById('bg-button2').style.backgroundColor = '#69abac';
+  document.getElementById('bg-button2').style.borderColor = '#69abac';
+  document.getElementById('bp-button2').style.color = '#000';
+  document.getElementById('bp-button2').style.backgroundColor = '#f6f9fc';
+  document.getElementById('bp-button2').style.borderColor = '#f6f9fc';
+
     }
 
-    console.log(`Table ${tableId} is now visible.`);
+    
   }
 
   // Add click event listeners to the buttons
   const bpButton = document.getElementById('bp-button2');
 const bgButton = document.getElementById('bg-button2');
-console.log(bgButton);
+
   bpButton.addEventListener('click', () => {
     toggleTable('bp-table2');
   });
@@ -507,8 +632,40 @@ console.log(bgButton);
   });
 
   // Show the BP table by default on page load
-  toggleTable('bp-table2');
+  toggleTable('bg-table2');
 });
+</script>
+<script src="../assets/js/home.js"></script>
+<script>
+function markLogbookAsRead(logbookId, type, row) {
+    console.log('Logbook ID:', logbookId);
+    console.log('Type:', type);
+
+    // Make an AJAX request to the server
+    $.ajax({
+        type: 'POST',
+        url: '/mark-as-read', // Replace with the actual route
+        data: {
+          _token: '{{ csrf_token() }}', // Include the CSRF token in your data
+            logbookId: logbookId,
+            type: type, // 'bp_read' or 'bg_read'
+        },
+        success: function(response) {
+          if (response.success) {
+                    // Update the UI to indicate that the row has been marked as read
+                    var row = document.getElementById('row' + logbookId);
+                    console.log(row);
+                    if (row) {
+                      row.style.backgroundColor = 'gray'; // Replace with your desired background color
+                    }
+                }
+        },
+        error: function(error) {
+            console.error('Error marking logbook as read', error);
+        }
+    });
+}
+
 </script>
 
 

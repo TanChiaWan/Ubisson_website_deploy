@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-class Logbook extends Model
+class logbook extends Model
 {
     public $timestamps = false;
     use HasApiTokens, HasFactory, Notifiable;

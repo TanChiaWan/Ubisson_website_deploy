@@ -29,7 +29,7 @@
           <div class="card-body">
             <h5 class="card-title fw-semibold mb-4">Add New Practice Group</h5>
               
-            {!! Form::open(array('route' => ['orginsert4.createpracticegroup', 'organization_id' => $organizationid], 'method' => 'POST')) !!}
+            {!! Form::open(array('route' => ['orginsert4.createpracticegroup'], 'method' => 'POST')) !!}
                 <legend class="form-fieldset-title">General</legend>
                 <div class="row">
                     <label class="form-label">Group Title</label>
@@ -42,7 +42,7 @@
                 </div>
                
                 <button type="submit" class="btn btn-primary mx-2">Submit</button>
-                <a href="{{ route('orgpracticegroup',[ 'organization_id' => $organizationid]) }}" class="btn btn-secondary">Cancel</a>
+                <a href="{{ route('orgpracticegroup') }}" class="btn btn-secondary">Cancel</a>
                 {!! Form::close() !!}
           </div>
         </div>

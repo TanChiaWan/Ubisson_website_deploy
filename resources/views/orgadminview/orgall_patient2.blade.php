@@ -23,8 +23,8 @@
                     <!--Tab-->
                     <div class="row">
                         <div class="col-md-12 d-flex justify-content-center">
-                        <a href="{{route('orgall_patients', ['organization_id' => $organizationid]) }}" class="btn btn-light m-3 ">Patient With Organization</a>
-                            <a href="{{route('orgall_patient2', ['organization_id' => $organizationid]) }}" class="btn btn-primary m-3">Patient Without Organization</a>
+                        <a href="{{route('orgall_patients') }}" class="btn btn-light m-3">Patient With Organization</a>
+                            <a href="{{route('orgall_patient2') }}" class="btn btn-primary m-3">Patient Without Organization</a>
                         </div>
                     </div>
                 </div>
@@ -51,23 +51,26 @@
                         </tr>
                       </thead>
                       <tbody>
-                        @foreach($patients as $patients)
-                        <tr >
-                          <td class="border-bottom-0"><p class="mb-0 fw-normal">{{ $patients->patient_name }}</p></td>
-                        
-                          <td class="border-bottom-0">
-                            <p class="mb-0 fw-normal">{{ $patients->patient_age }}</p>
-                          </td>
-                          <td class="border-bottom-0">
-                            <p class="mb-0 fw-normal">{{ $patients->diabetes_type }}</p>
-                          </td>
-                          <td class="border-bottom-0">
-                            <p class="mb-0 fw-normal">+{{ $patients->patient_phonenum }}</p>
-                          </td>
-                         
-                          
-                        </tr> 
-                        @endforeach
+    @foreach($patients as $patient)
+        @if ($patient->organizationid_FK == null && $patient->organization_name == null)
+            <tr>
+                <td class="border-bottom-0">
+                    <p class="mb-0 fw-normal">{{ $patient->patient_name }}</p>
+                </td>
+                <td class="border-bottom-0">
+                    <p class="mb-0 fw-normal">{{ $patient->patient_age }}</p>
+                </td>
+                <td class="border-bottom-0">
+                    <p class="mb-0 fw-normal">{{ $patient->diabetes_type}}</p>
+                </td>
+                <td class="border-bottom-0">
+                    <p class="mb-0 fw-normal">+{{ $patient->patient_phonenum }}</p>
+                </td>
+            </tr>
+        @endif
+    @endforeach
+</tbody>
+
                                                        
                       </tbody>
                     </table>

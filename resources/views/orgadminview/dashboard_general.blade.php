@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Health Data</title>
+        <title>Dashboard</title>
         <meta charset="utf-8">
         <meta name="description" content="create">
         <meta name="author" content="Min">
@@ -12,7 +12,7 @@
 
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
-
+  
     <body>
 <div class="container-fluid">
         <!-- Outer Tab -->
@@ -21,42 +21,12 @@
             <div class="card-body py-1 px-4">
               <div class="row text-center">
                 <div class="col-md-12 p-0">
-                <form action="{{ route('dashboard_general') }}" method="POST" style='display:inline-block;'>
-                          @csrf
-                        <input type="hidden" name="patient_id" value="{{ $patient->patient_id }}" >
-                        <input type="hidden" name="professional_id" value="{{ $user->professional_id }}">
-                        <button type="submit"  class="btn btn-primary m-1 active">Dashboard</button>
-                  </form>
-                <form action="{{ route('aboutpatient') }}" method="POST" style='display:inline-block;'>
-                          @csrf
-                        <input type="hidden" name="patient_id" value="{{ $patient->patient_id }}" >
-                        <input type="hidden" name="professional_id" value="{{ $user->professional_id }}">
-                        <button type="submit"  class="btn btn-light m-1 btn-pagenav-notselected">About Patient</button>
-                  </form>
-                  <form action="{{ route('logbook_bg') }}" method="POST" style='display:inline-block;'>
-                          @csrf
-                        <input type="hidden" name="patient_id" value="{{ $patient->patient_id }}" >
-                        <input type="hidden" name="professional_id" value="{{ $user->professional_id }}">
-                        <button type="submit"  class="btn btn-light m-1 btn-pagenav-notselected">Logbook</button>
-                  </form>
-                  <form action="{{ route('healthdata') }}" method="POST" style='display:inline-block;'>
-                          @csrf
-                        <input type="hidden" name="patient_id" value="{{ $patient->patient_id }}" >
-                        <input type="hidden" name="professional_id" value="{{ $user->professional_id }}">
-                        <button type="submit"  class="btn btn-light m-1 btn-pagenav-notselected">Health Data</button>
-                  </form>
-                  <form action="{{ route('remark') }}" method="POST" style='display:inline-block;'>
-                          @csrf
-                        <input type="hidden" name="patient_id" value="{{ $patient->patient_id }}" >
-                        <input type="hidden" name="professional_id" value="{{ $user->professional_id }}">
-                        <button type="submit"  class="btn btn-light m-1 btn-pagenav-notselected">Remarks</button>
-                  </form>
-                  <form action="{{ route('medicationreport') }}" method="POST" style='display:inline-block;'>
-                          @csrf
-                        <input type="hidden" name="patient_id" value="{{ $patient->patient_id }}" >
-                        <input type="hidden" name="professional_id" value="{{ $user->professional_id }}">
-                        <button type="submit"  class="btn btn-light m-1 btn-pagenav-notselected">Medication</button>
-                  </form>
+                <a href="{{ route('dashboard_generalorg') }}" class="btn btn-primary m-1 active">Dashboard</a>
+    <a href="{{ route('aboutpatientorg') }}" class="btn btn-light m-1 btn-pagenav-notselected">About Patient</a>
+    <a href="{{ route('logbook_bgorg') }}" class="btn btn-light m-1 btn-pagenav-notselected">Logbook</a>
+    <a href="{{ route('healthdataorg') }}" class="btn btn-light m-1 btn-pagenav-notselected">Health Data</a>
+    <a href="{{ route('remarkorg') }}" class="btn btn-light m-1 btn-pagenav-notselected">Remarks</a>
+    <a href="{{ route('medicationreportorg') }}" class="btn btn-light m-1 btn-pagenav-notselected">Medication</a>
                     
                 </div>
             </div>
@@ -80,31 +50,10 @@
             
             <div class="row">
               <div class="col-md-12 d-flex justify-content-center">
-              <form action="{{ route('dashboard_general') }}" method="POST" style='display:inline-block;'>
-                          @csrf
-                        <input type="hidden" name="patient_id" value="{{ $patient->patient_id }}" >
-                        <input type="hidden" name="professional_id" value="{{ $user->professional_id }}">
-                        <button type="submit"  class="btn btn-secondary m-2 mb-4 active">General</button>
-                  </form>
-                  
-                  <form action="{{ route('dashboard_bg') }}" method="POST" style='display:inline-block;'>
-                          @csrf
-                        <input type="hidden" name="patient_id" value="{{ $patient->patient_id }}" >
-                        <input type="hidden" name="professional_id" value="{{ $user->professional_id }}">
-                        <button type="submit"  class="btn btn-light m-2 mb-4">BG</button>
-                  </form>
-                  <form action="{{ route('dashboard_bp') }}" method="POST" style='display:inline-block;'>
-                          @csrf
-                        <input type="hidden" name="patient_id" value="{{ $patient->patient_id }}" >
-                        <input type="hidden" name="professional_id" value="{{ $user->professional_id }}">
-                        <button type="submit"  class="btn btn-light m-2 mb-4">BP</button>
-                  </form>
-                  <form action="{{ route('dashboard_cho') }}" method="POST" style='display:inline-block;'>
-                          @csrf
-                        <input type="hidden" name="patient_id" value="{{ $patient->patient_id }}" >
-                        <input type="hidden" name="professional_id" value="{{ $user->professional_id }}">
-                        <button type="submit"  class="btn btn-light m-2 mb-4">Cholesterol</button>
-                  </form>
+              <a href="{{ route('dashboard_generalorg') }}" class="btn btn-primary m-2 mb-4 active">Dashboard</a>
+              <a href="{{ route('dashboard_bgorg') }}" class="btn btn-light m-2 mb-4">BG</a>
+              <a href="{{ route('dashboard_bporg') }}" class="btn btn-light m-2 mb-4">BP</a>
+              <a href="{{ route('dashboard_choorg') }}" class="btn btn-light m-2 mb-4">Cholesterol</a>
                   
               </div>
             </div>

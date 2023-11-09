@@ -19,27 +19,7 @@ import ExampleComponent from './components/ExampleComponent.vue';
 import Organization from './components/Organization.vue';
 app.component('example-component', ExampleComponent);
 app.component('organization', Organization);
-import Professional from './components/professional.vue';
-app.component('professional', Professional);
-import Role from './components/role.vue';
-app.component('role', Role);
-import Permission from './components/permission.vue';
-app.component('permission', Permission);
-import Patient from './components/patient.vue';
-app.component('patient', Patient);
-import Patientorg from './components/patientorg.vue';
-app.component('patientorg', Patientorg);
-import Patient2 from './components/patient2.vue';
-app.component('patient2', Patient2);
 
-import Usercheck from './components/usercheck.vue';
-app.component('usercheck', Usercheck);
-
-import Practice_group from './components/practice_group.vue';
-app.component('practice_group', Practice_group);
-
-import Practicegroup from './components/practicegroup.vue';
-app.component('practicegroup', Practicegroup);
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

@@ -16,6 +16,9 @@ class MedicationInDiagnosis extends Model
         'diagnosis_id',
         'taken',
         'dosage',
+        'timesaday',
+        'medicationtype',
+        'taken_time',
     ];
     
 

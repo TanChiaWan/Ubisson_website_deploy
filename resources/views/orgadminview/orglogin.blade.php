@@ -42,7 +42,7 @@ Organization Login
                         Remember Me
                       </label>
                     </div>
-                    <a class="text-primary fw-bold" >Forgot Password ?</a>
+                    
                   </div>
                   <button  class="btn btn-primary w-100 py-8 fs-4 mb-2 rounded-2" type="submit" class=" loginbutton">
                   Sign In

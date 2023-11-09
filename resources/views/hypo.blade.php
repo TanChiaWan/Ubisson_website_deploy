@@ -35,7 +35,7 @@
                 <div class="row">
                     <div class="col-md-3 mb-3">
 
-                        <label for="user-create-input-name" class="form-label">Criteria 1 &ge;</label>
+                        <label for="user-create-input-name" class="form-label">Criteria 1 <</label>
                         <div class="input-group mb-3">
                           <input type="number" class="input-field form-control" id="criteria_1_glucose_hyper" name="criteria_1_glucose_hyper" aria-describedby="criteria_1_glucose_hyper_addon" step="0.01" value="{{ old('criteria_1_glucose_hyper', $criteria1) }}">
                           <span class="input-group-text" id="criteria_1_glucose_hyper_addon">mmol/L</span>
@@ -45,7 +45,7 @@
     
                     <div class="col-md-3 mb-3">
 
-                      <label for="user-create-input-name" class="form-label">Criteria 2 &gt;</label>
+                    <label for="user-create-input-name" class="form-label">Criteria 2 ≤</label>
                       <div class="input-group mb-3">
                         <input type="number" class="input-field form-control" id="criteria_2_glucose_hyper" name="criteria_2_glucose_hyper" aria-describedby="criteria_2_glucose_hyper_addon" step="0.01" value="{{ old('criteria_2_glucose_hyper', $criteria2) }}">
                         <span class="input-group-text" id="criteria_2_glucose_hyper_addon">mmol/L</span>
@@ -167,46 +167,74 @@
                         <th class="txtline">Patient Name</th>
                         <th class="txtline">Criteria 1</th>
                         <th class="txtline">Criteria 2</th>
-                        <th class="txtline">Above Target Range</th>
-                        <th class="txtline">Above Target Range 2</th>
+                        <th class="txtline">Below Target Range</th>
                         <th class="txtline">Action</th>
                       </tr>
                       @php
-                $noDataAvailable = true;
-            @endphp
-            @foreach ($results as $result)
-            @php
-                  $patient = $patients->firstWhere('patient_id', $result->patient_id_FK);
-              @endphp
-          
-                @if ($patient && $criteria1 !== '0' && $criteria2 !== '0')
-                    @php
-                  
-                        $noDataAvailable = false;
-                    @endphp
-                    <tr>
-                        <td>{{ $patient ? $patient->patient_name : '-' }}</td>
-                        <td>{{ $criteria1 }}</td>
-                        <td>{{ $criteria2 }}</td>
-                        <td>{{ $result->bg_level }}</td>
-                        <td>-</td>
-                        <td> <form action="{{ route('dashboard_bg') }}" method="post">
-                          @csrf
-                          <input type="hidden" name="patient_id" value="{{ $patient->patient_id }}">
-                          <input type="hidden" name="professional_id" value="{{ $user->professional_id }}">
-                          <button type="submit" style="background: none; border: none; outline: none; padding: 0; cursor: pointer; color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));">
-                            <i class="ti ti-eye"></i>
-                          </button>
-                        </form></td>
-                    </tr>
-                @endif
-            @endforeach
+$noDataAvailable = true;
+$patientData = []; // Initialize an array to store patient data
+@endphp
+
+@foreach ($results as $result)
+    @php
+    $patient = $patients->firstWhere('patient_id', $result->patient_id_FK);
+    @endphp
+
+    @if ($patient && $criteria1 !== '0' && $criteria2 !== '0' && $criteria1 < $criteria2)
+        @php
+        // Check if the patient is already in the $patientData array
+        $patientDataKey = array_search($patient->patient_id, array_column($patientData, 'patient_id'));
+
+        if ($patientDataKey === false) {
+            // If not in the array, add a new entry for the patient
+            $patientData[] = [
+                'patient_id' => $patient->patient_id,
+                'patient_name' => $patient->patient_name,
+                'biggercriteria1' => '',
+                'betweencriteria2' => '',
+                'abovetargetrange' => '',
+            ];
+            $patientDataKey = count($patientData) - 1; // Get the key of the newly added patient
+        }
+
+        // Update the respective fields based on conditions
+        if ($result->bg_level < $criteria1 && $result->bg_level > $patient->targetBG_low_BC ) {
+            $patientData[$patientDataKey]['biggercriteria1'] .= ($patientData[$patientDataKey]['biggercriteria1'] ? ', ' : '') . $result->bg_level;
+        } elseif ($result->bg_level < $criteria2 && $criteria1 < $result->bg_level) {
+            $patientData[$patientDataKey]['betweencriteria2'] .= ($patientData[$patientDataKey]['betweencriteria2'] ? ', ' : '') . $result->bg_level;
+        } elseif($result->bg_level < $patient->targetBG_low_BC )  {
+            $patientData[$patientDataKey]['abovetargetrange'] .= ($patientData[$patientDataKey]['abovetargetrange'] ? ', ' : '') . $result->bg_level;
+        }
+
+        $noDataAvailable = false;
+        @endphp
+    @endif
+@endforeach
+
+@foreach ($patientData as $patient)
+    <tr>
+        <td>{{ $patient['patient_name'] }}</td>
+        <td style="white-space: normal;">{{ !empty($patient['biggercriteria1']) ? $patient['biggercriteria1'] : '-' }}</td>
+        <td style="white-space: normal;">{{ !empty($patient['betweencriteria2']) ? $patient['betweencriteria2'] : '-' }}</td>
+        <td style="white-space: normal;">{{ !empty($patient['abovetargetrange']) ? $patient['abovetargetrange'] : '-' }}</td>
+        <td>
+            <form action="{{ route('dashboard_bg') }}" method="post">
+                @csrf
+                <input type="hidden" name="patient_id" value="{{ $patient['patient_id'] }}">
+                <input type="hidden" name="professional_id" value="{{ $user->professional_id }}">
+                <button type="submit" style="background: none; border: none; outline: none; padding: 0; cursor: pointer; color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));">
+                    <i class="ti ti-eye"></i>
+                </button>
+            </form>
+        </td>
+    </tr>
+@endforeach
             @if ($noDataAvailable)
                 <tr>
                 <td></td>
                               <td></td>
-                              <td></td>
                               <td>No data available in table</td>
+                            
                               <td></td>
                               <td></td>
                 </tr>

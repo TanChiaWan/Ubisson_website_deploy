@@ -16,8 +16,11 @@ return new class extends Migration
             
             $table->unsignedBigInteger('medication_id');
             $table->unsignedBigInteger('diagnosis_id');
-            $table->string('taken');
+            $table->string('taken_time');
+            $table->json('taken'); // or use text('taken') if you want to store it as serialized text
+            $table->string('medicationtype');
             $table->string('dosage');
+            $table->string('timesaday');
             $table->timestamps();
             
             // Add foreign key constraints

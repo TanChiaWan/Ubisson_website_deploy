@@ -18,7 +18,7 @@
           <div class="card-body">
             <h5 class="card-title fw-semibold mb-2">Practice Groups</h5>
             <p class="mb-3">{{$practicegroupCount}} Practice Groups</p>
-            <div class="d-flex justify-content-end"><a href="{{ route('practice',['organization_id' => $organizationid]) }}" class="btn btn-primary m-1">New Practice Group</a></div>
+            <div class="d-flex justify-content-end"><a href="{{ route('practice') }}" class="btn btn-primary m-1">New Practice Group</a></div>
             <div class="row mb-2">
                 <div class="col-md-12 d-flex align-items-center justify-content-center">
                     <div class="dangerous_event_indicator_shape low_event_color"></div>Dangerous Low Event

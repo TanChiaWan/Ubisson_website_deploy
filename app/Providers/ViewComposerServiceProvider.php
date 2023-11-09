@@ -28,7 +28,7 @@ class ViewComposerServiceProvider extends ServiceProvider
                 $professional_id = $professional->professional_id;
                 $user = Professional::where('professional_id', $professional_id)->first();
                 
-            $view->with('user', $user);
+             $view->with('user', $user);
             }
             
             

@@ -28,6 +28,8 @@ return new class extends Migration
             $table->string('image_title')->nullable();;
             $table->string('image')->nullable();;
             $table->string('bg_period');
+            $table->json('bp_read')->nullable();
+            $table->json('bg_read')->nullable();
         });
     }
 

@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>DASHBOARD</title>
+        <title>Dashboard General</title>
         <meta charset="utf-8">
         <meta name="description" content="create">
         <meta name="author" content="Min">
@@ -190,20 +190,22 @@
 
               <div class="col-md-6">
                 <div class="card">
-                    <div class="card-body p-0">
+                    <div class="card-body">
                     
                       <b><h4 class="w-100 text-center">HBA1C</h4></b>
-                      <div class="chart-container" style="margin-left:50px;">
+                      <div class="row">
+                      <div class="col-md-6 chart-container" style='margin-left:0;'>
                         <canvas id="doughnutChart1"></canvas>
-                        <div class="chart-percentage"></div> <!-- Add a div for displaying the percentage -->
+                        <div class="chart-percentage col-md-6"></div> <!-- Add a div for displaying the percentage -->
                         <div class="chart-label">Previous</div> <!-- Add a div for displaying the label -->
                       </div>
                     
-                      <div class="chart-container">
+                      <div class="col-md-6 chart-container" style='margin-left:0;'>
                         <canvas id="doughnutChart2"></canvas>
-                        <div class="chart-percentage"></div> <!-- Add a div for displaying the percentage -->
+                        <div class="chart-percentage col-md-6"></div> <!-- Add a div for displaying the percentage -->
                         <div class="chart-label">Current</div> <!-- Add a div for displaying the label -->
                       </div>
+</div>
                     
                      
 

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-class Patient extends Model
+class patient extends Model
 {
     public $timestamps = false;
     use HasApiTokens, HasFactory, Notifiable;
@@ -26,7 +26,22 @@ class Patient extends Model
         'patient_phonenum',
         'emergencypersonname',
         'emergencypersonphonenum',
+        'targetBG_low_BC',
+        'targetBG_high_BC',
+        'targetBG_low_AC',
+        'targetBG_high_AC',
+        'targetBG_low_BT',
+        'targetBG_high_BT',
+        'targethba1c',
+        'mincarb',
+        'maxcarb',
+        'minweight',
+        'maxweight',
+        'minbmi',
+        'maxbmi',
+        'totalactivity',
     ];
+    
 
     protected $hidden = [
         'patient_number',

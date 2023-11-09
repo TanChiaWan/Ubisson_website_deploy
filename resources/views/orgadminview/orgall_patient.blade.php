@@ -27,8 +27,8 @@
                     <!--Tab-->
                     <div class="row">
                         <div class="col-md-12 d-flex justify-content-center">
-                            <a href="{{route('orgall_patients', ['organization_id' => $organizationid]) }}" class="btn btn-primary m-3 ">Patient With Organization</a>
-                            <a href="{{route('orgall_patient2', ['organization_id' => $organizationid]) }}" class="btn btn-light m-3">Patient Without Organization</a>
+                            <a href="{{route('orgall_patients') }}" class="btn btn-primary m-3 ">Patient With Organization</a>
+                            <a href="{{route('orgall_patient2') }}" class="btn btn-light m-3">Patient Without Organization</a>
                         </div>
                     </div>
                 </div>
@@ -42,10 +42,6 @@
                           <th class="border-bottom-0">
                             <h6 class="fw-semibold mb-0">Name</h6>
                           </th>
-                          <th class="border-bottom-0">
-                            <h6 class="fw-semibold mb-0">Organization</h6>
-                          </th>
-                         
                           <th class="border-bottom-0">
                             <h6 class="fw-semibold mb-0">Age</h6>
                           </th>
@@ -69,11 +65,7 @@
                         <tr >
                           <td class="border-bottom-0"><p class="mb-0 fw-normal">{{ $patients->patient_name }}</p></td>
                         
-                          <td class="border-bottom-0">
-                            <p class="mb-0 fw-normal">{{ $patients->organization_name }}</p>                    
-                          </td>
-                    
-                         
+    
                           <td class="border-bottom-0">
                             <p class="mb-0 fw-normal">{{ $patients->patient_age }}</p>
                           </td>
@@ -87,12 +79,13 @@
                             <p class="mb-0 fw-normal">{{ $patients->date_of_diagnosis }}</p>
                           </td>
                           <td class="border-bottom-0">
-                          
-                          <a href="{{ route('dashboard_generalorg') }}" id="dashboard-link" data-route="{{ route('dashboard_generalorg') }}" style="background: none; border: none; outline: none; padding: 0; cursor: pointer; color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));">
-    <i class="ti ti-eye"></i>
-</a>
-
-
+                          <form action="{{ route('dashboard_generalorg') }}" method="post">
+                          @csrf
+                          <input type="hidden" name="patient_id" value="{{ $patients->patient_id }}" class="text-center">
+                          <input type="hidden" name="professional_id" value="{{ $user->professional_id }}">
+                          <input type="hidden" name="organization_id" value="{{ $organizationid }}">
+                          <button type="submit" style="background: none; border: none; outline: none; padding: 0; cursor: pointer;color: rgba(var(--bs-link-color-rgb),var(--bs-link-opacity,1));"><i class="ti ti-eye"></i></button>
+                          </form>
                           </td>
                         </tr> 
                         @endif
@@ -130,6 +123,8 @@
     }
 </script>
 
+@if($patients instanceof \Illuminate\Database\Eloquent\Collection && $patients->count() > 0)
+
 <script>
 $(document).ready(function() {
     $('#dashboard-link').click(function(e) {
@@ -163,8 +158,9 @@ $(document).ready(function() {
         });
     });
 });
-
 </script>
+@endif
+
 
     </body>
                     

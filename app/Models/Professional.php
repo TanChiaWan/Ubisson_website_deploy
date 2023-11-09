@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
-class Professional extends Model implements Authenticatable
+class professional extends Model implements Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable,HasRoles;
 

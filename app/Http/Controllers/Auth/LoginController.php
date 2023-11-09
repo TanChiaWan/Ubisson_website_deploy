@@ -122,22 +122,22 @@ class LoginController extends Controller
             ->where('username', $username)
             ->first();
         $organizationid = organization::find($organization_id);
+        
         $patientsCount = patient::where('organizationid_FK', $organization_id)->count();
+        
         $practicegroupCount = practicegroup::where('organizationid_FK', $organization_id)->count();
         $professionalsCount = Professional::where('organizationid_FK', $organization_id)->count();
         if ($user && Hash::check($password, $user->password)) {
- session(['authenticated_user' => $user]);
+            session(['authenticated_user' => $user, 'organizationid' => $organization_id]);
             // Authentication successful
+
             // You can add the logic for setting the authenticated user in the session or using Laravel's built-in authentication features.
             // For simplicity, let's assume the authentication is successful and return a success response.
-
-            return view('/orgadminview/orghome', [
+            return redirect()->route('homeorg')->with([
                 'user' => $user,
-                'organizationid' => $organizationid,
                 'patientsCount' => $patientsCount,
                 'practicegroupCount' => $practicegroupCount,
                 'professionalsCount' => $professionalsCount,
-
             ]);
            
         }
@@ -157,10 +157,12 @@ class LoginController extends Controller
      
      public function logout2(Request $request)
      {
+      
+       $organizationId = session('organizationid');
          Auth::logout();
          $request->session()->invalidate();
          $request->session()->regenerateToken();
-         return redirect()->route('custom.login');
+         return redirect()->route('custom.login',['organizationId' => $organizationId]);
      }
 
 
@@ -170,7 +172,7 @@ class LoginController extends Controller
         $organizationid = organization::find($organizationid);
         
         
-        $customLoginUrl = url("14.167.2.15/organization/$organizationid");
+        $customLoginUrl = url("/organization/$organizationid");
         
         // Your code logic here
         

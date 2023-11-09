@@ -18,5 +18,5 @@ function updateTargetRange() {
     localStorage.setItem("totalActivity", totalActivity);
 
     // Reload MyAboutPatient.html to display the updated values
-    location.href = "/aboutpatient/{patient.patient_id}";
+    location.href = "{{ route('aboutpatient', ['patientId' => $patient->patient_id]) }}";
 }

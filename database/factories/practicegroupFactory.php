@@ -11,7 +11,7 @@ use Faker\Factory as Faker;
 use Illuminate\Support\Facades\DB;
 
 
-class PracticeGroupFactory extends Factory
+final class PracticeGroupFactory extends Factory
 {
     /**
     * The name of the factory's corresponding model.

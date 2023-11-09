@@ -54,6 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     var bgLevels = @json($bgLevels);
         var bgLogbookDate = @json($bg_logbook_date);
+        console.log(bgLogbookDate);
        var criteria1 = @json($criteria1);
        var criteria2 = @json($criteria2);
         // var maxAxisValue = criteria2 > 10 ? 20 : 15;

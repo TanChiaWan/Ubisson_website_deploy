@@ -49,7 +49,7 @@
                                             </select>
                                             <input type="date" class="date_hyper" id="date_start" name="date_start"
                                                     value="2022-07-22"
-                                                    min="2000-01-01" max="2050-12-31">
+                                                    >
                                                     
                                         </div>
                                     </div>

@@ -10,180 +10,137 @@
         <meta name="author" content="Kong">
         <meta name="keywords" content="Organization">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-        <!--CSS -->
-        <link rel="stylesheet" href="../css/stylekong.css">
-
-        <!--Bootstrap-->
-        <link href="../bootstrap/bootstrap.min.css" rel="stylesheet" />
-        
-        
-        <!--Vue.js-->
-        <script src="https://unpkg.com/vue@2"></script>
         
 
     </head>
-
     <body>
-        <!--Side Bar-->
-    <div class="container"></div>
-        <div class="row">
-            <!--side bar-->
-            <div class="col-sm-3">
-            </div>
+<div class="container-fluid">
+        <div class="card">
+            <div class="card-body">
+              <h5 class="card-title fw-semibold mb-4">Update Patient</h5>
 
-            <!--content-->
-            <!--Body-->
-
-                            
-                              <div class="col-sm-9">
-                                <div class="content">
-                                  
-                                    <form action="{{ route('update-patient', ['patient_id' => $patient->patient_id]) }}" method="POST">
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <div class="border_Patient">
-                                                    <h2 class="sub_Patient">Personal Information</h2>
-                                                </div>
-                                                <div class="container_Patient">
-                                                    @csrf
-                                                    <div class="photo">
-                                                        <div id="profile-picture" style="background-image: url('{{ $patient->patient_image }}');" onclick="handleImageUpload()"></div>
-                                                                    <input id="profile-input" name="patient_image" type="file" accept="image/*" onchange="previewImage(event)">
-                                                    </div>
-                                                    <p class="phototxt">Click to upload new photo</p>
-                                                    <div class="form-group">
-                                                        <label id='label1' class="required" >Full Name (As Per IC/Passport)</label>
-                                                        <div class="col-xm-10">
-                                                            <input type="text" id="patient_name" placeholder="Enter fullname" name="patient_name" required style="font-size: 20px; padding: 10px;">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group1">
-                                                        <label for="date" >Date of Birth</label>
-                                                        <div class="col-xm-10">
-                                                            <input type="date" id="date_of_birth" name="date_of_birth" value="2000-07-22" min="2000-01-01" max="2050-12-31" style="font-size: 20px; padding: 10px;">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group23">
-                                                        <label for="gender" >Gender</label>
-                                                        <div class="col-xm-10">
-                                                            <select name="patient_gender" id="patient_gender" style="font-size: 20px; padding: 10px;">
-                                                                <optgroup>
-                                                                    <option value="M">Male</option>
-                                                                    <option value="F">Female</option>
-                                                                </optgroup>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group1">
-                                                        <label for="diabetes" >Diabetes Type</label>
-                                                        <div class="col-xm-10">
-                                                            <select name="diabetes_type" id="diabetes_type" style="font-size: 20px; padding: 10px;">
-                                                                <optgroup>
-                                                                    <option value="Type1">Type 1</option>
-                                                                    <option value="Type2">Type 2</option>
-                                                                    <option value="GestationalDiabetes">Gestational Diabetes</option>
-                                                                    <option value="Prediabetes">Pre-diabetes</option>
-                                                                    <option value="Nondiabetes">Non-diabetes</option>
-                                                                </optgroup>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                
-                                            </div>
-                                        </div>
-                    
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <div class="border_Patient1">
-                                                    <h2 class="sub_Patient">Advanced Information</h2>
-                                                </div>
-                                                <div class="container_Patient1">
-                                                    <div class="form-group">
-                                                        <label for="organisation" >Organisation</label>
-                                                        <div class="col-xm-10">
-                                                            <select  style="font-size: 20px;" name="organization_name" id="organization_name">
-                                                                @foreach($organizations as $organization)
-                                                                    <option value="{{ $organization->organization_name }}">{{ $organization->organization_name }}</option>
-                                                                @endforeach
-                                                            </select>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="date" >Date of Diagnosis</label>
-                                                    <div class="col-xm-10">
-                                                        <input type="date" id="date_of_diagnosis" style="font-size: 20px;" name="date_of_diagnosis" value="2023-07-22" min="1950-01-01" max="2050-12-31">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="mobilephone" >Mobile Phone</label>
-                                                    <div class="col-xm-10">
-                                                        <input type="text"  style="font-size: 20px;" id="patient_phonenum" placeholder="Enter phone number" name="patient_phonenum" required>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="patientnumber" >Patient Number</label>
-                                                    <div class="col-xm-10">
-                                                        <input type="text" style="font-size: 20px; " id="patient_number" placeholder="Enter patient number" name="patient_number" required>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                    
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <div class="border_Patient2">
-                                                <h2 class="sub_Patient">Emergency Information</h2>
-                                            </div>
-                                            <div class="container_Patient2">
-                                                <div class="form-group">
-                                                    <label for="emrName" >Emergency Contact Name</label>
-                                                    <div class="col-xm-10">
-                                                        <input type="text" id="emergencypersonname" placeholder="Enter emergency contact name" name="emergencypersonname" required>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="emrPhone" >Emergency Mobile Phone</label>
-                                                    <div class="col-xm-10">
-                                                        <input type="text" id="emergencypersonphonenum" placeholder="Enter emergency mobile phone" name="emergencypersonphonenum" required>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                    
-                                    <div class="row">
-                                        <div class="two_btn4">
-                                            <button type="button" class="cancelbtn">Cancel</button>
-                                            <button type="submit" class="savebtn">Save</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-            
-                        </div>
-                    </div>
-
-                    
+              <form action="{{ route('update-patientorg') }}" method="POST" enctype="multipart/form-data">
+              @csrf
+              @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
         </div>
-    </div>
+    @endif
+                    <legend class="form-fieldset-title">Personal Information</legend>
+                    <div class="row">
+                    <div class="col-sm-12 d-flex justify-content-center photo">
+                    @if (filter_var($patient->patient_image, FILTER_VALIDATE_URL))
+                    <div id="profile-picture" onclick="handleImageUpload()" style="background-image: url('{{ $patient->patient_image }}');"></div>
+                @else
+                
+                <img id="profile-picture" onclick="handleImageUpload()"  src="{{ asset('storage/' . $patient->patient_image) }}" alt="Uploaded Image">
+                                    @endif
+                                        
+                                    <input type="hidden" name="current_image" value="{{ asset('storage/' . $patient->patient_image) }}">
+<input id="profile-input" type="file" name="new_image" accept="image/*" onchange="previewImages(event)">
 
-    <!--jQuery CDN - Slim version (=without AJAX)-->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        
-    <!--Popper.js-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
-    
-    <!--Bootstrap.js-->
-    <script src="../bootstrap/bootstrap.min.js"></script>
+                                            <script>
+                                      
+                                          function previewImages(event) {
+    var image = document.getElementById('profile-picture');
+    var imageURL = URL.createObjectURL(event.target.files[0]);
+    console.log('New image URL:', imageURL);
+    image.src = imageURL;
+}
+</script>
+                                        </div>
+                                        <p class="col-sm-12 d-flex justify-content-center">Click to upload new photo</p>
+                    
+                      
+                    </div><br>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="patient-list-aboutpatient-name" class="form-label">Full Name (As Per IC/Passport)</label>
+                            <input type="text" class="form-control" id="patient_name" name="patient_name" value='{{$patient->patient_name}}' required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="patient-list-aboutpatient-gender" class="form-label">Gender</label>
+                            <select class="form-select" name="patient_gender" id="patient_gender" value='{{$patient->patient_gender}}'required>
+                                <option value="">Select</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="patient-list-aboutpatient-diabetestype" class="form-label">Diabetes Type</label>
+                            <select class="form-select" name="diabetes_type" id="diabetes_type" value='{{$patient->diabetes_type}}' required>
+                                <option value="">Select</option>
+                                <option value="Type 1">Type 1</option>
+                                <option value="Type 2">Type 2</option>
+                                <option value="Gestational Diabetes">Gestational Diabetes</option>
+                                <option value="Pre-diabetes">Pre-diabetes</option>
+                                <option value="Non-diabetes">Non-diabetes</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <label for="patient-list-aboutpatient-dateofbirth" class="form-label">Date of Birth</label>
+                          <input class="form-control" type="date" id="date_of_birth" name="date_of_birth"
+                          value="{{$patient->date_of_birth}}"
+                          min="1930-01-01" max="{{ date('Y-m-d') }}">
+                        </div>
+                    </div>
+                    <legend class="form-fieldset-title">Advanced Information</legend>
+                    <div class="row">
+                      <div class="col-md-6 mb-3">
+                          <label for="patient-list-aboutpatient-organisation" class="form-label">Organisation</label>
+                        
+                                                  
+                                            
+                          <select class="form-select" name="organization_name" id="organization_name" required disabled>
+                            @foreach($organizations as $organization)
+                                <option value="{{ $organization->organization_name }}" 
+                                    @if($patient->organizationid_FK == $organization->organizationid)
+                                        selected
+                                    @endif
+                                >
+                                    {{ $organization->organization_name }}
+                                </option>
+                            @endforeach
+                        </select>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label for="patient-list-aboutpatient-dateofdiagnosis" class="form-label">Date of Diagnosis</label>
+                        <input class="form-control" type="date" id="date_of_diagnosis" name="date_of_diagnosis"
+                        value='{{$patient->date_of_diagnosis}}'
+                        >
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label for="patient-list-aboutpatient-phone" class="form-label">Mobile Phone</label>
+                        <input type="text" class="form-control" id="patient_phonenum" name="patient_phonenum"  value='{{$patient->patient_phonenum}}'required>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label for="patient-list-aboutpatient-patientnumber" class="form-label">Patient Number</label>
+                        <input type="number" class="form-control" id="patient_number"  name="patient_number"value='{{$patient->patient_number}}' required>
+                      </div>
+                    </div>
+                    <legend class="form-fieldset-title">Emergency Information</legend>
+                    <div class="row">
+                      <div class="col-md-6 mb-3">
+                          <label for="patient-list-aboutpatient-emergencycontactname" class="form-label">Emergency Contact Name</label>
+                          <input type="text" class="form-control" id="emergencypersonname"  name="emergencypersonname" value='{{$patient->emergencypersonname}}'required>
+                      </div>
+                      <div class="col-md-6 mb-3">
+                        <label for="patient-list-aboutpatient-emergencymobilephone" class="form-label">Emergency Mobile Phone</label>
+                        <input type="text" class="form-control" id="emergencypersonphonenum"  name="emergencypersonphonenum" value='{{$patient->emergencypersonphonenum}}'required>
+                      </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            
+                  
+            </div>
+        </div>
+      </div>
 
-    <script src="../js/nav.js"></script>
 
     <script src="../js/imageUpload.js"></script>
     </body>

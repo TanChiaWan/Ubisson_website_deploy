@@ -1,4 +1,4 @@
-@extends('layouts.orgapp') 
+@extends('layouts.orgpatapp') 
 @section('content')
 <!DOCTYPE html>
 <html lang="en">
@@ -9,146 +9,621 @@
         <meta name="author" content="Kong">
         <meta name="keywords" content="Organization">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
 
-        <!--CSS -->
-        <link rel="stylesheet" href="../../css/stylekong.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="../assets/css/datatables3.css" rel="stylesheet">
 
-        <!--Bootstrap-->
-        <link href="../../bootstrap/bootstrap.min.css" rel="stylesheet" />
+<style>
 
-
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-        
-        
-        <!--Vue.js-->
-        <script src="https://unpkg.com/vue@2"></script>
-        
-
+</style>
     </head>
-
+ 
 <body>
-    <!--Side Bar-->
-    <div class="closed_sidebar">&#9776; Menu</div>
-        <!--<div class="container">-->
-            <div class="row">
-                <!--side bar-->
-                <div class="col-sm-3">
-                 
+    <div class="container-fluid">
+        <!-- Outer Tab -->
+        <div class="d-flex justify-content-center">
+          <div class="card d-inline-block">
+            <div class="card-body py-1 px-4">
+              <div class="row text-center">
+                <div class="col-md-12 p-0">
+                <a href="{{ route('dashboard_generalorg') }}" class="btn btn-light m-1 btn-pagenav-notselected">Dashboard</a>
+                <a href="{{ route('aboutpatientorg') }}" class="btn btn-light m-1 btn-pagenav-notselected">About Patient</a>
+                <a href="{{ route('logbook_bgorg') }}" class="btn btn-light m-1 btn-pagenav-notselected">Logbook</a>
+                <a href="{{ route('healthdataorg') }}" class="btn btn-primary m-1 active">Health Data</a>
+                <a href="{{ route('remarkorg') }}" class="btn btn-light m-1 btn-pagenav-notselected">Remarks</a>
+                <a href="{{ route('medicationreportorg') }}" class="btn btn-light m-1 btn-pagenav-notselected">Medication</a>
                 </div>
+                </div>
+            </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3">
+                <div class="col-md-4 text-center">
+                    <p class="fs-4 fw-semibold">Patient: {{ $patient->patient_name }} ({{ $patient->patient_age }} y/o)</p>
+                </div>
+                <div class="col-md-4 text-center">
+                    <p class="fs-4 fw-semibold">Gender: {{ $patient->patient_gender }}</p>
+                </div>
+                <div class="col-md-4 text-center">
+                    <p class="fs-4 fw-semibold">Diabetes Type: {{ $patient->diabetes_type }}</p>
+                </div>
+            </div>
+        <div class="card">
+          <div class="card-body">
+         
+            
+            <div class="row">
+                <div class="col-md-12 text-center">
+                <a href="{{ route('addhealthdataorg') }}" class="btn btn-primary m-1 btn-with-icon"><i class="ti ti-plus"></i>Add Health Data</a>
 
-            <!--content-->
-            <!--Body-->
-                    <div class="col-sm-9">
-                        <div class="content">
-                            <div class="topnav2">
-                            <a href="{{ route('dashboard_generalorg', ['patientId' => $patient->patient_id, 'organizationid' => $organizationid]) }}" >DashBoard</a>
-                              <a href="{{ route('patient', ['patientId' => $patient->patient_id,'organization_id' => $organizationid]) }}" >About Patient</a>
-                              <a href="{{ route('logbook_bgorg', ['patientId' => $patient->patient_id,'organizationid' => $organizationid]) }}"> Logbook</a>
-                        <a href="{{ route('healthdataorg', ['patientId' => $patient->patient_id,'organizationid' => $organizationid]) }}"class="active">Health Data</a>
-                            </div>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="search_bar">
-                                            <label class="search_fortxt">Search: </label>
-                                            <input type="text" class="search_txt" id="search" name="search">  
-                                            
-                                            <div class="add_export_btn">
-                                                <button class="add-button">
-                                                    <span class="plus-symbol">Add</span> +
-                                                </button>
-                                                <button class="export-button">
-                                                    <span class="symbol">Export</span> &#x21E3;
-                                                </button>
-                                            </div>
-                                        </div>
+                    
+                    <button type="button" class="btn btn-primary m-1 btn-with-icon" id="export_healthdata_button" onclick="exported('{{ $patient->patient_id }}')"><i class="ti ti-file-export"></i>Export</button>
+                </div>
+            </div>
+           
 
-
-                                        <form action="/action_page.php">
-                                            <div class="checkbox-group">
-                                                <input type="checkbox" id="general" name="general" checked>
-                                                <label for="general">General</label>
-                                                <input type="checkbox" id="pancreas" name="pancreas">
-                                                <label for="pancreas">Pancreas</label>
-                                                <input type="checkbox" id="urine" name="urine">
-                                                <label for="urine">Urine</label>
-                                                <input type="checkbox" id="liver" name="liver">
-                                                <label for="liver">Liver</label>
-                                                <input type="checkbox" id="lipids" name="lipids">
-                                                <label for="lipids">Lipids</label>
-                                                <input type="checkbox" id="glucose" name="glucose">
-                                                <label for="glucose">Glucose</label>
-                                                <input type="checkbox" id="kidneys" name="kidneys">
-                                                <label for="kidneys">Kidneys</label>
-                                                <input type="checkbox" id="electrolysis" name="electrolysis">
-                                                <label for="electrolysis">Electrolysis</label>
-                                            </div>
-
-                                            <div class="border_Health_Data">
-                                                <h2 class="sub_Health_Data">General</h2>          
-                                            </div>
-                                                <div class="container_Health_Data">
-                                                    <table style="z-index: 1" >
-                                                      
-                                                        <tr>
-                                                          <th class="txtline">Action</th>
-                                                          <th class="txtline">Data Originate</th>
-                                                          <th class="txtline">Date</th>
-                                                          <th class="txtline">Weight(kg)</th>
-                                                          <th class="txtline">Height(cm)</th>
-                                                          <th class="txtline">SBP/DBP(mmHg)</th>
-                                                          <th class="txtline">hr(bpm)</th>
-                                                          <th class="txtline">Celsius('C)</th>
-                                                          <th class="txtline">Fahrenheit('F)</th>
-                                                        </tr>
-                                                    
-                                    
-                                                        @foreach ($healthdata as $data)
-                                                        @if ($data->patient_id_FK === $patient->patient_id)
-                                                            <tr>
-                                                                <td>
-                                                                    <i class="fas fa-trash-alt"></i>
-                                                                    <i class="fas fa-pencil-alt"></i>
-                                                                </td>
-                                                                <td>Patient</td>
-                                                                <td>{{ $data->date }}</td>
-                                                                <td>{{ $data->weight }}</td>
-                                                                <td>{{ $data->height }}</td>
-                                                                <td>{{ $data->sbp }}/{{ $data->dbp }}</td>
-                                                                <td>{{ $data->hr }}</td>
-                                                                <td>{{ $data->celcius }}</td>
-                                                                <td>{{ $data->fahrenheit }}</td>
-                                                            </tr>
-                                                            @endif
-                                                            @endforeach
-                                                           
-
-                                                    </table>
-                                                      
-                                                </div>
-
-                                        </form>
-                                        
-                                    </div>
-                                </div>
-                        </div>
+            <!-- delete dialog box start-->
+            @if($healthdata && $singleHealthData && $singleHealthData->healthdata_id !== null)
+            <div class="modal fade" id="delete_health_data_modal" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered modal-sm">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Delete Health Data</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
+                    <div class="modal-body">Are you sure you want to delete this data?</div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                      <form action="{{ route('deletesorg') }}" method="POST" style="display: inline-block;">
+                    @csrf
+                    <input type="hidden" name="healthdata_id" id='healthdata_id_field' value="">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+                <script>
+$(document).ready(function () {
+    // When the modal is shown
+    $('#delete_health_data_modal').on('show.bs.modal', function (event) {
+    var link = $(event.relatedTarget); // Get the "Delete" link that triggered the modal
+    var healthdataId = link.data('healthdataid'); // Get the allergy ID from the data attribute
 
-
+    // Set the hidden input field's value with the allergy ID
+    $('#healthdata_id_field').val(healthdataId);
+});
+});
+</script>
                     
+                    </div>
+                  </div>
+                </div>
+            </div>
+            @endif
+            <!-- delete dialog box end-->
 
-                    
-        <!--</div>-->
+            <!-- checkboxes -->
+            <div class="row">
+              <div class="col-md-12 text-center mt-3">
+                <label class="mx-2">
+                  <input type="checkbox" id="checkbox-general" class="checkbox form-check-input" checked>
+                  General
+                </label>
+                <label class="mx-2">
+                  <input type="checkbox" id="checkbox-glucose" class="checkbox form-check-input" checked>
+                  Glucose
+                </label>
+                <label class="mx-2">
+                  <input type="checkbox" id="checkbox-lipids" class="checkbox form-check-input" checked>
+                  Lipids
+                </label>
+                <label class="mx-2">
+                  <input type="checkbox" id="checkbox-pancreas" class="checkbox form-check-input" checked>
+                  Pancreas
+                </label>
+                <label class="mx-2">
+                  <input type="checkbox" id="checkbox-urine" class="checkbox form-check-input" checked>
+                  Urine
+                </label>
+                <label class="mx-2">
+                  <input type="checkbox" id="checkbox-kidneys" class="checkbox form-check-input" checked>
+                  Kidneys
+                </label>
+                <label class="mx-2">
+                  <input type="checkbox" id="checkbox-electrolysis" class="checkbox form-check-input" checked>
+                  Electrolysis
+                </label>
+                <label class="mx-2">
+                  <input type="checkbox" id="checkbox-livers" class="checkbox form-check-input" checked>
+                  Liver
+                </label>
+              </div>
+            </div>
+
+            <div class="table-responsive table" style="overflow-y: hidden;">
+            
+                <table class="table text-nowrap mb-0 align-middle datatable">
+                    <thead class="text-dark fs-4">
+                        <!--datatable cannot use are caused by this-->
+                      <tr style="background-color: #3ab4b6" class="health-data-tr-title">
+                         <th colspan="3" class="border-bottom-0"> 
+                              <h6 class="fw-semibold mb-0"></h6>
+                          </th>
+                          <th colspan="5" class="category_general border-bottom-0">
+                              <h6 class="fw-semibold mb-0">General</h6>
+                          </th>
+                          <th colspan="2" class="category_glucose border-bottom-0">
+                              <h6 class="fw-semibold mb-0">Glucose</h6>
+                          </th>
+                          <th colspan="4" class="category_lipids border-bottom-0">
+                              <h6 class="fw-semibold mb-0">Lipids</h6>
+                          </th>
+                          <th colspan="1" class="category_pancreas border-bottom-0">
+                              <h6 class="fw-semibold mb-0">Pancreas</h6>
+                          </th>
+                          <th colspan="4" class="category_kidneys border-bottom-0">
+                              <h6 class="fw-semibold mb-0">Kidneys</h6>
+                          </th>
+                          <th colspan="4" class="category_urine border-bottom-0">
+                              <h6 class="fw-semibold mb-0">Urine</h6>
+                          </th>
+                          <th colspan="4" class="category_electrolysis border-bottom-0">
+                              <h6 class="fw-semibold mb-0">Electrolysis</h6>
+                          </th>
+                          <th colspan="2" class="category_livers border-bottom-0">
+                              <h6 class="fw-semibold mb-0">Liver</h6>
+                          </th>
+                      </tr>
+
+
+                        <tr style="background-color: #7ecbcc;">
+                            <th class="border-bottom-0">
+                              <h6 class="fw-semibold mb-0">Action</h6>
+                            </th>
+                            <th class="border-bottom-0">
+                              <h6 class="fw-semibold mb-0">Data Originate</h6>
+                            </th>
+                            <th class="border-bottom-0">
+                              <h6 class="fw-semibold mb-0">Date</h6>
+                            </th>
+                            <th class="category_general border-bottom-0">
+                              <h6 class="fw-semibold mb-0">Weight(kg)</h6>
+                            </th>
+                            <th class="category_general border-bottom-0">
+                              <h6 class="fw-semibold mb-0">Height(cm)</h6>
+                            </th>
+                            <th class="category_general border-bottom-0">
+                              <h6 class="fw-semibold mb-0">SBP/DBP(mmHg)</h6>
+                            </th>
+                            <th class="category_general border-bottom-0">
+                              <h6 class="fw-semibold mb-0">Pulse Rate(bpm)</h6>
+                            </th>
+                            @if ($user->temperature_unit === 'Celcius (°C)')
+                            <th class="category_general border-bottom-0">
+                              <h6 class="fw-semibold mb-0">Celsius(°C)</h6>
+                            </th>
+                            @else
+                            <th class="category_general border-bottom-0">
+                              <h6 class="fw-semibold mb-0">Fahrenheit(°F)</h6>
+                            </th>
+                            @endif
+                            <th class="category_glucose border-bottom-0">
+                              <h6 class="fw-semibold mb-0">a1cPercentage(%)</h6>
+                            </th>
+                            <th class="category_glucose border-bottom-0">
+                              <h6 class="fw-semibold mb-0">GA(%)</h6>
+                            </th>
+                            <th class="category_lipids border-bottom-0">
+                              <h6 class="fw-semibold mb-0">CHO(mmol/L)</h6>
+                            </th>
+                            <th class="category_lipids border-bottom-0">
+                              <h6 class="fw-semibold mb-0">HDL(mmol/L)</h6>
+                            </th>
+                            <th class="category_lipids border-bottom-0">
+                              <h6 class="fw-semibold mb-0">LDL-C(mmol/L)</h6>
+                            </th>
+                            <th class="category_lipids border-bottom-0">
+                              <h6 class="fw-semibold mb-0">TG(mmol/L)</h6>
+                            </th>
+                            <th class="category_pancreas border-bottom-0">
+                              <h6 class="fw-semibold mb-0">C-peptide(pmol/L)</h6>
+                            </th>
+                            <th class="category_kidneys border-bottom-0">
+                              <h6 class="fw-semibold mb-0">CKD Stage</h6>
+                            </th>
+                            <th class="category_kidneys border-bottom-0">
+                              <h6 class="fw-semibold mb-0">CRE(µmol/L)</h6>
+                            </th>
+                            <th class="category_kidneys border-bottom-0">
+                              <h6 class="fw-semibold mb-0">UA(mmol/L)</h6>
+                            </th>
+                            <th class="category_kidneys border-bottom-0">
+                              <h6 class="fw-semibold mb-0">eGFR(mL/min)</h6>
+                            </th>
+                            <th class="category_urine border-bottom-0">
+                              <h6 class="fw-semibold mb-0">ACR(mg/mmol)</h6>
+                            </th>
+                            <th class="category_urine border-bottom-0">
+                              <h6 class="fw-semibold mb-0">MA(mg/L)</h6>
+                            </th>
+                            <th class="category_urine border-bottom-0">
+                              <h6 class="fw-semibold mb-0">PRO(mg/L)</h6>
+                            </th>
+                            <th class="category_urine border-bottom-0">
+                              <h6 class="fw-semibold mb-0">UPCR(mg/mmol)</h6>
+                            </th>
+                            <th class="category_electrolysis border-bottom-0">
+                              <h6 class="fw-semibold mb-0">CA(mg/dL)</h6>
+                            </th>
+                            <th class="category_electrolysis border-bottom-0">
+                              <h6 class="fw-semibold mb-0">K(mmol/L)</h6>
+                            </th>
+                            <th class="category_electrolysis border-bottom-0">
+                              <h6 class="fw-semibold mb-0">NA(mmol/L)</h6>
+                            </th>
+                            <th class="category_electrolysis border-bottom-0">
+                              <h6 class="fw-semibold mb-0">P(mg/dL)</h6>
+                            </th>
+                            <th class="category_livers border-bottom-0">
+                              <h6 class="fw-semibold mb-0">GPT/ALT(U/L)</h6>
+                            </th>
+                            <th class="category_livers border-bottom-0">
+                              <h6 class="fw-semibold mb-0">GOT(U/L)</h6>
+                            </th>
+
+                            
+                          </tr>
+                    </thead>
+                    <tbody>
+                       
+                        @if($healthdata)
+                        @foreach ($healthdata as $data)
+                    @if ($data->patient_id_FK === $patient->patient_id)
+                    <tr>
+                        <td class="border-bottom-0">
+                            <p class="mb-0 fw-normal">
+                            <form id="editHealthDataForm" action="{{ route('edithealthdataorg') }}" method="POST" style="display: inline;">
+                                @csrf
+                                <input type="hidden" name="healthdata_id" value="{{ $data->healthdata_id }}" >
+                      
+                                <button type="submit" class=" mx-2 fs-5" style="background: none; border: none; outline: none; padding: 0; cursor: pointer; color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));">
+                                    <i class="ti ti-pencil"></i>
+                                </button>
+                            </form>
+                            <a href="javascript:void()" class="text-center delete-entry" data-bs-toggle="modal" data-bs-target="#delete_health_data_modal" data-healthdataid="{{ $data->healthdata_id }}"><i class="ti-trash ti"></i></a>
+                            </p>
+                        </td>
+                          <td class="border-bottom-0">
+                            <p class="mb-0 fw-normal">Patient</p>
+                          </td>
+                          <td class="border-bottom-0">
+                            <p class="mb-0 fw-normal">{{ $data->date }}</p>
+                          </td>
+                          <td class="category_general border-bottom-0">
+                            <p class="mb-0 fw-normal">{{ $data->weight }}</p>
+                          </td>
+                          <td class="category_general border-bottom-0">
+                            <p class="mb-0 fw-normal">{{ $data->height }}</p>
+                          </td>
+                          <td class="category_general border-bottom-0">
+                            <p class="mb-0 fw-normal">{{ $data->sbp }}/{{ $data->dbp }}</p>
+                          </td>
+                          <td class="category_general border-bottom-0">
+                            <p class="mb-0 fw-normal">{{ $data->hr }}</p>
+                          </td>
+                          @if ($user->temperature_unit === 'Celcius (°C)')
+                          <td class="category_general border-bottom-0">
+                            <p class="mb-0 fw-normal">{{ $data->celcius }}</p>
+                          </td>
+                          
+                          @else
+                          <td class="category_general border-bottom-0">
+                            <p class="mb-0 fw-normal">{{ $data->fahrenheit }}</p>
+                          </td>
+                          @endif
+                          <td class="category_glucose border-bottom-0" data-toggle="tooltip"  data-operator="{{ $data->operator }}" data-lotview="{{ $data->lotview }}" data-instid="{{ $data->instid }}" data-testid="{{ $data->testID }}">
+                            <p class="mb-0 fw-normal">{{ $data->a1cpercentage }}</p>
+                          </td>
+                          <td class="category_glucose border-bottom-0">
+                            <p class="mb-0 fw-normal">{{ $data->ga }}</p>
+                          </td>
+            
+                          <td class="category_lipids border-bottom-0">
+                            <p class="mb-0 fw-normal">{{ $data->cho }}</p>
+                          </td>
+                          <td class="category_lipids border-bottom-0">
+                            <p class="mb-0 fw-normal">{{ $data->hdl }}</p>
+                          </td>
+                          <td class="category_lipids border-bottom-0">
+                            <p class="mb-0 fw-normal">{{ $data->ldlc }}</p>
+                          </td>
+                          <td class="category_lipids border-bottom-0">
+                            <p class="mb-0 fw-normal">{{ $data->tg }}</p>
+                          </td>
+                          <td class="category_pancreas border-bottom-0">
+                            <p class="mb-0 fw-normal">{{ $data->cpeptide }}</p>
+                          </td>  
+                          <td class="category_kidneys border-bottom-0">
+                            <p class="mb-0 fw-normal">{{ $data->ckdstage }}</p>
+                          </td>  
+                          <td class="category_kidneys border-bottom-0">
+                            <p class="mb-0 fw-normal">{{ $data->cre }}</p>
+                          </td>  
+                          <td class="category_kidneys border-bottom-0">
+                            <p class="mb-0 fw-normal">{{ $data->ua }}</p>
+                          </td>  
+                          <td class="category_kidneys border-bottom-0">
+                            <p class="mb-0 fw-normal">{{ $data->egfr }}</p>
+                          </td>  
+                          <td class="category_urine border-bottom-0">
+                            <p class="mb-0 fw-normal">{{ $data->acr }}</p>
+                          </td>  
+                          <td class="category_urine border-bottom-0">
+                            <p class="mb-0 fw-normal">{{ $data->ma }}</p>
+                          </td>  
+                          <td class="category_urine border-bottom-0">
+                            <p class="mb-0 fw-normal">{{ $data->pro }}</p>
+                          </td>  
+                          <td class="category_urine border-bottom-0">
+                            <p class="mb-0 fw-normal">{{ $data->upcr }}</p>
+                          </td>
+                          <td class="category_electrolysis border-bottom-0">
+                            <p class="mb-0 fw-normal">{{ $data->ca }}</p>
+                          </td>  
+                          <td class="category_electrolysis border-bottom-0">
+                            <p class="mb-0 fw-normal">{{ $data->k }}</p>
+                          </td>  
+                          <td class="category_electrolysis border-bottom-0">
+                            <p class="mb-0 fw-normal">{{ $data->na }}</p>
+                          </td>  
+                          <td class="category_electrolysis border-bottom-0">
+                            <p class="mb-0 fw-normal">{{ $data->p }}</p>
+                          </td>
+                          <td class="category_livers border-bottom-0">
+                          <p class="mb-0 fw-normal">{{ $data->{'gpt/alt'} }}</p>
+                          </td>  
+                          <td class="category_livers border-bottom-0">
+                            <p class="mb-0 fw-normal">{{ $data->got }}</p>
+                          </td>
+                          </tr>
+                            @endif
+                            @endforeach
+                            @else
+        <tr>
+            <td colspan="30">No health data available.</td>
+        </tr>
+    @endif
+                          
+                        
+                    </tbody>
+                </table>
+            </div>
+                  
+            </div>
+        </div>
     </div>
 
-    <!--jQuery CDN - Slim version (=without AJAX)-->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        
-    <!--Popper.js-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
-    
-    <!--Bootstrap.js-->
-    <script src="../../bootstrap/bootstrap.min.js"></script>
 
+
+
+<!-- Script for checkboxes -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+   
+ 
+    const checkbox_general = document.getElementById('checkbox-general');
+    const checkbox_glucose = document.getElementById('checkbox-glucose');
+    const checkbox_lipids = document.getElementById('checkbox-lipids');
+    const checkbox_urine = document.getElementById('checkbox-urine');
+    const checkbox_pancreas = document.getElementById('checkbox-pancreas');
+    const checkbox_kidneys = document.getElementById('checkbox-kidneys');
+    const checkbox_livers = document.getElementById('checkbox-livers');
+    const checkbox_electrolysis = document.getElementById('checkbox-electrolysis');
+    
+    
+    var table_cells_general = document.querySelectorAll('.category_general');
+    var table_cells_glucose = document.querySelectorAll('.category_glucose');
+    var table_cells_lipids = document.querySelectorAll('.category_lipids');
+    var table_cells_urine = document.querySelectorAll('.category_urine');
+    var table_cells_pancreas = document.querySelectorAll('.category_pancreas');
+    var table_cells_kidneys = document.querySelectorAll('.category_kidneys');
+    var table_cells_livers = document.querySelectorAll('.category_livers'); 
+    var table_cells_electrolysis = document.querySelectorAll('.category_electrolysis');
+
+    function eventCheckbox() {
+  checkbox_lipids.addEventListener('change', function() {
+    if (this.checked) {
+      table_cells_lipids.forEach(cell => {
+        cell.style.display = "table-cell";
+      });
+    } else {
+      table_cells_lipids.forEach(cell => {
+        cell.style.display = "none";
+      });
+    }
+  });
+
+  checkbox_general.addEventListener('change', function() {
+    if (this.checked) {
+      table_cells_general.forEach(cell => {
+        cell.style.display = "table-cell";
+      });
+    } else {
+      table_cells_general.forEach(cell => {
+        cell.style.display = "none";
+      });
+    }
+  });
+
+  checkbox_glucose.addEventListener('change', function() {
+    if (this.checked) {
+      table_cells_glucose.forEach(cell => {
+        cell.style.display = "table-cell";
+      });
+    } else {
+      table_cells_glucose.forEach(cell => {
+        cell.style.display = "none";
+      });
+    }
+  });
+
+  checkbox_urine.addEventListener('change', function() {
+    if (this.checked) {
+      table_cells_urine.forEach(cell => {
+        cell.style.display = "table-cell";
+      });
+    } else {
+      table_cells_urine.forEach(cell => {
+        cell.style.display = "none";
+      });
+    }
+  });
+
+  checkbox_pancreas.addEventListener('change', function() {
+    if (this.checked) {
+      table_cells_pancreas.forEach(cell => {
+        cell.style.display = "table-cell";
+      });
+    } else {
+      table_cells_pancreas.forEach(cell => {
+        cell.style.display = "none";
+      });
+    }
+  });
+
+  checkbox_kidneys.addEventListener('change', function() {
+    if (this.checked) {
+      table_cells_kidneys.forEach(cell => {
+        cell.style.display = "table-cell";
+      });
+    } else {
+      table_cells_kidneys.forEach(cell => {
+        cell.style.display = "none";
+      });
+    }
+  });
+
+  checkbox_livers.addEventListener('change', function() {
+    if (this.checked) {
+      table_cells_livers.forEach(cell => {
+        cell.style.display = "table-cell";
+      });
+    } else {
+      table_cells_livers.forEach(cell => {
+        cell.style.display = "none";
+      });
+    }
+  });
+
+  checkbox_electrolysis.addEventListener('change', function() {
+    if (this.checked) {
+      table_cells_electrolysis.forEach(cell => {
+        cell.style.display = "table-cell";
+      });
+    } else {
+      table_cells_electrolysis.forEach(cell => {
+        cell.style.display = "none";
+      });
+    }
+  });
+}
+
+
+    function runScript() {
+      eventCheckbox(); 
+    }
+
+    runScript();
+
+  })
+</script>
+    <script>
+ function exported(patientId) {
+    var url = "{{ route('exports', ['patientId' => ':patientId']) }}";
+    url = url.replace(':patientId', patientId);
+    window.location.href = url;
+}
+
+function deleted(patientId, healthdataId) {
+    var url = "{{ route('deletes', ['patientId' => ':patientId', 'healthdataId' => ':healthdataId']) }}";
+    url = url.replace(':patientId', patientId);
+    url = url.replace(':healthdataId', healthdataId);
+    window.location.href = url;
+}
+$(document).ready(function () {
+  $('[data-toggle="tooltip"]').tooltip({
+    trigger: 'hover',
+    placement: 'right',
+    html: true,
+  // Replace the existing tooltip content generation logic
+  title: function () {
+  
+  const ga = $(this).data('ga');
+  const operator = $(this).data('operator');
+  const lotView = $(this).data('lotview');
+  const instID = $(this).data('instid');
+  const testID = $(this).data('testid');
+
+  // Check if any of the data attributes is empty
+  if (!lotView && !instID && !testID && !operator && !ga) {
+    return 'No information available';
+  }
+
+  // Build the tooltip content
+  let tooltipContent = '';
+
+  // Append the data attributes if they exist
+  if (lotView) {
+    tooltipContent += `<strong>Lot View:</strong> ${lotView}<br>`;
+  }
+  if (instID) {
+    tooltipContent += `<strong>Inst ID:</strong> ${instID}<br>`;
+  }
+  if (testID) {
+    tooltipContent += `<strong>Test ID:</strong> ${testID}<br>`;
+  }
+  if (operator) {
+    tooltipContent += `<strong>Operator:</strong> ${operator}<br>`;
+  }
+  
+
+
+
+  return tooltipContent;
+},
+
+
+
+  });
+});
+
+
+
+    </script>                       
+            <script>
+    // Define the constant for DataTables library URL
+    const DATATABLES_URL = 'https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js';
+
+    $(document).ready(function() {
+        // Load DataTables library dynamically
+        loadScript(DATATABLES_URL, function() {
+            $('.datatable').DataTable({
+              lengthMenu: [5, 10, 25, 100], // Define the available entries options
+  
+            });
+        });
+    });
+
+    // Function to dynamically load a script
+    function loadScript(url, callback) {
+        var script = document.createElement('script');
+        script.src = url;
+        script.onload = callback;
+        document.head.appendChild(script);
+    }
+</script>      
+
+
+                                        
 
 </body>
 </html>
